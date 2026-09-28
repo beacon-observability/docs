@@ -1,0 +1,32 @@
+---
+slug: /
+sidebar_position: 1
+title: Beacon documentation
+description: Add OpenTelemetry-based observability to applications without changing source code.
+---
+
+# Observe applications without changing their code
+
+Beacon provides independently released automatic-instrumentation agents built on OpenTelemetry. Pick a language, configure a service name and an OTLP receiver, then start the existing application through the agent.
+
+## Start here
+
+1. Open [Zero-code instrumentation](zero-code/index.md) and select your runtime.
+2. Install the released agent or package.
+3. Set `OTEL_SERVICE_NAME`, `OTEL_EXPORTER_OTLP_ENDPOINT`, and the protocol accepted by your receiver.
+4. Launch the application with the documented wrapper, preload, or runtime agent.
+
+No application source changes are required. Automatic instrumentation observes supported frameworks and libraries; it does not automatically describe every business operation inside application code.
+
+## Current language releases
+
+| Language | Release | Zero-code entry point | Profiling |
+| --- | --- | --- | --- |
+| Java | 1.0.0 | `-javaagent` | Experimental JFR, opt in |
+| Python | 1.0.1 | `beacon` command | Optional, opt in |
+| Node.js | 1.1.0 | `NODE_OPTIONS` preload | Optional, opt in |
+| .NET | 1.0.0 | `beacon-dotnet run` | No supported user setup |
+| PHP | 1.1.1 | Native hook plus Composer autoload | No supported user setup |
+
+Each language is versioned and released independently. Use the version shown in its guide instead of assuming one shared Beacon version.
+
