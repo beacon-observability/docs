@@ -15,5 +15,3 @@ Profile 与 Trace、指标和日志分别配置。普通 OTLP 遥测地址并不
 | [Node.js](nodejs.md) | pprof | HTTP 上传 | 可选 |
 
 Beacon .NET 和 PHP 当前未提供受支持的用户级 Profile 配置。
-
-各语言的完整环境变量请参阅 [Profile 参数配置](configuration.md)。

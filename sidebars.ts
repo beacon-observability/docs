@@ -20,7 +20,6 @@ const sidebars: SidebarsConfig = {
       label: 'Profiling',
       link: {type: 'doc', id: 'profiling/index'},
       items: [
-        'profiling/configuration',
         'profiling/java',
         'profiling/python',
         'profiling/nodejs',
