@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Beacon logo</title>
+  <desc id="desc">A lighthouse emitting signals above waves and circuit branches</desc>
+  <defs>
+    <linearGradient id="signal" x1="76" y1="52" x2="436" y2="460" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#13D9E8"/>
+      <stop offset=".5" stop-color="#0788F5"/>
+      <stop offset="1" stop-color="#1748D4"/>
+    </linearGradient>
+    <linearGradient id="tower" x1="194" y1="218" x2="336" y2="430" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#126EE8"/>
+      <stop offset="1" stop-color="#082A78"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="210" y1="131" x2="304" y2="218" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF9A19"/>
+      <stop offset="1" stop-color="#F14C0A"/>
+    </linearGradient>
+    <linearGradient id="flame" x1="256" y1="151" x2="256" y2="210" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF5A8"/>
+      <stop offset=".55" stop-color="#FFD43B"/>
+      <stop offset="1" stop-color="#FF9518"/>
+    </linearGradient>
+    <clipPath id="towerClip">
+      <path d="M205 229h102l28 203H177l28-203Z"/>
+    </clipPath>
+  </defs>
+
+  <g fill="none" stroke-linecap="round">
+    <path d="M79 205A186 186 0 0 1 189 68M323 68a186 186 0 0 1 110 137" stroke="url(#signal)" stroke-width="24"/>
+    <path d="M118 221a145 145 0 0 1 78-108m120 0a145 145 0 0 1 78 108" stroke="url(#signal)" stroke-width="21"/>
+    <path d="M158 230a103 103 0 0 1 42-68m112 0a103 103 0 0 1 42 68" stroke="#FF9F1A" stroke-width="18"/>
+  </g>
+
+  <g fill="none" stroke="#0B3B93" stroke-linecap="round" stroke-linejoin="round" stroke-width="12">
+    <path d="M126 285H93v76l48 48"/>
+    <path d="M139 349h-18v48"/>
+    <path d="M386 285h33v76l-48 48"/>
+    <path d="M373 349h18v48"/>
+  </g>
+  <g fill="#0B3B93" stroke="#12BCEB" stroke-width="11">
+    <circle cx="137" cy="285" r="18"/>
+    <circle cx="151" cy="349" r="18"/>
+    <circle cx="375" cy="285" r="18"/>
+    <circle cx="361" cy="349" r="18"/>
+  </g>
+
+  <path d="M193 433 212 229h88l19 204Z" fill="url(#tower)"/>
+  <g clip-path="url(#towerClip)">
+    <path d="m180 310 151-73 8 45-165 80Z" fill="#C7F6FF"/>
+    <path d="m169 393 175-85 8 47-188 91Z" fill="#C7F6FF"/>
+  </g>
+  <path d="M244 314a12 12 0 0 1 24 0v31h-24v-31Z" fill="#082A78"/>
+
+  <rect x="207" y="132" width="98" height="85" rx="7" fill="url(#glass)" stroke="#0A327F" stroke-width="10"/>
+  <path d="m192 142 64-51 64 51-10 16-54-28-54 28-10-16Z" fill="#092E7C"/>
+  <path d="M250 91V75a6 6 0 0 1 12 0v16" stroke="#092E7C" stroke-width="9" stroke-linecap="round"/>
+  <circle cx="256" cy="68" r="12" fill="#0B3B93"/>
+  <path d="M256 151c18 24 25 36 25 48a25 25 0 0 1-50 0c0-12 7-24 25-48Z" fill="url(#flame)"/>
+  <path d="M256 174c9 13 12 20 12 27a12 12 0 0 1-24 0c0-7 3-14 12-27Z" fill="#FFF"/>
+  <rect x="188" y="207" width="136" height="28" rx="14" fill="#0A368A"/>
+  <rect x="199" y="207" width="114" height="9" rx="4.5" fill="#128DF4"/>
+
+  <path d="M115 419c41-29 84-27 126 2 42-31 89-33 143-1-39 45-82 68-128 68-48 0-95-23-141-69Z" fill="#082A78"/>
+  <path d="M119 432c40-21 78-18 117 7 40-27 83-29 130-6" fill="none" stroke="#079AF6" stroke-width="15" stroke-linecap="round"/>
+
+  <path d="M76 260v126c0 37 20 71 53 89l127 25 127-25c33-18 53-52 53-89V260" fill="none" stroke="url(#signal)" stroke-width="21" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

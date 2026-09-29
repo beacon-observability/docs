@@ -37,10 +37,11 @@ const config: Config = {
     ],
   ],
   themeConfig: {
+    image: 'img/beacon-logo.png',
     colorMode: {respectPrefersColorScheme: true},
     navbar: {
       title: 'Beacon',
-      logo: {alt: 'Beacon logo', src: 'img/logo.svg'},
+      logo: {alt: 'Beacon logo', src: 'img/beacon-logo.svg'},
       items: [
         {to: '/zero-code/', label: 'Zero-code', position: 'left'},
         {to: '/configuration/', label: 'Configuration', position: 'left'},
