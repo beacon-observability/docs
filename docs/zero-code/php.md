@@ -6,19 +6,19 @@ description: Enable PHP automatic instrumentation with a native hook and Compose
 
 # PHP zero-code instrumentation
 
-Beacon PHP 1.1.1 requires PHP 8.2 or later, the matching Beacon native extension, and the Composer package in the application.
+Beacon PHP requires PHP 8.2 or later, Composer package 1.1.2 in the application, and Beacon native extension 1.0.1 matching the runtime.
 
 ## Install
 
-1. Download and enable the extension build matching the PHP version, thread-safety mode, operating system, and architecture from the [extension release](https://github.com/beacon-observability/beacon-php-instrumentation/releases/tag/v1.0.0).
+1. Download and enable the extension build matching the PHP version, thread-safety mode, operating system, and architecture from the [1.0.1 extension release](https://github.com/beacon-observability/beacon-php-instrumentation/releases/tag/v1.0.1).
 2. Add the released Composer artifact and install the framework integrations you use:
 
 ```bash
 mkdir -p .beacon
-curl -fL -o .beacon/beacon-php-1.1.1.zip \
-  https://github.com/beacon-observability/beacon-php/releases/download/v1.1.1/beacon-php-1.1.1.zip
+curl -fL -o .beacon/beacon-php-1.1.2.zip \
+  https://github.com/beacon-observability/beacon-php/releases/download/v1.1.2/beacon-php-1.1.2.zip
 composer config repositories.beacon artifact "$PWD/.beacon"
-composer require beacon-observability/beacon-php:1.1.1
+composer require beacon-observability/beacon-php:1.1.2
 vendor/bin/beacon-php install pdo guzzle
 ```
 
@@ -36,4 +36,3 @@ php public/index.php
 ```
 
 For PHP-FPM, configure the same environment variables in the service environment and restart the workers. Beacon PHP does not currently ship a profiling component.
-

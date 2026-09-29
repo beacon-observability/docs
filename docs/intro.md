@@ -20,13 +20,12 @@ No application source changes are required. Automatic instrumentation observes s
 
 ## Current language releases
 
-| Language | Release | Zero-code entry point | Profiling |
+| Language | Release(s) | Zero-code entry point | Profiling |
 | --- | --- | --- | --- |
 | Java | 1.0.0 | `-javaagent` | Experimental JFR, opt in |
 | Python | 1.0.1 | `beacon` command | Optional, opt in |
 | Node.js | 1.1.0 | `NODE_OPTIONS` preload | Optional, opt in |
 | .NET | 1.0.0 | `beacon-dotnet run` | No supported user setup |
-| PHP | 1.1.1 | Native hook plus Composer autoload | No supported user setup |
+| PHP | Composer 1.1.2; native extension 1.0.1 | Native hook plus Composer autoload | No supported user setup |
 
 Each language is versioned and released independently. Use the version shown in its guide instead of assuming one shared Beacon version.
-

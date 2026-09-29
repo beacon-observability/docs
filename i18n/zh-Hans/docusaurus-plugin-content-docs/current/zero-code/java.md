@@ -12,7 +12,7 @@ Beacon Java 1.0.0 以单个 Agent JAR 发布。探针需要 JDK 支持的运行�
 
 ```bash
 curl -fL -o beacon-javaagent.jar \
-  https://github.com/beacon-observability/beacon-java/releases/download/beacon-v1.0.0/beacon-javaagent-1.0.0.jar
+  https://github.com/beacon-observability/beacon-java/releases/download/v1.0.0/beacon-javaagent-1.0.0.jar
 ```
 
 ## 启动
