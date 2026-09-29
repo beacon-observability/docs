@@ -44,6 +44,7 @@ const config: Config = {
       logo: {alt: 'Beacon logo', src: 'img/beacon-logo.svg'},
       items: [
         {to: '/zero-code/', label: 'Zero-code', position: 'left'},
+        {to: '/profiling/', label: 'Profiling', position: 'left'},
         {to: '/configuration/', label: 'Configuration', position: 'left'},
         {type: 'localeDropdown', position: 'right'},
         {

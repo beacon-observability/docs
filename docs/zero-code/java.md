@@ -26,17 +26,6 @@ java -javaagent:./beacon-javaagent.jar -jar app.jar
 
 Put `-javaagent` before `-jar` or the application's main class. Keep all existing JVM and application arguments unchanged.
 
-## Enable profiling
+## Profiling
 
-Profiling is experimental and disabled by default. The shortest receiver-independent check writes JFR snapshots to disk:
-
-```bash
-mkdir -p profiles
-export OTEL_PROFILING_ENABLED=true
-export OTEL_PROFILING_EXPORTER=file
-export OTEL_PROFILING_EXPERIMENTAL_FILE_EXPORT_PATH="$PWD/profiles"
-java -javaagent:./beacon-javaagent.jar -jar app.jar
-```
-
-Confirm that `.jfr` files appear in `profiles/`. Enable profiling in a load test before production use and account for local disk retention.
-
+Java 11 and later can collect experimental JFR profiles and either write them to disk or upload them over HTTP. See the [Java profiling guide](../profiling/java.md).

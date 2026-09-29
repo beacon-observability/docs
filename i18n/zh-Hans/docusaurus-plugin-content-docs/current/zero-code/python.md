@@ -28,16 +28,6 @@ beacon uvicorn myapp:app
 
 将 `uvicorn myapp:app` 替换为应用原有启动命令。可用 `beacon --version` 检查当前生效的版本。
 
-## 开启 Profile
+## Profile
 
-安装 profiling extra，并配置兼容 pprof 的 HTTP 接收端：
-
-```bash
-pip install 'beacon-otel[fastapi,profiling]==1.0.1'
-export OTEL_PROFILING_ENABLED=true
-export OTEL_PROFILING_PPROF_UPLOAD_URL=http://127.0.0.1:8081/profiles
-beacon uvicorn myapp:app
-```
-
-调用栈采集会自动启动。如需额外采集器，可设置 `OTEL_PROFILING_MEMORY_ENABLED=true`、`OTEL_PROFILING_LOCK_ENABLED=true`；Python 3.12 及以上还可设置 `OTEL_PROFILING_EXCEPTION_ENABLED=true`。
-
+Python 可以通过 OTLP/HTTP 导出 Profile、通过 HTTP 上传 pprof，或在本地写入 pprof 文件。参阅 [Python Profile 指南](../profiling/python.md)。

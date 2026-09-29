@@ -28,16 +28,6 @@ beacon uvicorn myapp:app
 
 Replace `uvicorn myapp:app` with the application's existing command. `beacon --version` verifies which distribution is active.
 
-## Enable profiling
+## Profiling
 
-Install the profiling extra and configure a compatible pprof HTTP receiver:
-
-```bash
-pip install 'beacon-otel[fastapi,profiling]==1.0.1'
-export OTEL_PROFILING_ENABLED=true
-export OTEL_PROFILING_PPROF_UPLOAD_URL=http://127.0.0.1:8081/profiles
-beacon uvicorn myapp:app
-```
-
-Stack profiling starts automatically. To opt into additional collectors, set `OTEL_PROFILING_MEMORY_ENABLED=true`, `OTEL_PROFILING_LOCK_ENABLED=true`, or, on Python 3.12 and later, `OTEL_PROFILING_EXCEPTION_ENABLED=true`.
-
+Python can export profiles through OTLP/HTTP, upload pprof over HTTP, or write pprof files locally. See the [Python profiling guide](../profiling/python.md).

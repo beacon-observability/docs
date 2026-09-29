@@ -26,17 +26,6 @@ java -javaagent:./beacon-javaagent.jar -jar app.jar
 
 必须将 `-javaagent` 放在 `-jar` 或应用主类之前，其他 JVM 与应用参数保持不变。
 
-## 开启 Profile
+## Profile
 
-Profile 是实验能力，默认关闭。以下与接收端无关的最简验证会把 JFR 快照写入本地磁盘：
-
-```bash
-mkdir -p profiles
-export OTEL_PROFILING_ENABLED=true
-export OTEL_PROFILING_EXPORTER=file
-export OTEL_PROFILING_EXPERIMENTAL_FILE_EXPORT_PATH="$PWD/profiles"
-java -javaagent:./beacon-javaagent.jar -jar app.jar
-```
-
-确认 `profiles/` 中生成 `.jfr` 文件。生产环境启用前请先进行压测，并规划本地文件保留策略。
-
+Java 11 及以上可以采集实验性 JFR Profile，并写入本地文件或通过 HTTP 上传。参阅 [Java Profile 指南](../profiling/java.md)。

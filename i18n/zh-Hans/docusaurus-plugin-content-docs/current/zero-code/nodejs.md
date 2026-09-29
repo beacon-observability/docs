@@ -26,15 +26,6 @@ node app.js
 
 保留应用原有的 `node` 命令。如果 `NODE_OPTIONS` 已有内容，请追加 `--require`，不要覆盖原参数。
 
-## 开启 Profile
+## Profile
 
-同一个预加载模块可以采集 wall profile，并上传到兼容 pprof 的 HTTP 接收端：
-
-```bash
-export OTEL_PROFILING_ENABLED=true
-export OTEL_PROFILING_PPROF_UPLOAD_URL=http://127.0.0.1:8081/profiles
-node app.js
-```
-
-设置 `OTEL_PROFILING_MEMORY_ENABLED=true` 可增加 heap profile。默认上传周期是 60 秒；调整 `OTEL_PROFILING_EXPORT_INTERVAL` 前请先验证接收端负载。
-
+同一个预加载模块可以采集 wall 与 heap profile，并通过 HTTP 上传。参阅 [Node.js Profile 指南](../profiling/nodejs.md)。

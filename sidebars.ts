@@ -15,10 +15,19 @@ const sidebars: SidebarsConfig = {
         'zero-code/php',
       ],
     },
+    {
+      type: 'category',
+      label: 'Profiling',
+      link: {type: 'doc', id: 'profiling/index'},
+      items: [
+        'profiling/java',
+        'profiling/python',
+        'profiling/nodejs',
+      ],
+    },
     'configuration/index',
     'troubleshooting/index',
   ],
 };
 
 export default sidebars;
-
