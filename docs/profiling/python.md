@@ -6,6 +6,8 @@ description: Export Beacon Python profiles with OTLP/HTTP or pprof.
 
 # Python profiling
 
+For every supported option and its default, see [Profile configuration: Python](configuration.md#python).
+
 Install the profiling extra in the application's virtual environment:
 
 ```bash

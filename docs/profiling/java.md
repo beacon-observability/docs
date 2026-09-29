@@ -8,6 +8,8 @@ description: Export Beacon Java JFR profiles to local files or an HTTP receiver.
 
 Beacon Java profiling is experimental, disabled by default, and requires Java 11 or later with JFR available. Keep using the same `-javaagent` command from the [Java zero-code guide](../zero-code/java.md).
 
+For every supported option and its default, see [Profile configuration: Java](configuration.md#java).
+
 ## Upload over HTTP
 
 Use the compatibility HTTP exporter to send a JFR snapshot and its metadata as `multipart/form-data`:
@@ -43,4 +45,3 @@ export OTEL_PROFILING_MEMORY_ENABLED=true
 ```
 
 This applies memory-focused JFR settings on top of the standard profile template.
-

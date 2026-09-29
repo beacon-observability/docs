@@ -6,6 +6,8 @@ description: 将 Beacon Java JFR Profile 写入本地文件或发送到 HTTP 接
 
 # Java Profile
 
+全部可用参数和默认值请参阅 [Profile 参数配置：Java](configuration.md#java)。
+
 Beacon Java Profile 是实验能力，默认关闭，需要 Java 11 或更高版本且运行时支持 JFR。应用仍使用 [Java 零代码指南](../zero-code/java.md)中的同一个 `-javaagent` 命令。
 
 ## 通过 HTTP 上传
@@ -43,4 +45,3 @@ export OTEL_PROFILING_MEMORY_ENABLED=true
 ```
 
 该配置会在标准 Profile 模板上叠加面向内存的 JFR 设置。
-

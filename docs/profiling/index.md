@@ -16,3 +16,4 @@ Profiling is configured separately from traces, metrics, and logs. A normal OTLP
 
 .NET and PHP do not currently expose a supported user-level profiling setup in Beacon.
 
+See [Profile configuration](configuration.md) for the complete environment-variable reference for each supported language.

@@ -6,6 +6,8 @@ description: 通过 OTLP/HTTP 或 pprof 导出 Beacon Python Profile。
 
 # Python Profile
 
+全部可用参数和默认值请参阅 [Profile 参数配置：Python](configuration.md#python)。
+
 在应用使用的虚拟环境中安装 profiling extra：
 
 ```bash
