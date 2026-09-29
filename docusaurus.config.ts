@@ -6,9 +6,9 @@ const config: Config = {
   tagline: 'OpenTelemetry-based zero-code instrumentation',
   favicon: 'img/favicon.svg',
   url: 'https://beacon-observability.github.io',
-  baseUrl: '/beacon-docs/',
+  baseUrl: '/docs/',
   organizationName: 'beacon-observability',
-  projectName: 'beacon-docs',
+  projectName: 'docs',
   onBrokenLinks: 'throw',
   markdown: {
     hooks: {onBrokenMarkdownLinks: 'throw'},
@@ -29,7 +29,7 @@ const config: Config = {
         docs: {
           routeBasePath: '/',
           sidebarPath: './sidebars.ts',
-          editUrl: 'https://github.com/beacon-observability/beacon-docs/edit/main/',
+          editUrl: 'https://github.com/beacon-observability/docs/edit/main/',
         },
         blog: false,
         theme: {customCss: './src/css/custom.css'},
