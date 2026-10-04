@@ -20,12 +20,15 @@ No application source changes are required. Automatic instrumentation observes s
 
 ## Current language releases
 
-| Language | Release(s) | Zero-code entry point | Profiling |
-| --- | --- | --- | --- |
-| Java | 1.0.0 | `-javaagent` | Experimental JFR, opt in |
-| Python | 1.0.1 | `beacon` command | Optional, opt in |
-| Node.js | 1.1.0 | `NODE_OPTIONS` preload | Optional, opt in |
-| .NET | 1.0.0 | `beacon-dotnet run` | No supported user setup |
-| PHP | Composer 1.1.2; native extension 1.0.1 | Native hook plus Composer autoload | No supported user setup |
+| Language | Release(s) | Zero-code entry point | Profiling | Security |
+| --- | --- | --- | --- | --- |
+| Java | 1.1.0 | `-javaagent` | Experimental JFR, opt in | Optional, opt in |
+| Python | 1.1.0 | `beacon` command | Optional, opt in | Optional on standard-GIL CPython 3.11–3.14 |
+| Node.js | 1.2.0 | `NODE_OPTIONS` preload | Optional, opt in | Optional on Node.js 22.22.3+ or 24.11.1+ |
+| .NET | 1.0.0 | `beacon-dotnet run` | No supported user setup | No released capability |
+| PHP | Composer 1.1.2; native extension 1.0.1 | Native hook plus Composer autoload | No supported user setup | No released capability |
 
 Each language is versioned and released independently. Use the version shown in its guide instead of assuming one shared Beacon version.
+
+Security is disabled by default. See the [Security guides](security/index.md)
+for the released Java, Python, and Node.js activation and runtime scope.

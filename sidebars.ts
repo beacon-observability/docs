@@ -25,6 +25,12 @@ const sidebars: SidebarsConfig = {
         'profiling/nodejs',
       ],
     },
+    {
+      type: 'category',
+      label: 'Security',
+      link: {type: 'doc', id: 'security/index'},
+      items: ['security/java', 'security/python', 'security/nodejs'],
+    },
     'configuration/index',
     'troubleshooting/index',
   ],

@@ -6,13 +6,14 @@ description: 使用 -javaagent 为 Java 应用挂载 Beacon。
 
 # Java 零代码接入
 
-Beacon Java 1.0.0 以单个 Agent JAR 发布。探针需要 JDK 支持的运行时；Profile 要求 JDK 11 或更高版本。
+Beacon Java 1.1.0 以单个 Agent JAR 发布。探针需要 JDK 支持的运行时；Profile
+要求 JDK 11 或更高版本。同一个 JAR 已包含可选的 Security 能力。
 
 ## 安装
 
 ```bash
 curl -fL -o beacon-javaagent.jar \
-  https://github.com/beacon-observability/beacon-java/releases/download/v1.0.0/beacon-javaagent-1.0.0.jar
+  https://github.com/beacon-observability/beacon-java/releases/download/v1.1.0/beacon-javaagent-1.1.0.jar
 ```
 
 ## 启动
@@ -29,3 +30,8 @@ java -javaagent:./beacon-javaagent.jar -jar app.jar
 ## Profile
 
 Java 11 及以上可以采集实验性 JFR Profile，并写入本地文件或通过 HTTP 上传。参阅 [Java Profile 指南](../profiling/java.md)。
+
+## Security
+
+同一个 Agent 可以通过 OpenTelemetry Logs 导出需主动启用的安全发现和运行时 SBOM。
+参阅 [Java Security 指南](../security/java.md)。

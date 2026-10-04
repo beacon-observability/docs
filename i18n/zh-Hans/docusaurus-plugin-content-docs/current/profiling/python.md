@@ -9,7 +9,7 @@ description: 通过 OTLP/HTTP 或 pprof 导出 Beacon Python Profile。
 在应用使用的虚拟环境中安装 profiling extra：
 
 ```bash
-pip install 'beacon-otel[fastapi,profiling]==1.0.1'
+pip install 'beacon-otel[fastapi,profiling]==1.1.0'
 ```
 
 请将 `fastapi` 替换为应用实际使用的组件。
