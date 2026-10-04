@@ -9,7 +9,7 @@ description: Export Beacon Python profiles with OTLP/HTTP or pprof.
 Install the profiling extra in the application's virtual environment:
 
 ```bash
-pip install 'beacon-otel[fastapi,profiling]==1.0.1'
+pip install 'beacon-otel[fastapi,profiling]==1.1.0'
 ```
 
 Replace `fastapi` with the integration used by the application.

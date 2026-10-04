@@ -20,12 +20,15 @@ Beacon 提供基于 OpenTelemetry、按语言独立发布的自动探针。选�
 
 ## 当前语言版本
 
-| 语言 | 发布版本 | 零代码入口 | Profile |
-| --- | --- | --- | --- |
-| Java | 1.0.0 | `-javaagent` | 实验性 JFR，需主动开启 |
-| Python | 1.0.1 | `beacon` 命令 | 可选，需主动开启 |
-| Node.js | 1.1.0 | `NODE_OPTIONS` 预加载 | 可选，需主动开启 |
-| .NET | 1.0.0 | `beacon-dotnet run` | 暂无受支持的用户配置 |
-| PHP | Composer 1.1.2；原生扩展 1.0.1 | 原生 Hook 加 Composer 自动加载 | 暂无受支持的用户配置 |
+| 语言 | 发布版本 | 零代码入口 | Profile | Security |
+| --- | --- | --- | --- | --- |
+| Java | 1.1.0 | `-javaagent` | 实验性 JFR，需主动开启 | 可选，需主动开启 |
+| Python | 1.1.0 | `beacon` 命令 | 可选，需主动开启 | 可选，支持标准 GIL 的 CPython 3.11–3.14 |
+| Node.js | 1.2.0 | `NODE_OPTIONS` 预加载 | 可选，需主动开启 | 可选，支持 Node.js 22.22.3+ 或 24.11.1+ |
+| .NET | 1.0.0 | `beacon-dotnet run` | 暂无受支持的用户配置 | 暂无已发布能力 |
+| PHP | Composer 1.1.2；原生扩展 1.0.1 | 原生 Hook 加 Composer 自动加载 | 暂无受支持的用户配置 | 暂无已发布能力 |
 
 每种语言独立维护版本与发布节奏。请使用对应语言指南中注明的版本，不要假设 Beacon 存在统一版本。
+
+Security 默认关闭。已发布的 Java、Python 和 Node.js 启用方式及运行时范围请参阅
+[Security 指南](security/index.md)。

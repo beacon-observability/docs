@@ -6,7 +6,8 @@ description: Run a Python application through the Beacon command.
 
 # Python zero-code instrumentation
 
-Beacon Python 1.0.1 supports Python 3.10 through 3.14. Install it in the same virtual environment as the application.
+Beacon Python 1.1.0 supports the documented zero-code workflow on Python 3.10
+through 3.14. Install it in the same virtual environment as the application.
 
 ## Install
 
@@ -14,7 +15,7 @@ Choose the extra that matches the application:
 
 ```bash
 # FastAPI; use flask or requests for those integrations
-pip install 'beacon-otel[fastapi]==1.0.1'
+pip install 'beacon-otel[fastapi]==1.1.0'
 ```
 
 ## Run
@@ -31,3 +32,8 @@ Replace `uvicorn myapp:app` with the application's existing command. `beacon --v
 ## Profiling
 
 Python can export profiles through OTLP/HTTP, upload pprof over HTTP, or write pprof files locally. See the [Python profiling guide](../profiling/python.md).
+
+## Security
+
+The same `beacon-otel` wheel contains opt-in Security for standard-GIL CPython
+3.11 through 3.14. See the [Python Security guide](../security/python.md).

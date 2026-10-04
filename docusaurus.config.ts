@@ -45,6 +45,7 @@ const config: Config = {
       items: [
         {to: '/zero-code/', label: 'Zero-code', position: 'left'},
         {to: '/profiling/', label: 'Profiling', position: 'left'},
+        {to: '/security/', label: 'Security', position: 'left'},
         {to: '/configuration/', label: 'Configuration', position: 'left'},
         {type: 'localeDropdown', position: 'right'},
         {
@@ -61,6 +62,7 @@ const config: Config = {
           title: 'Documentation',
           items: [
             {label: 'Zero-code setup', to: '/zero-code/'},
+            {label: 'Security setup', to: '/security/'},
             {label: 'Troubleshooting', to: '/troubleshooting/'},
           ],
         },

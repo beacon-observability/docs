@@ -20,5 +20,15 @@ description: 排查零代码接入后没有遥测数据的问题。
 - Python 和 Node.js：确认已设置 `OTEL_PROFILING_ENABLED=true`、上传地址正确，且进程存活时间超过导出周期。
 - 不要把 Profile 数据发送到 OTLP Trace 地址；接收端必须支持文档所述的 pprof 上传格式。
 
-如果应用只在探针启用时失败，应先停用探针恢复服务，并保留探针调试日志、运行时版本、移除敏感信息后的命令行，以及最小可复现请求。
+## 没有 Security 数据
 
+- 确认应用进程环境中设置了 `BEACON_SECURITY_ENABLED=true` 和 OTLP Logs 导出器。
+- Python 需要通过 `BEACON_SECURITY_PYTHON_INCLUDE` 设置应用模块前缀。Node.js
+  需要通过 `BEACON_SECURITY_NODE_INCLUDE` 设置应用源码根目录，并使用 ESM
+  `--import` 预加载。
+- 运行时 SBOM 可能先于安全发现产生。请生成一条经过已建模 source 和 sink 的实际请求；
+  仅启动应用不会产生安全发现。
+- 除非设置 `BEACON_SECURITY_LOCAL_OUTPUT_ENABLED=true`，否则本地诊断文件始终关闭。
+  没有本地文件并不代表 OTLP Logs 导出失败。
+
+如果应用只在探针启用时失败，应先停用探针恢复服务，并保留探针调试日志、运行时版本、移除敏感信息后的命令行，以及最小可复现请求。

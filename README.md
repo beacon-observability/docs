@@ -1,6 +1,7 @@
 # Beacon Docs
 
-The bilingual documentation site for Beacon zero-code instrumentation. The site follows an OpenTelemetry-style information architecture while keeping each language quick start short and release-specific.
+The bilingual documentation site for Beacon zero-code instrumentation,
+profiling, and Security. Each language guide stays short and release-specific.
 
 ## Local development
 
@@ -17,4 +18,3 @@ npm run build
 ```
 
 English source documents live in `docs/`. Simplified Chinese translations mirror the same paths under `i18n/zh-Hans/docusaurus-plugin-content-docs/current/`. The check script rejects missing translations and prohibited product wording.
-

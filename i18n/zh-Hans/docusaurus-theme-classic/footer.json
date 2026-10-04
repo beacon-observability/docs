@@ -1,0 +1,10 @@
+{
+  "link.title.Documentation": {"message": "文档"},
+  "link.title.Project": {"message": "项目"},
+  "link.item.label.Zero-code setup": {"message": "零代码接入"},
+  "link.item.label.Security setup": {"message": "Security 配置"},
+  "link.item.label.Troubleshooting": {"message": "故障排查"},
+  "link.item.label.Beacon": {"message": "Beacon"},
+  "link.item.label.OpenTelemetry": {"message": "OpenTelemetry"},
+  "copyright": {"message": "版权所有 © Beacon 贡献者。"}
+}

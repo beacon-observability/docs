@@ -6,7 +6,8 @@ description: 通过 beacon 命令启动 Python 应用。
 
 # Python 零代码接入
 
-Beacon Python 1.0.1 支持 Python 3.10 至 3.14。请将它安装在应用使用的同一个虚拟环境中。
+Beacon Python 1.1.0 的零代码流程支持 Python 3.10 至 3.14。请将它安装在应用使用的
+同一个虚拟环境中。
 
 ## 安装
 
@@ -14,7 +15,7 @@ Beacon Python 1.0.1 支持 Python 3.10 至 3.14。请将它安装在应用使用
 
 ```bash
 # FastAPI；使用 Flask 或 requests 时替换对应 extra
-pip install 'beacon-otel[fastapi]==1.0.1'
+pip install 'beacon-otel[fastapi]==1.1.0'
 ```
 
 ## 启动
@@ -31,3 +32,8 @@ beacon uvicorn myapp:app
 ## Profile
 
 Python 可以通过 OTLP/HTTP 导出 Profile、通过 HTTP 上传 pprof，或在本地写入 pprof 文件。参阅 [Python Profile 指南](../profiling/python.md)。
+
+## Security
+
+同一个 `beacon-otel` wheel 已包含需主动启用的 Security，支持标准 GIL 的 CPython
+3.11 至 3.14。参阅 [Python Security 指南](../security/python.md)。
