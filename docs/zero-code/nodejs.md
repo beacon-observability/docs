@@ -28,6 +28,18 @@ node app.js
 
 Keep the application's existing `node` command. If `NODE_OPTIONS` already contains options, append the `--require` entry instead of replacing them.
 
+## Debugging and diagnostics
+
+Retain the `NODE_OPTIONS` preload configuration above and temporarily enable OpenTelemetry diagnostic logging:
+
+```bash
+OTEL_LOG_LEVEL=debug node app.js > beacon-nodejs-debug.log 2>&1
+```
+
+Diagnostic logs go to the console; this command captures both standard output and standard error. When Security is enabled, keep its required ESM `--import` preload.
+
+Return to the normal launch command after troubleshooting. If `OTEL_LOG_LEVEL=debug` was added to the deployment environment, remove it and restart the application.
+
 ## Profiling
 
 The same preload can collect wall and heap profiles and upload them over HTTP. See the [Node.js profiling guide](../profiling/nodejs.md).

@@ -27,6 +27,20 @@ java -javaagent:./beacon-javaagent.jar -jar app.jar
 
 必须将 `-javaagent` 放在 `-jar` 或应用主类之前，其他 JVM 与应用参数保持不变。
 
+## 调试与诊断
+
+沿用上文的服务名和 OTLP 配置，临时开启 Agent 调试日志并保存输出：
+
+```bash
+OTEL_JAVAAGENT_DEBUG=true \
+  java -javaagent:./beacon-javaagent.jar -jar app.jar \
+  > beacon-java-debug.log 2>&1
+```
+
+也可以在 `-jar` 之前添加 JVM 参数 `-Dotel.javaagent.debug=true`；JVM 系统属性优先于同名环境变量。日志用于检查 Agent 加载、插桩匹配和导出错误。
+
+排障后恢复原启动命令；若在服务配置中设置了该变量或 JVM 参数，请移除并重启应用。
+
 ## Profile
 
 Java 11 及以上可以采集实验性 JFR Profile，并写入本地文件或通过 HTTP 上传。参阅 [Java Profile 指南](../profiling/java.md)。
