@@ -27,3 +27,18 @@ beacon-dotnet run dotnet MyApp.dll
 
 `run` instruments only the child process. Beacon .NET does not currently expose a supported user-level continuous-profiling setup, so no profile variables are required.
 
+## Debugging and diagnostics
+
+Check the installation status, then choose a writable directory for instrumentation debug logs:
+
+```bash
+beacon-dotnet status
+mkdir -p beacon-dotnet-logs
+OTEL_LOG_LEVEL=debug OTEL_DOTNET_AUTO_LOGGER=file \
+  OTEL_DOTNET_AUTO_LOG_DIRECTORY="$PWD/beacon-dotnet-logs" \
+  beacon-dotnet run dotnet MyApp.dll
+```
+
+The application process identity must have write access to `OTEL_DOTNET_AUTO_LOG_DIRECTORY`. To view diagnostics in the console, change `OTEL_DOTNET_AUTO_LOGGER` to `console`.
+
+Return to the normal launch command after troubleshooting. Remove any debug variables added to service configuration and restart the application.
