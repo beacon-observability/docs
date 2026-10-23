@@ -16,6 +16,7 @@ const sidebars: SidebarsConfig = {
         'rumable',
       ],
     },
+    'fastrace',
     {
       type: 'category',
       label: 'Profiling',

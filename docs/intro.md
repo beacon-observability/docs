@@ -2,12 +2,14 @@
 slug: /
 sidebar_position: 1
 title: Beacon documentation
-description: Add server instrumentation and browser RUM without changing application source code.
+description: Set up Beacon server agents, the Fastrace Rust SDK, and Rumable browser RUM.
 ---
 
-# Observe applications without changing their code
+# Observe applications with Beacon
 
 Beacon combines independently released OpenTelemetry-based server agents with browser RUM through [Rumable](rumable.md). For server telemetry, pick a language, configure a service name and an OTLP receiver, then start the existing application through the agent.
+
+For Rust applications, use the **[Fastrace Rust SDK](fastrace.md)**, released as **[v0.1.0](https://github.com/beacon-observability/fastrace/releases/tag/v0.1.0)**. Add fixed-tag Cargo dependencies, instrument application code, and initialize a reporter to send traces to local DataKit over OTLP/gRPC. Its guide covers installation, a working example, trace context, verification, and rollback.
 
 ## Start here
 
