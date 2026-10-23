@@ -11,6 +11,8 @@ Beacon 提供独立发布的 OpenTelemetry 服务端探针，以及通过 [Rumab
 
 ## 从这里开始
 
+For Rust applications, use the **[Fastrace Rust SDK](fastrace.md)**, released as **[v0.1.0](https://github.com/beacon-observability/fastrace/releases/tag/v0.1.0)**. This English guide covers fixed-tag Cargo dependencies, explicit code instrumentation, local DataKit OTLP/gRPC export, trace context, verification, and rollback.
+
 1. 打开[零代码接入](zero-code/index.md)，选择服务端运行时或浏览器 RUM。
 2. 按对应接入指南安装已发布的探针或软件包。
 3. 配置指南中要求的应用标识和接收端。

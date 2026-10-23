@@ -3,7 +3,7 @@ import type {Options, ThemeConfig} from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'Beacon Documentation',
-  tagline: 'Zero-code server instrumentation and browser RUM',
+  tagline: 'Server instrumentation, Rust tracing, and browser RUM',
   favicon: 'img/favicon.svg',
   url: 'https://beacon-observability.github.io',
   baseUrl: '/docs/',
@@ -44,6 +44,7 @@ const config: Config = {
       logo: {alt: 'Beacon logo', src: 'img/beacon-logo.svg'},
       items: [
         {to: '/zero-code/', label: 'Zero-code', position: 'left'},
+        {to: '/fastrace', label: 'Rust tracing', position: 'left'},
         {to: '/profiling/', label: 'Profiling', position: 'left'},
         {to: '/security/', label: 'Security', position: 'left'},
         {to: '/configuration/', label: 'Configuration', position: 'left'},
@@ -63,6 +64,7 @@ const config: Config = {
           items: [
             {label: 'Zero-code setup', to: '/zero-code/'},
             {label: 'Rumable browser RUM', to: '/rumable'},
+            {label: 'Fastrace Rust SDK', to: '/fastrace'},
             {label: 'Security setup', to: '/security/'},
             {label: 'Troubleshooting', to: '/troubleshooting/'},
           ],
@@ -78,7 +80,7 @@ const config: Config = {
       copyright: `Copyright © ${new Date().getFullYear()} Beacon contributors.`,
     },
     prism: {
-      additionalLanguages: ['bash', 'java', 'powershell'],
+      additionalLanguages: ['bash', 'java', 'powershell', 'rust', 'toml'],
     },
   } satisfies ThemeConfig,
 };
