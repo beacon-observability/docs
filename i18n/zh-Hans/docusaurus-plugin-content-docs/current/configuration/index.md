@@ -6,7 +6,7 @@ description: 配置服务标识、OTLP 传输、资源属性与认证信息。
 
 # 公共配置
 
-Beacon 探针使用标准 OpenTelemetry 环境变量导出遥测数据。
+Beacon 服务端探针使用标准 OpenTelemetry 环境变量导出遥测数据。浏览器 RUM 的接收端与 TOML 配置请参阅 [Rumable](../rumable.md)。
 
 | 环境变量 | 作用 | 示例 |
 | --- | --- | --- |

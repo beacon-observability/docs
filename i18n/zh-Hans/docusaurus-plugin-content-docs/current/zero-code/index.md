@@ -18,3 +18,7 @@ description: 选择 Beacon 探针，在不修改应用代码的情况下接入�
 
 所有示例都将数据发送到由你指定的接收端。添加认证 Header 或更改协议前，请先阅读[公共配置](../configuration/index.md)。
 
+
+## 浏览器监测
+
+对于通过 Nginx 或 IIS 提供的网站，请使用 [Rumable 浏览器 RUM](../rumable.md)，生成网站接入命令。Rumable 使用独立的浏览器 SDK 上报配置。

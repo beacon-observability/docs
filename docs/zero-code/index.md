@@ -18,3 +18,7 @@ Choose your runtime:
 
 All examples export to a receiver you control. See [common configuration](../configuration/index.md) before adding authentication headers or changing protocols.
 
+
+## Browser monitoring
+
+For websites served through Nginx or IIS, use [Rumable browser RUM](../rumable.md) to generate a website setup command. Rumable uses separate browser SDK reporting settings.

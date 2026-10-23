@@ -2,14 +2,16 @@
 slug: /
 sidebar_position: 1
 title: Beacon documentation
-description: Add OpenTelemetry-based observability to applications without changing source code.
+description: Add server instrumentation and browser RUM without changing application source code.
 ---
 
 # Observe applications without changing their code
 
-Beacon provides independently released automatic-instrumentation agents built on OpenTelemetry. Pick a language, configure a service name and an OTLP receiver, then start the existing application through the agent.
+Beacon combines independently released OpenTelemetry-based server agents with browser RUM through [Rumable](rumable.md). For server telemetry, pick a language, configure a service name and an OTLP receiver, then start the existing application through the agent.
 
 ## Start here
+
+For browser monitoring, use the [Rumable setup guide](rumable.md). For server-side instrumentation:
 
 1. Open [Zero-code instrumentation](zero-code/index.md) and select your runtime.
 2. Install the released agent or package.
@@ -17,6 +19,10 @@ Beacon provides independently released automatic-instrumentation agents built on
 4. Launch the application with the documented wrapper, preload, or runtime agent.
 
 No application source changes are required. Automatic instrumentation observes supported frameworks and libraries; it does not automatically describe every business operation inside application code.
+
+## Browser RUM
+
+[Rumable v0.1.9](rumable.md) adds browser monitoring through Nginx or IIS. Use the [English configuration page](https://beacon-observability.github.io/rumable/latest/setup/index.html) to generate a setup command, and download packages from [GitHub Releases](https://github.com/beacon-observability/rumable/releases/latest).
 
 ## Current language releases
 

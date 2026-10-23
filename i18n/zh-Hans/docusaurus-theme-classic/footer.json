@@ -6,5 +6,6 @@
   "link.item.label.Troubleshooting": {"message": "故障排查"},
   "link.item.label.Beacon": {"message": "Beacon"},
   "link.item.label.OpenTelemetry": {"message": "OpenTelemetry"},
-  "copyright": {"message": "版权所有 © Beacon 贡献者。"}
+  "copyright": {"message": "版权所有 © Beacon 贡献者。"},
+  "link.item.label.Rumable browser RUM": {"message": "Rumable 浏览器 RUM"}
 }

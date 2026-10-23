@@ -3,7 +3,7 @@ import type {Options, ThemeConfig} from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'Beacon Documentation',
-  tagline: 'OpenTelemetry-based zero-code instrumentation',
+  tagline: 'Zero-code server instrumentation and browser RUM',
   favicon: 'img/favicon.svg',
   url: 'https://beacon-observability.github.io',
   baseUrl: '/docs/',
@@ -44,6 +44,7 @@ const config: Config = {
       logo: {alt: 'Beacon logo', src: 'img/beacon-logo.svg'},
       items: [
         {to: '/zero-code/', label: 'Zero-code', position: 'left'},
+        {to: '/rumable', label: 'Rumable', position: 'left'},
         {to: '/profiling/', label: 'Profiling', position: 'left'},
         {to: '/security/', label: 'Security', position: 'left'},
         {to: '/configuration/', label: 'Configuration', position: 'left'},
@@ -62,6 +63,7 @@ const config: Config = {
           title: 'Documentation',
           items: [
             {label: 'Zero-code setup', to: '/zero-code/'},
+            {label: 'Rumable browser RUM', to: '/rumable'},
             {label: 'Security setup', to: '/security/'},
             {label: 'Troubleshooting', to: '/troubleshooting/'},
           ],

@@ -1,7 +1,7 @@
 # Beacon Docs
 
 The bilingual documentation site for Beacon zero-code instrumentation,
-profiling, and Security. Each language guide stays short and release-specific.
+profiling, Security, and Rumable browser RUM. Each setup guide stays short and release-specific.
 
 ## Local development
 

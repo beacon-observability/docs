@@ -6,7 +6,7 @@ description: Configure service identity, OTLP transport, resources, and authenti
 
 # Common configuration
 
-Beacon agents use standard OpenTelemetry environment variables for telemetry export.
+Beacon server-side agents use standard OpenTelemetry environment variables for telemetry export. For browser RUM receiver and TOML settings, see [Rumable](../rumable.md).
 
 | Variable | Purpose | Example |
 | --- | --- | --- |
