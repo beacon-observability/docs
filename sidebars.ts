@@ -13,9 +13,9 @@ const sidebars: SidebarsConfig = {
         'zero-code/nodejs',
         'zero-code/dotnet',
         'zero-code/php',
+        'rumable',
       ],
     },
-    'rumable',
     {
       type: 'category',
       label: 'Profiling',

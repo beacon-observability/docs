@@ -6,7 +6,7 @@ description: 通过 Nginx 或 IIS 接入浏览器真实用户监测，无需修�
 
 # Rumable 浏览器 RUM
 
-Rumable 是 Beacon 的浏览器真实用户监测（RUM）项目。它通过 Nginx 或 IIS 在 HTML 响应中注入随包提供的 Web SDK，无需修改应用源代码。浏览器直接向配置的 RUM 接收端发送数据，CLI 在部署完成后退出。
+Rumable 是 Beacon 的浏览器真实用户监测（RUM）[零代码接入](zero-code/index.md)项目。它通过 Nginx 或 IIS 在 HTML 响应中注入随包提供的 Web SDK，无需修改应用源代码。浏览器直接向配置的 RUM 接收端发送数据，CLI 在部署完成后退出。
 
 当前版本为 **[v0.1.9](https://github.com/beacon-observability/rumable/releases/tag/v0.1.9)**。Rumable 保留自己的名称、`rumable` 命令、TOML 配置和独立发布节奏。
 
