@@ -65,6 +65,7 @@ const config: Config = {
             {label: 'Zero-code setup', to: '/zero-code/'},
             {label: 'Rumable', to: '/rumable'},
             {label: 'Fastrace', to: '/fastrace'},
+            {label: 'Ruby', to: '/ruby'},
             {label: 'Security setup', to: '/security/'},
             {label: 'Troubleshooting', to: '/troubleshooting/'},
           ],

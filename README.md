@@ -1,7 +1,7 @@
 # Beacon Docs
 
 The bilingual documentation site for Beacon zero-code instrumentation,
-profiling, Security, the Fastrace Rust SDK, and Rumable browser RUM. Each setup guide stays short and release-specific. Fastrace content is maintained in English in both locale routes.
+profiling, Security, Ruby source integration, the Fastrace Rust SDK, and Rumable browser RUM. Each setup guide stays short and release-specific. Fastrace content is maintained in English in both locale routes.
 
 ## Local development
 
