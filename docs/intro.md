@@ -2,38 +2,41 @@
 slug: /
 sidebar_position: 1
 title: Beacon documentation
-description: Set up Beacon server agents, the Fastrace Rust SDK, and Rumable browser RUM.
+description: Explore Beacon language agents, source integrations, tracing SDKs, and browser RUM.
 ---
 
 # Observe applications with Beacon
 
-Beacon combines independently released OpenTelemetry-based server agents with browser RUM through [Rumable](rumable.md). For server telemetry, pick a language, configure a service name and an OTLP receiver, then start the existing application through the agent.
+Beacon combines independently released OpenTelemetry-based server agents, source integrations, and tracing SDKs with browser RUM through [Rumable](rumable.md). For server-side agents, pick a language, configure a service name and an OTLP receiver, then start the existing application through the agent.
 
 For Rust applications, use the **[Fastrace Rust SDK](fastrace.md)**. See [Releases](https://github.com/beacon-observability/fastrace/releases) for available versions and downloads. Add fixed-tag Cargo dependencies, instrument application code, and initialize a reporter to send traces to local DataKit over OTLP/gRPC. Its guide covers installation, a working example, trace context, verification, and rollback.
 
 ## Start here
 
-1. Open [Zero-code instrumentation](zero-code/index.md) and choose a server runtime or browser RUM.
-2. Install the released agent or package using its setup guide.
+1. Choose a language or project from [Language projects](#language-projects) and open its guide.
+2. Install the released agent, package, or source distribution using its setup guide.
 3. Configure the application identity and receiver described in that guide.
-4. Enable the runtime agent, preload, or wrapper, or apply Rumable's generated Nginx/IIS setup command.
+4. Follow the guide to load the agent, initialize the SDK, or apply Rumable's generated Nginx/IIS setup command.
 
 Server agents use OpenTelemetry settings such as `OTEL_SERVICE_NAME` and `OTEL_EXPORTER_OTLP_ENDPOINT`. Rumable uses browser application and reporting settings from its [configuration page](https://beacon-observability.github.io/rumable/latest/setup/index.html).
 
 Zero-code setups require deployment configuration, while application source code stays unchanged. Automatic collection covers the supported frameworks, libraries, or website responses described in each guide.
 
-## Current zero-code projects
+## Language projects
 
-| Project / runtime | Releases | Zero-code entry point | Profiling | Security |
+| Language / project | Integration | Profiling | Security | Releases |
 | --- | --- | --- | --- | --- |
-| Java | [Releases](https://github.com/beacon-observability/beacon-java/releases) | `-javaagent` | Experimental JFR, opt in | Optional, opt in |
-| Python | [Releases](https://github.com/beacon-observability/beacon-python/releases) | `beacon` command | Optional, opt in | Optional on standard-GIL CPython 3.11–3.14 |
-| Node.js | [Releases](https://github.com/beacon-observability/beacon-nodejs/releases) | `NODE_OPTIONS` preload | Optional, opt in | Optional on Node.js 22.22.3+ or 24.11.1+ |
-| .NET | [Releases](https://github.com/beacon-observability/beacon-dotnet/releases) | `beacon-dotnet run` | No supported user setup | No released capability |
-| PHP | [Composer releases](https://github.com/beacon-observability/beacon-php/releases); [native extension releases](https://github.com/beacon-observability/beacon-php-instrumentation/releases) | Native hook plus Composer autoload | No supported user setup | No released capability |
-| [Rumable (browser RUM)](rumable.md) | [Releases](https://github.com/beacon-observability/rumable/releases) | Web SDK injection through Nginx / IIS | Not provided | Not provided |
+| [Java](zero-code/java.md) | Agent: `-javaagent` | [Experimental JFR](profiling/java.md), opt in | [Opt in](security/java.md) | [Releases](https://github.com/beacon-observability/beacon-java/releases) |
+| [Python](zero-code/python.md) | Launcher: `beacon` | [Opt in](profiling/python.md) | [Opt in](security/python.md) | [Releases](https://github.com/beacon-observability/beacon-python/releases) |
+| [Node.js](zero-code/nodejs.md) | Preload: `NODE_OPTIONS` | [Opt in](profiling/nodejs.md) | [Opt in](security/nodejs.md) | [Releases](https://github.com/beacon-observability/beacon-nodejs/releases) |
+| [.NET](zero-code/dotnet.md) | Launcher: `beacon-dotnet run` | No supported setup | No released capability | [Releases](https://github.com/beacon-observability/beacon-dotnet/releases) |
+| [PHP](zero-code/php.md) | Native hook + Composer autoload | No supported setup | No released capability | [Composer](https://github.com/beacon-observability/beacon-php/releases) · [Extension](https://github.com/beacon-observability/beacon-php-instrumentation/releases) |
+| [Ruby](https://github.com/beacon-observability/beacon-ruby/blob/v1.0.0/beacon/INSTALLATION.md) | Source integration: Net::HTTP tracing | Outside validated scope | Outside validated scope | [Releases](https://github.com/beacon-observability/beacon-ruby/releases) |
+| [Rust / Fastrace](fastrace.md) | Tracing SDK: explicit instrumentation | Not provided | Not provided | [Releases](https://github.com/beacon-observability/fastrace/releases) |
+| [Browser / Rumable](rumable.md) | Web SDK injection: Nginx / IIS | Not provided | Not provided | [Releases](https://github.com/beacon-observability/rumable/releases) |
 
-Each project is versioned and released independently. Follow the release links for available versions and download assets. Profiling and Security in this table refer to server-side agent features; Rumable provides browser RUM.
+Each project is versioned and released independently. Follow the release links for available versions and download assets, and the language guides for runtime requirements. Profiling and Security in this table refer to server-side agent features; Rumable provides browser RUM.
 
-Security is disabled by default. See the [Security guides](security/index.md)
-for the released Java, Python, and Node.js activation and runtime scope.
+Ruby currently provides a source release with a validated Net::HTTP trace path. It does not publish a Beacon gem or a zero-code preload; see its source installation guide for the validated environment and limitations. Fastrace requires application code instrumentation and reporter initialization.
+
+Security is disabled by default. See the [Security guides](security/index.md) for the released Java, Python, and Node.js activation and runtime scope.
