@@ -1,10 +1,10 @@
 ---
 sidebar_position: 2
-title: Rumable 浏览器 RUM
+title: Rumable
 description: 通过 Nginx 或 IIS 接入浏览器真实用户监测，无需修改应用源代码。
 ---
 
-# Rumable 浏览器 RUM
+# Rumable
 
 Rumable 是 Beacon 的浏览器真实用户监测（RUM）[零代码接入](zero-code/index.md)项目。它通过 Nginx 或 IIS 在 HTML 响应中注入随包提供的 Web SDK，无需修改应用源代码。浏览器直接向配置的 RUM 接收端发送数据，CLI 在部署完成后退出。
 

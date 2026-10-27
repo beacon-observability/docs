@@ -1,5 +1,6 @@
 ---
 title: Fastrace Rust SDK
+sidebar_label: Fastrace
 description: Install Fastrace v0.1.0 and report Rust application traces to local DataKit over OTLP/gRPC.
 ---
 
