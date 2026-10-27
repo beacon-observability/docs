@@ -16,7 +16,12 @@ const sidebars: SidebarsConfig = {
         'rumable',
       ],
     },
-    'fastrace',
+    {
+      type: 'category',
+      label: 'SDK',
+      link: {type: 'generated-index', title: 'SDK', slug: '/sdk'},
+      items: ['fastrace'],
+    },
     {
       type: 'category',
       label: 'Profiling',

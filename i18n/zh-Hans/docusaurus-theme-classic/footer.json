@@ -7,5 +7,6 @@
   "link.item.label.Beacon": {"message": "Beacon"},
   "link.item.label.OpenTelemetry": {"message": "OpenTelemetry"},
   "copyright": {"message": "版权所有 © Beacon 贡献者。"},
-  "link.item.label.Rumable browser RUM": {"message": "Rumable 浏览器 RUM"}
+  "link.item.label.Rumable": {"message": "Rumable"},
+  "link.item.label.Fastrace": {"message": "Fastrace"}
 }

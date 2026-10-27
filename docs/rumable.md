@@ -1,10 +1,10 @@
 ---
 sidebar_position: 2
-title: Rumable browser RUM
+title: Rumable
 description: Add browser real user monitoring through Nginx or IIS without changing application source code.
 ---
 
-# Rumable browser RUM
+# Rumable
 
 Rumable provides [zero-code instrumentation](zero-code/index.md) for browser real user monitoring (RUM) in Beacon. It injects the bundled Web SDK into HTML responses through Nginx or IIS, without changing application source code. Browsers send telemetry directly to the configured RUM receiver; the CLI exits after deployment.
 
