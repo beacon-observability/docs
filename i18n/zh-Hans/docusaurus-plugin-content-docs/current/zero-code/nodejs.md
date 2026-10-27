@@ -27,6 +27,18 @@ node app.js
 
 保留应用原有的 `node` 命令。如果 `NODE_OPTIONS` 已有内容，请追加 `--require`，不要覆盖原参数。
 
+## 调试与诊断
+
+保留上文的 `NODE_OPTIONS` 预加载配置，临时开启 OpenTelemetry 诊断日志：
+
+```bash
+OTEL_LOG_LEVEL=debug node app.js > beacon-nodejs-debug.log 2>&1
+```
+
+日志写入终端，上述命令将标准输出和标准错误一起保存。启用 Security 时，继续使用其要求的 ESM `--import` 预加载方式。
+
+排障后恢复原启动命令；若在部署环境中设置了 `OTEL_LOG_LEVEL=debug`，请移除该设置并重启应用。
+
 ## Profile
 
 同一个预加载模块可以采集 wall 与 heap profile，并通过 HTTP 上传。参阅 [Node.js Profile 指南](../profiling/nodejs.md)。

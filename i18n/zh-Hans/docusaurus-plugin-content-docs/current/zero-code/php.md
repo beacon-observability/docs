@@ -36,3 +36,19 @@ php public/index.php
 ```
 
 使用 PHP-FPM 时，请在服务环境中配置相同变量并重启 Worker。Beacon PHP 当前不提供 Profile 组件。
+
+## 调试与诊断
+
+先生成运行环境诊断报告，再开启 SDK 内部诊断日志。沿用上文的自动加载和 OTLP 配置：
+
+```bash
+vendor/bin/beacon-php doctor --json > beacon-php-doctor.json
+OTEL_LOG_LEVEL=debug OTEL_PHP_LOG_DESTINATION=stderr \
+  php public/index.php > beacon-php-debug.log 2>&1
+```
+
+`doctor` 检查 PHP、原生扩展、SDK、Exporter、组件和零代码配置；它不验证一次实际的 OTLP 投递。`OTEL_PHP_LOG_DESTINATION=stderr` 将 SDK 内部日志写入标准错误，上述命令将其保存到文件。
+
+PHP-FPM 需要在实际 Worker 的环境中注入这两个变量，重启 Worker，并按 FPM 的日志配置收集标准错误。CLI 与 FPM 可能使用不同的 `php.ini`、扩展和环境变量，CLI 的 `doctor` 结果不能代替 FPM 运行环境检查。
+
+排障后恢复原启动命令，或从 FPM/服务配置中移除调试变量并重启。

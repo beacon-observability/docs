@@ -36,3 +36,19 @@ php public/index.php
 ```
 
 For PHP-FPM, configure the same environment variables in the service environment and restart the workers. Beacon PHP does not currently ship a profiling component.
+
+## Debugging and diagnostics
+
+Capture a runtime diagnostic report, then enable SDK internal logging. Keep the autoload and OTLP settings above:
+
+```bash
+vendor/bin/beacon-php doctor --json > beacon-php-doctor.json
+OTEL_LOG_LEVEL=debug OTEL_PHP_LOG_DESTINATION=stderr \
+  php public/index.php > beacon-php-debug.log 2>&1
+```
+
+`doctor` checks PHP, the native extension, SDK, exporter, components, and zero-code configuration. It does not test an actual OTLP delivery. `OTEL_PHP_LOG_DESTINATION=stderr` sends SDK internal logs to standard error, which this command captures in a file.
+
+For PHP-FPM, inject both variables into the actual worker environment, restart workers, and collect standard error using the FPM logging configuration. CLI and FPM can use different `php.ini` files, extensions, and environment variables; a CLI `doctor` report does not validate the FPM runtime.
+
+Return to the normal launch command, or remove the debug variables from FPM/service configuration and restart after troubleshooting.

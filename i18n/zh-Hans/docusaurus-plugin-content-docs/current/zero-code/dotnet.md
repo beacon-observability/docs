@@ -27,3 +27,18 @@ beacon-dotnet run dotnet MyApp.dll
 
 `run` 只对其子进程启用探针。Beacon .NET 当前未提供受支持的用户级持续 Profile 配置，因此无需设置 Profile 环境变量。
 
+## 调试与诊断
+
+先检查安装状态，再指定可写目录保存探针的调试日志：
+
+```bash
+beacon-dotnet status
+mkdir -p beacon-dotnet-logs
+OTEL_LOG_LEVEL=debug OTEL_DOTNET_AUTO_LOGGER=file \
+  OTEL_DOTNET_AUTO_LOG_DIRECTORY="$PWD/beacon-dotnet-logs" \
+  beacon-dotnet run dotnet MyApp.dll
+```
+
+`OTEL_DOTNET_AUTO_LOG_DIRECTORY` 必须对实际应用进程的运行身份可写。需要在终端查看诊断日志时，可将 `OTEL_DOTNET_AUTO_LOGGER` 改为 `console`。
+
+排障后恢复原启动命令；若在服务配置中设置了这些调试变量，请移除并重启应用。
