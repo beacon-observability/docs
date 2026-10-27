@@ -24,16 +24,16 @@ Zero-code setups require deployment configuration, while application source code
 
 ## Language projects
 
-| Language / project | Integration | Profiling | Security | Releases |
-| --- | --- | --- | --- | --- |
-| [Java](zero-code/java.md) | Agent: `-javaagent` | [Experimental JFR](profiling/java.md), opt in | [Opt in](security/java.md) | [Releases](https://github.com/beacon-observability/beacon-java/releases) |
-| [Python](zero-code/python.md) | Launcher: `beacon` | [Opt in](profiling/python.md) | [Opt in](security/python.md) | [Releases](https://github.com/beacon-observability/beacon-python/releases) |
-| [Node.js](zero-code/nodejs.md) | Preload: `NODE_OPTIONS` | [Opt in](profiling/nodejs.md) | [Opt in](security/nodejs.md) | [Releases](https://github.com/beacon-observability/beacon-nodejs/releases) |
-| [.NET](zero-code/dotnet.md) | Launcher: `beacon-dotnet run` | No supported setup | No released capability | [Releases](https://github.com/beacon-observability/beacon-dotnet/releases) |
-| [PHP](zero-code/php.md) | Native hook + Composer autoload | No supported setup | No released capability | [Composer](https://github.com/beacon-observability/beacon-php/releases) · [Extension](https://github.com/beacon-observability/beacon-php-instrumentation/releases) |
-| [Ruby](https://github.com/beacon-observability/beacon-ruby/blob/v1.0.0/beacon/INSTALLATION.md) | Source integration: Net::HTTP tracing | Outside validated scope | Outside validated scope | [Releases](https://github.com/beacon-observability/beacon-ruby/releases) |
-| [Rust / Fastrace](fastrace.md) | Tracing SDK: explicit instrumentation | Not provided | Not provided | [Releases](https://github.com/beacon-observability/fastrace/releases) |
-| [Browser / Rumable](rumable.md) | Web SDK injection: Nginx / IIS | Not provided | Not provided | [Releases](https://github.com/beacon-observability/rumable/releases) |
+| Language / project | Integration type | Integration | Profiling | Security | Releases |
+| --- | --- | --- | --- | --- | --- |
+| [Java](zero-code/java.md) | Zero-code | Agent: `-javaagent` | [Experimental JFR](profiling/java.md), opt in | [Opt in](security/java.md) | [Releases](https://github.com/beacon-observability/beacon-java/releases) |
+| [Python](zero-code/python.md) | Zero-code | Launcher: `beacon` | [Opt in](profiling/python.md) | [Opt in](security/python.md) | [Releases](https://github.com/beacon-observability/beacon-python/releases) |
+| [Node.js](zero-code/nodejs.md) | Zero-code | Preload: `NODE_OPTIONS` | [Opt in](profiling/nodejs.md) | [Opt in](security/nodejs.md) | [Releases](https://github.com/beacon-observability/beacon-nodejs/releases) |
+| [.NET](zero-code/dotnet.md) | Zero-code | Launcher: `beacon-dotnet run` | No supported setup | No released capability | [Releases](https://github.com/beacon-observability/beacon-dotnet/releases) |
+| [PHP](zero-code/php.md) | Zero-code | Native hook + Composer autoload | No supported setup | No released capability | [Composer](https://github.com/beacon-observability/beacon-php/releases) · [Extension](https://github.com/beacon-observability/beacon-php-instrumentation/releases) |
+| [Ruby](https://github.com/beacon-observability/beacon-ruby/blob/v1.0.0/beacon/INSTALLATION.md) | SDK (source integration) | Source integration: Net::HTTP tracing | Outside validated scope | Outside validated scope | [Releases](https://github.com/beacon-observability/beacon-ruby/releases) |
+| [Rust / Fastrace](fastrace.md) | SDK | Tracing SDK: explicit instrumentation | Not provided | Not provided | [Releases](https://github.com/beacon-observability/fastrace/releases) |
+| [Browser / Rumable](rumable.md) | Zero-code | Web SDK injection: Nginx / IIS | Not provided | Not provided | [Releases](https://github.com/beacon-observability/rumable/releases) |
 
 Each project is versioned and released independently. Follow the release links for available versions and download assets, and the language guides for runtime requirements. Profiling and Security in this table refer to server-side agent features; Rumable provides browser RUM.
 
