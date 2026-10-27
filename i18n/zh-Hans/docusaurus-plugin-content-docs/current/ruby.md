@@ -16,18 +16,24 @@ Beacon Ruby **[v1.0.0](https://github.com/beacon-observability/beacon-ruby/relea
 
 ## 下载与校验
 
-在新目录中执行以下命令，下载源码并校验文件：
+在新目录中执行以下命令。命令先解析一次 [latest](https://github.com/beacon-observability/beacon-ruby/releases/latest)，自动生成源码包名，再从同一个发布版本下载三个文件：
 
 ```bash
-curl -fLO https://github.com/beacon-observability/beacon-ruby/releases/download/v1.0.0/beacon-ruby-1.0.0-source.tar.gz
-curl -fLO https://github.com/beacon-observability/beacon-ruby/releases/download/v1.0.0/SOURCE.txt
-curl -fLO https://github.com/beacon-observability/beacon-ruby/releases/download/v1.0.0/SHA256SUMS
+ruby_release_page=$(curl -fsSL -o /dev/null -w '%{url_effective}' https://github.com/beacon-observability/beacon-ruby/releases/latest)
+ruby_release_tag=${ruby_release_page##*/}
+ruby_release_version=${ruby_release_tag#v}
+ruby_archive="beacon-ruby-${ruby_release_version}-source.tar.gz"
+ruby_release_url="https://github.com/beacon-observability/beacon-ruby/releases/download/${ruby_release_tag}"
+
+curl -fLO "${ruby_release_url}/${ruby_archive}"
+curl -fLO "${ruby_release_url}/SOURCE.txt"
+curl -fLO "${ruby_release_url}/SHA256SUMS"
 sha256sum -c SHA256SUMS
-tar -xzf beacon-ruby-1.0.0-source.tar.gz
-cd beacon-ruby-1.0.0
+tar -xzf "${ruby_archive}"
+cd "beacon-ruby-${ruby_release_version}"
 ```
 
-校验通过后再继续。`SOURCE.txt` 记录源码提交和上游基线。压缩包包含源码与许可证，依赖需要单独安装。
+校验通过后再继续。`SOURCE.txt` 记录源码提交和上游基线。压缩包包含源码与许可证，依赖需要单独安装。本页的验收环境和能力范围对应 v1.0.0；使用其他版本时，请查阅所选版本的发布说明。
 
 ## 验证 Net::HTTP 链路
 

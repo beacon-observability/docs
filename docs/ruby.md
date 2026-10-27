@@ -16,18 +16,24 @@ Beacon Ruby **[v1.0.0](https://github.com/beacon-observability/beacon-ruby/relea
 
 ## Download and verify
 
-Run these commands in a new directory to download the source and verify its checksums:
+Run these commands in a new directory. They resolve [latest](https://github.com/beacon-observability/beacon-ruby/releases/latest) once, derive the source archive name, and download all three assets from the same release:
 
 ```bash
-curl -fLO https://github.com/beacon-observability/beacon-ruby/releases/download/v1.0.0/beacon-ruby-1.0.0-source.tar.gz
-curl -fLO https://github.com/beacon-observability/beacon-ruby/releases/download/v1.0.0/SOURCE.txt
-curl -fLO https://github.com/beacon-observability/beacon-ruby/releases/download/v1.0.0/SHA256SUMS
+ruby_release_page=$(curl -fsSL -o /dev/null -w '%{url_effective}' https://github.com/beacon-observability/beacon-ruby/releases/latest)
+ruby_release_tag=${ruby_release_page##*/}
+ruby_release_version=${ruby_release_tag#v}
+ruby_archive="beacon-ruby-${ruby_release_version}-source.tar.gz"
+ruby_release_url="https://github.com/beacon-observability/beacon-ruby/releases/download/${ruby_release_tag}"
+
+curl -fLO "${ruby_release_url}/${ruby_archive}"
+curl -fLO "${ruby_release_url}/SOURCE.txt"
+curl -fLO "${ruby_release_url}/SHA256SUMS"
 sha256sum -c SHA256SUMS
-tar -xzf beacon-ruby-1.0.0-source.tar.gz
-cd beacon-ruby-1.0.0
+tar -xzf "${ruby_archive}"
+cd "beacon-ruby-${ruby_release_version}"
 ```
 
-Continue only if checksum verification succeeds. `SOURCE.txt` records the source commit and upstream baseline. The archive includes source and licenses; dependencies are installed separately.
+Continue only if checksum verification succeeds. `SOURCE.txt` records the source commit and upstream baseline. The archive includes source and licenses; dependencies are installed separately. The validated environment and scope on this page describe v1.0.0; review the selected release's notes for changes.
 
 ## Verify Net::HTTP traces
 
