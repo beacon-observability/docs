@@ -8,5 +8,6 @@
   "link.item.label.OpenTelemetry": {"message": "OpenTelemetry"},
   "copyright": {"message": "版权所有 © Beacon 贡献者。"},
   "link.item.label.Rumable": {"message": "Rumable"},
-  "link.item.label.Fastrace": {"message": "Fastrace"}
+  "link.item.label.Fastrace": {"message": "Fastrace"},
+  "link.item.label.Ruby": {"message": "Ruby"}
 }

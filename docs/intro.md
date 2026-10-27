@@ -31,12 +31,12 @@ Zero-code setups require deployment configuration, while application source code
 | [Node.js](zero-code/nodejs.md) | Zero-code | Preload: `NODE_OPTIONS` | [Opt in](profiling/nodejs.md) | [Opt in](security/nodejs.md) | [Releases](https://github.com/beacon-observability/beacon-nodejs/releases) |
 | [.NET](zero-code/dotnet.md) | Zero-code | Launcher: `beacon-dotnet run` | No supported setup | No released capability | [Releases](https://github.com/beacon-observability/beacon-dotnet/releases) |
 | [PHP](zero-code/php.md) | Zero-code | Native hook + Composer autoload | No supported setup | No released capability | [Composer](https://github.com/beacon-observability/beacon-php/releases) · [Extension](https://github.com/beacon-observability/beacon-php-instrumentation/releases) |
-| [Ruby](https://github.com/beacon-observability/beacon-ruby/blob/v1.0.0/beacon/INSTALLATION.md) | SDK (source integration) | Source integration: Net::HTTP tracing | Outside validated scope | Outside validated scope | [Releases](https://github.com/beacon-observability/beacon-ruby/releases) |
+| [Ruby](ruby.md) | SDK (source integration) | Source integration: Net::HTTP tracing | Outside validated scope | Outside validated scope | [Releases](https://github.com/beacon-observability/beacon-ruby/releases) |
 | [Rust / Fastrace](fastrace.md) | SDK | Tracing SDK: explicit instrumentation | Not provided | Not provided | [Releases](https://github.com/beacon-observability/fastrace/releases) |
 | [Browser / Rumable](rumable.md) | Zero-code | Web SDK injection: Nginx / IIS | Not provided | Not provided | [Releases](https://github.com/beacon-observability/rumable/releases) |
 
 Each project is versioned and released independently. Follow the release links for available versions and download assets, and the language guides for runtime requirements. Profiling and Security in this table refer to server-side agent features; Rumable provides browser RUM.
 
-Ruby currently provides a source release with a validated Net::HTTP trace path. It does not publish a Beacon gem or a zero-code preload; see its source installation guide for the validated environment and limitations. Fastrace requires application code instrumentation and reporter initialization.
+Ruby currently provides a source release with a validated Net::HTTP trace path. It does not publish a Beacon gem or a zero-code preload; see the [Ruby guide](ruby.md) for the validated environment and limitations. Fastrace requires application code instrumentation and reporter initialization.
 
 Security is disabled by default. See the [Security guides](security/index.md) for the released Java, Python, and Node.js activation and runtime scope.

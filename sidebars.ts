@@ -20,7 +20,7 @@ const sidebars: SidebarsConfig = {
       type: 'category',
       label: 'SDK',
       link: {type: 'generated-index', title: 'SDK', slug: '/sdk'},
-      items: ['fastrace'],
+      items: ['fastrace', 'ruby'],
     },
     {
       type: 'category',
