@@ -6,26 +6,26 @@ description: Install released Ruby instrumentation source and verify Net::HTTP t
 
 # Ruby source integration
 
-Beacon Ruby **[v1.0.0](https://github.com/beacon-observability/beacon-ruby/releases/tag/v1.0.0)** is a source release based on OpenTelemetry Ruby Contrib. Applications integrate the instrumentation gems and initialize the OpenTelemetry SDK explicitly. This release retains upstream gem identities; it does not publish a Beacon gem, executable agent, or zero-code preload.
+Beacon Ruby **[v1.1.0](https://github.com/beacon-observability/beacon-ruby/releases/tag/v1.1.0)** is a source release based on OpenTelemetry Ruby Contrib. Applications integrate the instrumentation gems and initialize the OpenTelemetry SDK explicitly. This release retains upstream instrumentation gem identities and adds the opt-in **beacon-security 0.1.0** gem as a GitHub Release asset. It does not publish to RubyGems or provide an executable agent or zero-code preload.
 
 ## Requirements
 
-- The validated environment is **Ubuntu 24.04 x86_64, CRuby 3.3.12, and Bundler 2.5.22**. The source gem specifications require Ruby 3.3 or newer; other runtimes and platforms are outside this release's validated scope.
+- The validated environment is **Ubuntu 24.04 x86_64, CRuby 3.3.12, and Bundler 2.5.22**. The source gem specifications require Ruby 3.3 or newer; Security CI also passes Linux CRuby 3.3, 3.4 and 4.0. Collector acceptance uses CRuby 3.3.12; other engines/platforms are outside the validated scope.
 - Download access to GitHub and RubyGems.
 - Python 3 and Docker for the receiver check below.
 
 ## Download and verify
 
-Run these commands in a new directory. They resolve [latest](https://github.com/beacon-observability/beacon-ruby/releases/latest) once, derive the source archive name, and download all three assets from the same release:
+Run these commands in a new directory. They pin v1.1.0 and download its source, Security gem, provenance and checksums together:
 
 ```bash
-ruby_release_page=$(curl -fsSL -o /dev/null -w '%{url_effective}' https://github.com/beacon-observability/beacon-ruby/releases/latest)
-ruby_release_tag=${ruby_release_page##*/}
+ruby_release_tag=v1.1.0
 ruby_release_version=${ruby_release_tag#v}
 ruby_archive="beacon-ruby-${ruby_release_version}-source.tar.gz"
 ruby_release_url="https://github.com/beacon-observability/beacon-ruby/releases/download/${ruby_release_tag}"
 
 curl -fLO "${ruby_release_url}/${ruby_archive}"
+curl -fLO "${ruby_release_url}/beacon-security-0.1.0.gem"
 curl -fLO "${ruby_release_url}/SOURCE.txt"
 curl -fLO "${ruby_release_url}/SHA256SUMS"
 sha256sum -c SHA256SUMS
@@ -33,7 +33,7 @@ tar -xzf "${ruby_archive}"
 cd "beacon-ruby-${ruby_release_version}"
 ```
 
-Continue only if checksum verification succeeds. `SOURCE.txt` records the source commit and upstream baseline. The archive includes source and licenses; dependencies are installed separately. The validated environment and scope on this page describe v1.0.0; review the selected release's notes for changes.
+Continue only if checksum verification succeeds. `SOURCE.txt` records the source commit and upstream baseline. The archive includes source and licenses; the Security gem is a separate checksummed asset. Dependencies are installed separately. The validated environment and scope on this page describe v1.1.0; review the selected release's notes for changes.
 
 ## Verify Net::HTTP traces
 
@@ -56,9 +56,24 @@ The harness removes its temporary servers, container, and trace output afterward
 
 ## Application integration and scope
 
-Use the release's [Gemfile](https://github.com/beacon-observability/beacon-ruby/blob/v1.0.0/beacon/validation/Gemfile) and [Ruby example](https://github.com/beacon-observability/beacon-ruby/blob/v1.0.0/beacon/validation/http_smoke.rb) as references for the validated Net::HTTP path. The Gemfile loads the base and Net::HTTP instrumentation from the released source and pins the Core SDK and OTLP exporter. Load the required libraries before initializing the SDK and enabling `OpenTelemetry::Instrumentation::Net::HTTP`.
+Use the release's [Gemfile](https://github.com/beacon-observability/beacon-ruby/blob/v1.1.0/beacon/validation/Gemfile) and [Ruby example](https://github.com/beacon-observability/beacon-ruby/blob/v1.1.0/beacon/validation/http_smoke.rb) as references for the validated Net::HTTP path. The Gemfile loads the base and Net::HTTP instrumentation from the released source and pins the Core SDK and OTLP exporter. Load the required libraries before initializing the SDK and enabling `OpenTelemetry::Instrumentation::Net::HTTP`.
 
-Release acceptance covers the shared instrumentation base, Net::HTTP modes, and local Collector trace export. Rails, other integrations, DataKit, metrics, logs, profiling, and Security are outside this release's validated scope. See the [source installation guide](https://github.com/beacon-observability/beacon-ruby/blob/v1.0.0/beacon/INSTALLATION.md) and [release notes](https://github.com/beacon-observability/beacon-ruby/releases/tag/v1.0.0) before adapting the example.
+Release acceptance covers the shared instrumentation base, Net::HTTP modes, and local Collector trace export. Security findings and runtime inventories also have a validated Logs path; see [Ruby Security](security/ruby.md). Rails-specific adapters, other integrations, DataKit, metrics, general application logs and profiling are outside the validated scope. See the [source installation guide](https://github.com/beacon-observability/beacon-ruby/blob/v1.1.0/beacon/INSTALLATION.md) and [release notes](https://github.com/beacon-observability/beacon-ruby/releases/tag/v1.1.0) before adapting the example.
+
+## Enable Security
+
+After verifying all assets, install the GitHub-distributed gem from the download directory:
+
+```bash
+gem install ./beacon-security-0.1.0.gem --no-document
+```
+
+Add that installed version to the application's Gemfile, or reference the extracted
+`security` directory with a Bundler `path:` entry. Initialize the application's
+OpenTelemetry Logs SDK/exporter, call `Beacon::Security.start`, and add its Rack
+middleware. Set `BEACON_SECURITY_ENABLED=true`; local files remain disabled.
+This requires application setup. See [Ruby Security](security/ruby.md) for the
+complete startup, coverage, budgets and verification steps.
 
 ## Upgrade and rollback
 
@@ -66,4 +81,4 @@ Keep each source release in a separate directory. Retain the verified archive, c
 
 - [Source repository](https://github.com/beacon-observability/beacon-ruby)
 - [Releases and downloads](https://github.com/beacon-observability/beacon-ruby/releases)
-- [Versioned acceptance record](https://github.com/beacon-observability/beacon-ruby/blob/v1.0.0/beacon/validation/README.md)
+- [Versioned acceptance record](https://github.com/beacon-observability/beacon-ruby/blob/v1.1.0/beacon/validation/README.md)
