@@ -28,3 +28,7 @@ export OTEL_EXPORTER_OTLP_PROTOCOL=grpc
 
 不要把凭证直接写入进程参数或提交到代码库。应通过部署平台的 Secret 管理能力注入 Header。
 
+
+## Security Logs
+
+[.NET Security](../security/dotnet.md) 复用现有 OpenTelemetry Logs Provider、资源标识和 OTLP 配置。接收端需配置 Logs 管道，并设置 `OTEL_LOGS_EXPORTER=otlp`。Logs 专用的端点、协议和请求头设置会覆盖对应通用设置。Security 参数通过环境变量配置；.NET Security 不增加 YAML 或 App.config 绑定。
