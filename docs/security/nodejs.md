@@ -34,6 +34,45 @@ node /srv/app/server.mjs
 dependencies, Node.js built-ins, and explicitly excluded roots are not
 transformed.
 
+## Findings and analysis
+
+Per-request occurrences and request-specific attack evidence are available from
+1.3.0; schema v2 is available from 2.0.0. This page uses 2.0.1, with
+`occurrence_id` identifying the request occurrence. Detail sampling is independent
+of occurrence export and trace sampling; empty evidence arrays may be omitted,
+and sampling alone does not mean truncation. Online bodies have no cumulative
+occurrence total; consumers aggregate received occurrences after deduplication.
+See [Findings and evidence](findings.md) for `unknown`, `no_evidence`, `suspected`,
+evidence upgrades, and delivery limits. No status guarantees successful exploitation.
+
+SQL analysis defaults to `unknown`. Set `BEACON_SECURITY_ANALYSIS_SQL_DIALECT=ansi`
+only for compatible SQL to enable the bounded lexical subset: quoted strings and
+identifiers, doubled quote escapes, numbers, simple operators, and comments.
+This is not a complete parser. Other dialects, backslash or dollar quoting,
+unsupported syntax, imprecise taint, and inputs exceeding 8,192 UTF-16 code units or
+64 taint marks remain `unknown`. Fixed bound values are separate from untrusted
+templates assembled before preparation.
+
+Shell analysis supports simple POSIX `sh`, `bash`, `dash`, `ksh`, and `zsh`
+commands, quotes, escapes, and control separators. Expansion, redirection,
+compound syntax, and other shells remain `unknown`. Ordinary argv and
+fixed-destination path/query input are separate observations. Network allowlist
+and filesystem-root policies are not implemented, so related boundary judgments
+remain `unknown`; normalization does not establish safety. Byte strings are not
+analyzed as a known textual dialect. See the
+[version-pinned analysis reference](https://github.com/beacon-observability/beacon-nodejs/blob/v2.0.1/packages/security-nodejs/README.md).
+
+### Exporting findings without attack evidence
+
+2.0.1 excludes `no_evidence` findings from OpenTelemetry Logs and evidence
+JSONL by default. Set `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED=true` to restore
+their export. `unknown` and `suspected` remain eligible, and SBOM is unaffected.
+Filtering happens before queue admission and is not export loss; internal
+detection, same-request deduplication, and upgrades still run. Local finding
+snapshots and span summaries can retain excluded observations. `no_evidence`
+is not a safety verdict, and an absent exported event does not prove no risk
+was detected.
+
 ## Configuration reference
 
 | Environment variable | Default | Purpose |
@@ -41,17 +80,15 @@ transformed.
 | `BEACON_SECURITY_ENABLED` | `false` | Enables the Security lifecycle and runtime SBOM. |
 | `BEACON_SECURITY_NODE_INCLUDE` | Empty | Selects application source roots for finding collection. |
 | `BEACON_SECURITY_NODE_EXCLUDE` | Empty | Excludes source roots and takes precedence over include. |
-| `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED` | `false` | Exports findings classified as `attack_evidence.status=no_evidence` when set to `true`. |
+| `BEACON_SECURITY_FINDINGS_SAMPLE_SECONDS` | `300` | Full-evidence interval per finding in seconds. |
+| `BEACON_SECURITY_ANALYSIS_SQL_DIALECT` | `unknown` | `ansi` enables the supported SQL lexical subset. |
+| `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED` | `false` | Also export `no_evidence` events. |
 | `BEACON_SECURITY_SBOM_ENABLED` | `true` | Collects runtime SBOM while Security is enabled. |
 | `BEACON_SECURITY_LOCAL_OUTPUT_ENABLED` | `false` | Enables process-local diagnostic files. |
 | `BEACON_SECURITY_OUTPUT` | `./beacon-security-output/<instance-id>` | Sets the diagnostic directory. |
 
 Findings and SBOM records use the OpenTelemetry Logs pipeline. Local output is
 diagnostic evidence and remains off by default.
-
-## Finding export policy
-
-Findings classified as `attack_evidence.status=no_evidence` are not exported by default. `unknown`, `suspected`, and SBOM records remain eligible for export. Set `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED=true` to restore the previous behavior. The switch controls OpenTelemetry Logs and evidence JSONL; internal detection, local finding snapshots, span summaries, and same-request evidence upgrades remain available. See the [shared export policy](index.md#finding-export-policy).
 
 ## Kubernetes
 

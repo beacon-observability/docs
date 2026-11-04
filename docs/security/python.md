@@ -12,6 +12,15 @@ there is no separate Security distribution.
 
 ## Enable Security
 
+Upgrade to 1.2.4 in the application's existing virtual environment first. Retain
+the framework extras used by the application; if the optional `beacon-profiling`
+package is installed, upgrade it to 1.2.4 as well:
+
+```bash
+pip install 'beacon-otel==1.2.4'
+beacon --version
+```
+
 ```bash
 export BEACON_SECURITY_ENABLED=true
 export BEACON_SECURITY_PYTHON_INCLUDE=orders
@@ -27,6 +36,45 @@ beacon uvicorn orders.asgi:application --host 0.0.0.0 --port 8000
 paths. Without it, the enabled lifecycle can export the runtime SBOM but does
 not transform application modules or produce modeled-flow findings.
 
+## Findings and analysis
+
+Per-request occurrences and request-specific attack evidence are available from
+1.2.0; schema v2 is available from 1.2.3. This page uses 1.2.4, with
+`occurrence_id` identifying the request occurrence. Detail sampling is independent
+of occurrence export and trace sampling; empty evidence arrays may be omitted,
+and sampling alone does not mean truncation. Online bodies have no cumulative
+occurrence total; consumers aggregate received occurrences after deduplication.
+See [Findings and evidence](findings.md) for `unknown`, `no_evidence`, `suspected`,
+evidence upgrades, and delivery limits. No status guarantees successful exploitation.
+
+SQL analysis defaults to `unknown`. Set `BEACON_SECURITY_ANALYSIS_SQL_DIALECT=ansi`
+only for compatible SQL to enable the bounded lexical subset: quoted strings and
+identifiers, doubled quote escapes, numbers, simple operators, and comments.
+This is not a complete parser. Other dialects, backslash or dollar quoting,
+unsupported syntax, imprecise taint, and inputs exceeding 8,192 Unicode code points or
+64 taint marks remain `unknown`. Fixed bound values are separate from untrusted
+templates assembled before preparation.
+
+Shell analysis supports simple POSIX `sh`, `bash`, `dash`, `ksh`, and `zsh`
+commands, quotes, escapes, and control separators. Expansion, redirection,
+compound syntax, and other shells remain `unknown`. Ordinary argv and
+fixed-destination path/query input are separate observations. Network allowlist
+and filesystem-root policies are not implemented, so related boundary judgments
+remain `unknown`; normalization does not establish safety. Byte strings are not
+analyzed as a known textual dialect. See the
+[version-pinned analysis reference](https://github.com/beacon-observability/beacon-python/blob/v1.2.4/beacon-otel/README.md).
+
+### Exporting findings without attack evidence
+
+1.2.4 excludes `no_evidence` findings from OpenTelemetry Logs and evidence
+JSONL by default. Set `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED=true` to restore
+their export. `unknown` and `suspected` remain eligible, and SBOM is unaffected.
+Filtering happens before queue admission and is not export loss; internal
+detection, same-request deduplication, and upgrades still run. Local finding
+snapshots and span summaries can retain excluded observations. `no_evidence`
+is not a safety verdict, and an absent exported event does not prove no risk
+was detected.
+
 ## Configuration reference
 
 | Environment variable | Default | Purpose |
@@ -34,7 +82,9 @@ not transform application modules or produce modeled-flow findings.
 | `BEACON_SECURITY_ENABLED` | `false` | Enables the Security lifecycle and runtime SBOM. |
 | `BEACON_SECURITY_PYTHON_INCLUDE` | Empty | Selects application module prefixes for finding collection. |
 | `BEACON_SECURITY_PYTHON_EXCLUDE` | Empty | Excludes module prefixes and takes precedence over include. |
-| `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED` | `false` | Exports findings classified as `attack_evidence.status=no_evidence` when set to `true`. |
+| `BEACON_SECURITY_FINDINGS_SAMPLE_SECONDS` | `300` | Full-evidence interval per finding in seconds. |
+| `BEACON_SECURITY_ANALYSIS_SQL_DIALECT` | `unknown` | `ansi` enables the supported SQL lexical subset. |
+| `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED` | `false` | Also export `no_evidence` events. |
 | `BEACON_SECURITY_SBOM_ENABLED` | `true` | Collects runtime SBOM while Security is enabled. |
 | `BEACON_SECURITY_LOCAL_OUTPUT_ENABLED` | `false` | Enables process-local diagnostic files. |
 | `BEACON_SECURITY_OUTPUT` | `./beacon-security-output/<instance-id>` | Sets the diagnostic directory. |
@@ -42,10 +92,6 @@ not transform application modules or produce modeled-flow findings.
 
 Findings and SBOM records use the OpenTelemetry Logs pipeline. Local output is
 diagnostic evidence and remains off by default.
-
-## Finding export policy
-
-Findings classified as `attack_evidence.status=no_evidence` are not exported by default. `unknown`, `suspected`, and SBOM records remain eligible for export. Set `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED=true` to restore the previous behavior. The switch controls OpenTelemetry Logs and evidence JSONL; internal detection, local finding snapshots, span summaries, and same-request evidence upgrades remain available. See the [shared export policy](index.md#finding-export-policy).
 
 ## Kubernetes and Gunicorn
 

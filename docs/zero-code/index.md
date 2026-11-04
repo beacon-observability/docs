@@ -16,7 +16,7 @@ Zero-code instrumentation adds telemetry without modifying application source co
 | [Python](python.md) | Python applications | Prefix the existing command with `beacon` |
 | [Node.js](nodejs.md) | Node.js applications | Preload one module with `NODE_OPTIONS` |
 | [.NET](dotnet.md) | .NET applications | Launch the existing process with `beacon-dotnet run` |
-| [PHP](php.md) | PHP applications | Enable the native hook and Composer autoloading |
+| [PHP](php.md) | PHP applications | Install the native extension and standalone runtime with `beacon-setup.php` |
 | [Rumable (browser RUM)](../rumable.md) | Websites served through Nginx or IIS | Generate and run a server setup command to inject the Web SDK |
 
 ## Configure and verify

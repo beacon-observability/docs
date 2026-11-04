@@ -16,7 +16,7 @@ description: 无需修改应用源代码，选择服务端探针或浏览器 RUM
 | [Python](python.md) | Python 应用 | 在原有命令前添加 `beacon` |
 | [Node.js](nodejs.md) | Node.js 应用 | 通过 `NODE_OPTIONS` 预加载一个模块 |
 | [.NET](dotnet.md) | .NET 应用 | 使用 `beacon-dotnet run` 启动原有进程 |
-| [PHP](php.md) | PHP 应用 | 启用原生 Hook 和 Composer 自动加载 |
+| [PHP](php.md) | PHP 应用 | 通过 `beacon-setup.php` 安装原生扩展和独立运行时 |
 | [Rumable（浏览器 RUM）](../rumable.md) | 通过 Nginx 或 IIS 提供的网站 | 生成并执行服务器接入命令，注入 Web SDK |
 
 ## 配置与验证

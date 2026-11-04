@@ -8,7 +8,7 @@ description: Diagnose missing telemetry after zero-code setup.
 
 Work through these checks in order:
 
-1. Confirm the agent version: inspect the Java JAR name, or run `beacon --version`, `npm ls @beacon-observability/nodejs`, `beacon-dotnet version`, or `vendor/bin/beacon-php --version`.
+1. Confirm the agent version: inspect the Java JAR name, or run `beacon --version`, `npm ls @beacon-observability/nodejs`, `beacon-dotnet version`, or `php beacon-setup.php doctor --php-bin=all`.
 2. Confirm `OTEL_SERVICE_NAME`, endpoint, and protocol in the same process environment that starts the application.
 3. Test network access from the application host to the receiver port.
 4. Generate traffic through a supported framework or library; startup alone may not create a span.
@@ -24,7 +24,7 @@ Debugging entry points differ by language. These settings apply to the released 
 | [Python](../zero-code/python.md#debugging-and-diagnostics) | Configure the `opentelemetry` logger through application logging; use `OTEL_TRACES_EXPORTER=otlp,console` for an initial check | SDK logging depends on Python logging configuration; console Spans verify telemetry creation |
 | [Node.js](../zero-code/nodejs.md#debugging-and-diagnostics) | `OTEL_LOG_LEVEL=debug`, retaining the existing preload | Console diagnostics |
 | [.NET](../zero-code/dotnet.md#debugging-and-diagnostics) | `OTEL_LOG_LEVEL=debug` with `OTEL_DOTNET_AUTO_LOG_DIRECTORY` | Instrumentation log files; `beacon-dotnet status` checks installation status |
-| [PHP](../zero-code/php.md#debugging-and-diagnostics) | `OTEL_LOG_LEVEL=debug`, `OTEL_PHP_LOG_DESTINATION=stderr`; `vendor/bin/beacon-php doctor --json` | SDK internal logs and a runtime diagnostic report |
+| [PHP](../zero-code/php.md#debugging-and-diagnostics) | `OTEL_LOG_LEVEL=debug`, `OTEL_PHP_LOG_DESTINATION=stderr`; `php beacon-setup.php doctor --php-bin=all` | SDK internal logs and a runtime diagnostic report |
 
 Agent diagnostic logging is configured separately from telemetry log export controlled by `OTEL_LOGS_EXPORTER`. Retain the service name, OTLP endpoint, and loading method, enable diagnostics temporarily, reproduce once, then restore the normal launch configuration. Remove credentials and sensitive request contents before sharing logs.
 
@@ -56,4 +56,4 @@ If the application fails only when the agent is active, disable the agent first 
 - [Python 1.2.4](https://github.com/beacon-observability/beacon-python/blob/v1.2.4/beacon-otel/src/beacon_otel/cli.py)
 - [Node.js 2.0.1](https://github.com/beacon-observability/beacon-nodejs/blob/v2.0.1/packages/nodejs/README.md)
 - [.NET 1.0.0](https://github.com/beacon-observability/beacon-dotnet/blob/v1.0.0/docs/config.md#internal-logs)
-- [PHP OpenTelemetry API 1.10.0](https://github.com/opentelemetry-php/api/blob/7c029c4a6fd457094a20569bf98f93d95e9a7559/Behavior/Internal/LogWriterFactory.php)
+- [PHP 1.3.0](https://github.com/beacon-observability/beacon-php/blob/v1.3.0/docs/standalone.md)
