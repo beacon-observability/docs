@@ -40,6 +40,9 @@ description: 排查零代码接入后没有遥测数据的问题。
 - Python 需要通过 `BEACON_SECURITY_PYTHON_INCLUDE` 设置应用模块前缀。Node.js
   需要通过 `BEACON_SECURITY_NODE_INCLUDE` 设置应用源码根目录，并使用 ESM
   `--import` 预加载。
+- [.NET](../security/dotnet.md)：必须启用自动 SDK 初始化。关闭自动 Logs 会阻止
+  Security 的 OTLP 导出，但单独启用的本地输出仍可工作。查询参数来源需经受支持的
+  字符串拼接到达已建模的 sink 才会产生安全发现，并需核对已验证的运行时范围。
 - 运行时 SBOM 可能先于安全发现产生。请生成一条经过已建模 source 和 sink 的实际请求；
   仅启动应用不会产生安全发现。
 - Java 1.3.4、Python 1.2.4、Node.js 2.0.1 默认不导出 `attack_evidence.status=no_evidence` 的安全发现，这不表示采集失败。按需设置 `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED=true`；参阅[导出策略](../security/index.md#finding-export-policy)。
@@ -53,5 +56,5 @@ description: 排查零代码接入后没有遥测数据的问题。
 - [Java 1.3.4](https://github.com/beacon-observability/beacon-java/blob/v1.3.4/javaagent-tooling/src/main/java/io/opentelemetry/javaagent/tooling/config/EarlyInitAgentConfig.java)
 - [Python 1.2.4](https://github.com/beacon-observability/beacon-python/blob/v1.2.4/beacon-otel/src/beacon_otel/cli.py)
 - [Node.js 2.0.1](https://github.com/beacon-observability/beacon-nodejs/blob/v2.0.1/packages/nodejs/README.md)
-- [.NET 1.0.0](https://github.com/beacon-observability/beacon-dotnet/blob/v1.0.0/docs/config.md#internal-logs)
+- [.NET 1.1.1](https://github.com/beacon-observability/beacon-dotnet/blob/v1.1.1/docs/config.md#internal-logs)
 - [PHP 1.3.0](https://github.com/beacon-observability/beacon-php/blob/v1.3.0/docs/standalone.md)

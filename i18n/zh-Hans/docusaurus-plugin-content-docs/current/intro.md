@@ -29,7 +29,7 @@ Rust 应用请使用 **[Fastrace Rust SDK](fastrace.md)**，可用版本与下�
 | [Java](zero-code/java.md) | 零代码 | Agent：`-javaagent` | [实验性 JFR](profiling/java.md)，需主动开启 | [需主动开启](security/java.md) | [Releases](https://github.com/beacon-observability/beacon-java/releases) |
 | [Python](zero-code/python.md) | 零代码 | 启动器：`beacon` | [需主动开启](profiling/python.md) | [需主动开启](security/python.md) | [Releases](https://github.com/beacon-observability/beacon-python/releases) |
 | [Node.js](zero-code/nodejs.md) | 零代码 | 预加载：`NODE_OPTIONS` | [需主动开启](profiling/nodejs.md) | [需主动开启](security/nodejs.md) | [Releases](https://github.com/beacon-observability/beacon-nodejs/releases) |
-| [.NET](zero-code/dotnet.md) | 零代码 | 启动器：`beacon-dotnet run` | 暂无受支持的配置 | 暂无已发布能力 | [Releases](https://github.com/beacon-observability/beacon-dotnet/releases) |
+| [.NET](zero-code/dotnet.md) | 零代码 | 启动器：`beacon-dotnet run` | 暂无受支持的配置 | [实验性，显式开启](security/dotnet.md) | [Releases](https://github.com/beacon-observability/beacon-dotnet/releases) |
 | [PHP](zero-code/php.md) | 零代码 | 统一安装器：`beacon-setup.php` | 暂无受支持的配置 | [实验性，显式开启](security/php.md) | [Releases](https://github.com/beacon-observability/beacon-php/releases) |
 | [Ruby](ruby.md) | SDK（源码集成） | 源码集成：Net::HTTP 链路追踪 | 不在已验证范围内 | 不在已验证范围内 | [Releases](https://github.com/beacon-observability/beacon-ruby/releases) |
 | [Rust / Fastrace](fastrace.md) | SDK | 链路追踪 SDK：显式代码埋点 | 不提供 | 不提供 | [Releases](https://github.com/beacon-observability/fastrace/releases) |
@@ -39,6 +39,6 @@ Rust 应用请使用 **[Fastrace Rust SDK](fastrace.md)**，可用版本与下�
 
 Ruby 当前提供源码发行包，已验证 Net::HTTP 链路路径；未发布 Beacon gem 或零代码预加载入口，验收环境与限制请参阅 [Ruby 指南](ruby.md)。Fastrace 需要在应用代码中显式埋点并初始化 reporter。
 
-Security 默认关闭。已发布的 Java、Python、Node.js 和 PHP 启用方式及运行时范围请参阅 [Security 指南](security/index.md)。
+Security 默认关闭。已发布的 Java、Python、Node.js、.NET 和 PHP 启用方式及运行时范围请参阅 [Security 指南](security/index.md)。
 
 Java 1.3.4、Python 1.2.4 和 Node.js 2.0.1 默认过滤无利用证据的安全发现，并提供恢复导出的开关。参阅 [Security 导出策略](security/index.md#finding-export-policy)。

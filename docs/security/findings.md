@@ -9,7 +9,8 @@ description: Interpret request occurrences, evidence sampling, attack evidence, 
 A finding records a bounded modeled source-to-sink observation or candidate code
 risk. It does not confirm a vulnerability, malicious intent, or successful
 exploitation. The following behavior is backed by released Java, Node.js, and
-Python versions; it does not imply equivalent analysis in PHP.
+Python versions; it does not imply equivalent analysis in PHP or .NET. See
+[.NET Security](dotnet.md) for the released .NET scope.
 
 ## Released versions and event formats
 

@@ -6,13 +6,19 @@ description: Launch an unchanged .NET application with beacon-dotnet.
 
 # .NET zero-code instrumentation
 
-Beacon .NET 1.0.0 provides native packages and a cross-platform `beacon-dotnet` command. The following example uses Debian or Ubuntu on x64; use the [release page](https://github.com/beacon-observability/beacon-dotnet/releases/tag/v1.0.0) for other systems and architectures.
+Beacon .NET 1.1.1 provides native packages and a cross-platform `beacon-dotnet` command. The following example uses Debian or Ubuntu on x64; use the [release page](https://github.com/beacon-observability/beacon-dotnet/releases/tag/v1.1.1) for other systems and architectures.
 
 ## Install
 
+Use a recent GitHub CLI with artifact-attestation support. Download and verify the asset before installing:
+
 ```bash
-curl -fLO https://github.com/beacon-observability/beacon-dotnet/releases/download/v1.0.0/beacon-dotnet-1.0.0-linux-amd64.deb
-sudo apt install ./beacon-dotnet-1.0.0-linux-amd64.deb
+curl -fLO https://github.com/beacon-observability/beacon-dotnet/releases/download/v1.1.1/beacon-dotnet-1.1.1-linux-amd64.deb
+gh attestation verify beacon-dotnet-1.1.1-linux-amd64.deb \
+  --repo beacon-observability/beacon-dotnet \
+  --signer-workflow beacon-observability/beacon-dotnet/.github/workflows/beacon-release.yml \
+  --source-ref refs/tags/v1.1.1
+sudo apt install ./beacon-dotnet-1.1.1-linux-amd64.deb
 beacon-dotnet status
 ```
 
@@ -26,6 +32,16 @@ beacon-dotnet run dotnet MyApp.dll
 ```
 
 `run` instruments only the child process. Beacon .NET does not currently expose a supported user-level continuous-profiling setup, so no profile variables are required.
+
+## Upgrade and verify
+
+Download the 1.1.1 package for the same system and architecture from the release page and install it using the same package manager. Restart the instrumented application after upgrading, then check `beacon-dotnet version` and `beacon-dotnet status`.
+
+The release includes Linux glibc/musl x64 and ARM64 archives, a Windows archive and x64 MSI, a macOS ARM64 archive (macOS 14 or later), Linux DEB/RPM packages, and NuGet packages. Native packages are not yet OS-signed; verify each downloaded asset as shown above before installing.
+
+## Optional Security
+
+Version 1.1.1 includes experimental, default-off [Security and runtime assembly inventory](../security/dotnet.md). Enable it separately and verify OTLP Logs receipt. Its validated runtime scope is narrower than the downloadable platform set.
 
 ## Debugging and diagnostics
 

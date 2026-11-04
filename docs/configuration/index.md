@@ -28,3 +28,7 @@ export OTEL_EXPORTER_OTLP_PROTOCOL=grpc
 
 Do not put credentials directly in process arguments or committed files. Inject headers from the deployment platform's secret store.
 
+
+## Security Logs
+
+[.NET Security](../security/dotnet.md) reuses the existing OpenTelemetry Logs provider, resource identity and OTLP configuration. Configure a Logs pipeline at the receiver and use `OTEL_LOGS_EXPORTER=otlp`. Logs-specific endpoint, protocol and header settings override their shared equivalents. Security settings are environment variables; the .NET Security integration does not add YAML or App.config bindings.
