@@ -6,7 +6,7 @@ description: 通过 beacon 命令启动 Python 应用。
 
 # Python 零代码接入
 
-Beacon Python 1.1.0 的零代码流程支持 Python 3.10 至 3.14。请将它安装在应用使用的
+Beacon Python 1.2.4 的零代码流程支持 Python 3.10 至 3.14。请将它安装在应用使用的
 同一个虚拟环境中。
 
 ## 安装
@@ -15,7 +15,7 @@ Beacon Python 1.1.0 的零代码流程支持 Python 3.10 至 3.14。请将它安
 
 ```bash
 # FastAPI；使用 Flask 或 requests 时替换对应 extra
-pip install 'beacon-otel[fastapi]==1.1.0'
+pip install 'beacon-otel[fastapi]==1.2.4'
 ```
 
 ## 启动
@@ -31,7 +31,7 @@ beacon uvicorn myapp:app
 
 ## 调试与诊断
 
-Beacon Python 1.1.0 的零代码入口没有统一的 SDK 调试日志开关，`OTEL_LOG_LEVEL=debug` 不会自动配置 Python 的 `logging` 级别。需要详细日志时，通过应用已有的日志配置将 `opentelemetry` Logger 设为 `DEBUG` 并配置输出 Handler。
+Beacon Python 1.2.4 的零代码入口没有统一的 SDK 调试日志开关，`OTEL_LOG_LEVEL=debug` 不会自动配置 Python 的 `logging` 级别。需要详细日志时，通过应用已有的日志配置将 `opentelemetry` Logger 设为 `DEBUG` 并配置输出 Handler。
 
 无需修改应用源码的初步诊断，可以在保留 OTLP 导出的同时增加控制台 Span 输出：
 

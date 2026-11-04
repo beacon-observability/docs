@@ -6,14 +6,13 @@ description: Preload Beacon Node.js without changing application source.
 
 # Node.js zero-code instrumentation
 
-Beacon Node.js 1.2.0 supports the maintained Node.js runtime lines tested by
-the package, starting with Node.js 18.19. Security has a narrower runtime
+Beacon Node.js 2.0.1 covers Node.js 18.19+, 20.6+, 22, and 24 in its CI matrix. Security has a narrower runtime
 requirement documented below.
 
 ## Install
 
 ```bash
-npm install @beacon-observability/nodejs@1.2.0
+npm install @beacon-observability/nodejs@2.0.1
 ```
 
 ## Run

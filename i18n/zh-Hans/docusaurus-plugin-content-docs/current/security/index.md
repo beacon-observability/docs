@@ -11,9 +11,9 @@ Agent、包装命令或独立版本生命周期。
 
 | 语言 | 本指南采用的版本 | 运行时范围 | 部署方式 |
 | --- | --- | --- | --- |
-| [Java](java.md) | 1.3.3 | 完整 Java Agent | 单个 Agent JAR |
-| [Python](python.md) | 1.2.4 | 标准 GIL 的 CPython 3.11–3.14 | 现有 `beacon` 命令 |
-| [Node.js](nodejs.md) | 2.0.1 | Node.js 22.22.3+ 或 24.11.1+ | 现有软件包加 ESM 预加载 |
+| [Java](java.md) | [1.3.4](https://github.com/beacon-observability/beacon-java/releases/tag/v1.3.4) | 完整 Java Agent | 单个 Agent JAR |
+| [Python](python.md) | [1.2.4](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.4) | 标准 GIL 的 CPython 3.11–3.14 | 现有 `beacon` 命令 |
+| [Node.js](nodejs.md) | [2.0.1](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v2.0.1) | Node.js 22.22.3+ 或 24.11.1+ | 现有软件包加 ESM 预加载 |
 | [.NET](dotnet.md) | 1.1.1，实验性 | CoreCLR .NET 8–10：Linux glibc x64、Windows x64、macOS ARM64 | 现有 `beacon-dotnet run` 命令 |
 | [PHP](php.md) | 1.3.0，实验性 | PHP 8.2–8.4，已验证 Linux glibc x86_64 | 现有安装器与 Agent 运行时 |
 
@@ -24,10 +24,12 @@ Agent、包装命令或独立版本生命周期。
 安全发现表示有边界的已建模数据流观测或候选风险，并不确认应用存在漏洞。请先选择
 应用运行时对应的指南，并在扩大配置范围前验证已导出的 Logs 记录。
 
-
 ## 解读安全发现
 
 参见[安全发现与证据](findings.md)，了解代码风险、请求攻击证据与利用结果的区别，
 以及逐请求计数、Trace 关联和证据采样。该页列出了 Java、Node.js、Python 的最低版本与
-schema v1/v2 差异；不能据此推断 PHP 或 .NET 具有相同覆盖；.NET 已发布范围见 [.NET Security](dotnet.md)。Node.js 2.0.1、Python 1.2.4 默认
-过滤 `no_evidence` 事件，没有收到事件不代表没有检测到风险。
+schema v1/v2 差异；不能据此推断 PHP 或 .NET 具有相同覆盖；.NET 已发布范围见 [.NET Security](dotnet.md)。
+
+## 安全发现的导出策略 {#finding-export-policy}
+
+Java 1.3.4、Node.js 2.0.1 和 Python 1.2.4 默认过滤 `no_evidence` 事件，没有收到事件不代表没有检测到风险。设置 `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED=true` 可恢复导出，默认值为 `false`。参见[安全发现与证据](findings.md)，了解状态含义、同请求升级与投递限制。
