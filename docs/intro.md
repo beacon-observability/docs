@@ -40,3 +40,5 @@ Each project is versioned and released independently. Follow the release links f
 Ruby currently provides a source release with a validated Net::HTTP trace path. It does not publish a Beacon gem or a zero-code preload; see the [Ruby guide](ruby.md) for the validated environment and limitations. Fastrace requires application code instrumentation and reporter initialization.
 
 Security is disabled by default. See the [Security guides](security/index.md) for the released Java, Python, Node.js, and PHP activation and runtime scope.
+
+Java 1.3.4, Python 1.2.4, and Node.js 2.0.1 suppress findings without exploitation evidence by default and provide a switch to include them. See the [Security export policy](security/index.md#finding-export-policy).
