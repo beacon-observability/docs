@@ -40,6 +40,7 @@ const sidebars: SidebarsConfig = {
         'security/java',
         'security/python',
         'security/nodejs',
+        'security/dotnet',
         'security/php',
         'security/ruby',
         'security/findings',

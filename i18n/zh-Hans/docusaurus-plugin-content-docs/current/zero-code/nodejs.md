@@ -6,13 +6,13 @@ description: 无需修改应用源码，通过预加载方式接入 Beacon Node.
 
 # Node.js 零代码接入
 
-Beacon Node.js 1.2.0 支持该软件包已验证的 Node.js 维护版本，最低为 Node.js 18.19。
+Beacon Node.js 2.0.1 在 CI 中覆盖 Node.js 18.19+、20.6+、22 和 24。
 Security 的运行时要求更严格，详见下文。
 
 ## 安装
 
 ```bash
-npm install @beacon-observability/nodejs@1.2.0
+npm install @beacon-observability/nodejs@2.0.1
 ```
 
 ## 启动

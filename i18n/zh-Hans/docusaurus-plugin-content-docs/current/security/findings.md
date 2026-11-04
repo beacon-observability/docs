@@ -8,13 +8,13 @@ description: 解读请求发生记录、证据采样、攻击证据及不同版�
 
 安全发现记录有边界的已建模来源到敏感调用的数据流观测或候选代码风险，并不确认漏洞、
 恶意意图或利用成功。以下行为以已发布的 Java、Node.js、Python 版本为依据，不表示
-PHP 具有相同的分析能力。
+PHP 或 .NET 具有相同的分析能力；.NET 已发布范围见 [.NET Security](dotnet.md)。
 
 ## 已发布版本与事件格式
 
 | 语言 | 首次支持逐请求记录与攻击证据 | 首次使用 schema v2 | 本指南采用的版本 |
 | --- | --- | --- | --- |
-| Java | [1.3.0](https://github.com/beacon-observability/beacon-java/releases/tag/v1.3.0) | [1.3.3](https://github.com/beacon-observability/beacon-java/releases/tag/v1.3.3) | 1.3.3 |
+| Java | [1.3.0](https://github.com/beacon-observability/beacon-java/releases/tag/v1.3.0) | [1.3.3](https://github.com/beacon-observability/beacon-java/releases/tag/v1.3.3) | [1.3.4](https://github.com/beacon-observability/beacon-java/releases/tag/v1.3.4) |
 | Node.js | [1.3.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v1.3.0) | [2.0.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v2.0.0) | [2.0.1](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v2.0.1) |
 | Python | [1.2.0](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.0) | [1.2.3](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.3) | [1.2.4](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.4) |
 
@@ -98,10 +98,10 @@ v1 的 `attack_evidence_counts` 将聚合请求次数划分为三种状态。这
 
 ## 导出策略与投递限制
 
-Node.js 2.0.1 和 Python 1.2.4 默认不向 OpenTelemetry Logs 和证据 JSONL 导出
+Java 1.3.4、Node.js 2.0.1 和 Python 1.2.4 默认不向 OpenTelemetry Logs 和证据 JSONL 导出
 `no_evidence` 发现。设置 `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED=true` 可恢复导出。
-`unknown`、`suspected` 仍可导出，SBOM 不受影响。过滤发生在入队前，不算导出丢失。
-内部检测、去重和同请求证据升级仍然执行。本指南不将此开关声明为 Java 1.3.3 的能力。
+`unknown`、`suspected` 仍可导出，SBOM 不受影响。过滤发生在入队前，不占用队列或发送限额，也不算导出丢失。
+内部检测、去重和同请求证据升级仍然执行。Java 1.3.3 尚无此开关，1.3.4 起提供。
 上面的 A/B/C v1 示例早于此导出策略。
 
 即使详细证据采样，重复发现仍可能增加日志量。队列、内存、单条字节数和速率预算均有
