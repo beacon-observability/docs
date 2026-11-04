@@ -6,7 +6,7 @@ description: Enable Beacon Security in the complete Beacon Java Agent.
 
 # Java Security
 
-Beacon Java 1.1.0 embeds Security in the complete Agent JAR. Keep the same
+Beacon Java 1.3.4 embeds Security in the complete Agent JAR. Keep the same
 `-javaagent` setup from the [Java zero-code guide](../zero-code/java.md); there
 is no separate Security JAR to install or version.
 
@@ -31,6 +31,7 @@ runtime observations or candidate risks rather than confirmed vulnerabilities.
 | Environment variable | Default | Purpose |
 | --- | --- | --- |
 | `BEACON_SECURITY_ENABLED` | `false` | Enables the Security lifecycle and runtime observation. |
+| `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED` | `false` | Exports findings classified as `attack_evidence.status=no_evidence` when set to `true`. |
 | `BEACON_SECURITY_SBOM_ENABLED` | `true` | Collects runtime SBOM while Security is enabled. |
 | `BEACON_SECURITY_LOCAL_OUTPUT_ENABLED` | `false` | Enables process-local diagnostic snapshots. |
 | `BEACON_SECURITY_OUTPUT` | `./beacon-security-output/<instance-id>` | Sets the diagnostic snapshot directory. |
@@ -40,14 +41,15 @@ Normal OpenTelemetry variables configure resource identity, transport, and
 authentication. Local output is for diagnosis only and is not durable or
 cluster-wide delivery.
 
+## Finding export policy
+
+Findings classified as `attack_evidence.status=no_evidence` are not exported by default. `unknown`, `suspected`, and SBOM records remain eligible for export. Set `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED=true` to restore the previous behavior. The switch controls OpenTelemetry Logs and evidence JSONL; internal detection, local finding snapshots, span summaries, and same-request evidence upgrades remain available. See the [shared export policy](index.md#finding-export-policy).
+
+Java also accepts `-Dbeacon.security.export.no-evidence.enabled=true`; put the JVM option before `-jar`.
+
 ## Kubernetes
 
-Release 1.1.0 does not publish a Beacon-owned container image. Put the released
-Agent JAR in the application image, or build a private init image and use the
-[version-pinned initContainer example](https://github.com/beacon-observability/beacon-java/blob/cc55c77be6247d4f0e3835639002415b683a220b/extensions/security/examples/kubernetes/init-container.yaml).
-The init container copies the same complete Agent JAR into an `emptyDir`; the
-application enables it with `JAVA_TOOL_OPTIONS`. Keep local output disabled for
-normal workloads.
+Put the complete released Agent JAR in the application image, or follow the [version-pinned initContainer example](https://github.com/beacon-observability/beacon-java/blob/v1.3.4/extensions/security/examples/kubernetes/init-container.yaml). When using the public image, change the example image to `ghcr.io/beacon-observability/beacon-java:1.3.4` and pin its digest for production. The init container copies the same JAR into an `emptyDir`; the application loads it with `JAVA_TOOL_OPTIONS`. Keep local output disabled for normal workloads.
 
 Remove `BEACON_SECURITY_ENABLED` or set it to `false` to disable Security while
 leaving normal zero-code telemetry active.

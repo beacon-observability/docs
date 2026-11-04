@@ -6,7 +6,7 @@ description: Enable Beacon Security through the existing beacon command.
 
 # Python Security
 
-Beacon Python 1.1.0 includes Security in the `beacon-otel` wheel. It supports
+Beacon Python 1.2.4 includes Security in the `beacon-otel` wheel. It supports
 standard-GIL CPython 3.11 through 3.14 and uses the existing `beacon` command;
 there is no separate Security distribution.
 
@@ -34,6 +34,7 @@ not transform application modules or produce modeled-flow findings.
 | `BEACON_SECURITY_ENABLED` | `false` | Enables the Security lifecycle and runtime SBOM. |
 | `BEACON_SECURITY_PYTHON_INCLUDE` | Empty | Selects application module prefixes for finding collection. |
 | `BEACON_SECURITY_PYTHON_EXCLUDE` | Empty | Excludes module prefixes and takes precedence over include. |
+| `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED` | `false` | Exports findings classified as `attack_evidence.status=no_evidence` when set to `true`. |
 | `BEACON_SECURITY_SBOM_ENABLED` | `true` | Collects runtime SBOM while Security is enabled. |
 | `BEACON_SECURITY_LOCAL_OUTPUT_ENABLED` | `false` | Enables process-local diagnostic files. |
 | `BEACON_SECURITY_OUTPUT` | `./beacon-security-output/<instance-id>` | Sets the diagnostic directory. |
@@ -42,10 +43,14 @@ not transform application modules or produce modeled-flow findings.
 Findings and SBOM records use the OpenTelemetry Logs pipeline. Local output is
 diagnostic evidence and remains off by default.
 
+## Finding export policy
+
+Findings classified as `attack_evidence.status=no_evidence` are not exported by default. `unknown`, `suspected`, and SBOM records remain eligible for export. Set `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED=true` to restore the previous behavior. The switch controls OpenTelemetry Logs and evidence JSONL; internal detection, local finding snapshots, span summaries, and same-request evidence upgrades remain available. See the [shared export policy](index.md#finding-export-policy).
+
 ## Kubernetes and Gunicorn
 
-Install `beacon-otel==1.1.0` in the application image and follow the
-[version-pinned Deployment example](https://github.com/beacon-observability/beacon-python/blob/v1.1.0/beacon-otel/examples/kubernetes/deployment.yaml).
+Install `beacon-otel==1.2.4` in the application image and follow the
+[version-pinned Deployment example](https://github.com/beacon-observability/beacon-python/blob/v1.2.4/beacon-otel/examples/kubernetes/deployment.yaml).
 No Security sidecar or init container is needed.
 
 Gunicorn must initialize telemetry after each worker fork. Use the release's

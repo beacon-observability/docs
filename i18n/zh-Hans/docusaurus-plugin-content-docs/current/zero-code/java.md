@@ -6,14 +6,13 @@ description: 使用 -javaagent 为 Java 应用挂载 Beacon。
 
 # Java 零代码接入
 
-Beacon Java 1.1.0 以单个 Agent JAR 发布。探针需要 JDK 支持的运行时；Profile
-要求 JDK 11 或更高版本。同一个 JAR 已包含可选的 Security 能力。
+Beacon Java 1.3.4 以单个 Agent JAR 交付。[完整发布验收](https://github.com/beacon-observability/beacon-java/actions/runs/41728142815)覆盖 JDK 8、11、17、21、25 和 26。实验性 Profile 要求 JDK 11 或更高版本；同一个 JAR 包含可选的 Security 能力。
 
 ## 安装
 
 ```bash
 curl -fL -o beacon-javaagent.jar \
-  https://github.com/beacon-observability/beacon-java/releases/download/v1.1.0/beacon-javaagent-1.1.0.jar
+  https://github.com/beacon-observability/beacon-java/releases/download/v1.3.4/beacon-javaagent-1.3.4.jar
 ```
 
 ## 启动
@@ -40,6 +39,17 @@ OTEL_JAVAAGENT_DEBUG=true \
 也可以在 `-jar` 之前添加 JVM 参数 `-Dotel.javaagent.debug=true`；JVM 系统属性优先于同名环境变量。日志用于检查 Agent 加载、插桩匹配和导出错误。
 
 排障后恢复原启动命令；若在服务配置中设置了该变量或 JVM 参数，请移除并重启应用。
+
+## 文本日志关联
+
+Java 1.3.4 可在 JVM 启动时自动为现有文本日志格式补齐 `service.name`、`trace_id` 和 `span_id`，无需修改应用日志配置。此功能默认关闭：
+
+```bash
+export OTEL_INSTRUMENTATION_LOGGING_PATTERN_INJECTION_ENABLED=true
+java -javaagent:./beacon-javaagent.jar -jar app.jar
+```
+
+也可使用 JVM 参数 `-Dotel.instrumentation.logging.pattern-injection.enabled=true`。支持 Logback classic 1.0+、Log4j 1.2 PatternLayout 和 Log4j2 2.7+ PatternLayout，需要保留对应的 MDC/context-data instrumentation。JSON 布局和 Log4j2 PatternSelector 分支不在此范围内。有效 Span 之外仍可输出服务名，但不会生成 Trace/Span ID。参阅[该版本的日志关联说明](https://github.com/beacon-observability/beacon-java/blob/v1.3.4/beacon/LOGGING.md)。
 
 ## Profile
 

@@ -6,15 +6,13 @@ description: Attach Beacon Java to an application with -javaagent.
 
 # Java zero-code instrumentation
 
-Beacon Java 1.1.0 ships as one agent JAR. It requires a JDK-supported runtime;
-profiling requires JDK 11 or later. The same JAR contains the optional Security
-capability.
+Beacon Java 1.3.4 ships as one Agent JAR. Its [full release validation](https://github.com/beacon-observability/beacon-java/actions/runs/41728142815) covers JDK 8, 11, 17, 21, 25, and 26. Experimental profiling requires JDK 11 or later. The same JAR contains the optional Security capability.
 
 ## Install
 
 ```bash
 curl -fL -o beacon-javaagent.jar \
-  https://github.com/beacon-observability/beacon-java/releases/download/v1.1.0/beacon-javaagent-1.1.0.jar
+  https://github.com/beacon-observability/beacon-java/releases/download/v1.3.4/beacon-javaagent-1.3.4.jar
 ```
 
 ## Run
@@ -41,6 +39,17 @@ OTEL_JAVAAGENT_DEBUG=true \
 Alternatively, add `-Dotel.javaagent.debug=true` before `-jar`. The JVM system property takes precedence over the environment variable. Use these logs to inspect Agent loading, instrumentation matching, and export errors.
 
 Return to the normal launch command after troubleshooting. If the variable or JVM property was added to service configuration, remove it and restart the application.
+
+## Text log correlation
+
+Java 1.3.4 can add missing `service.name`, `trace_id`, and `span_id` fields to existing text patterns without editing application logging configuration. Enable this at JVM startup; the default is `false`:
+
+```bash
+export OTEL_INSTRUMENTATION_LOGGING_PATTERN_INJECTION_ENABLED=true
+java -javaagent:./beacon-javaagent.jar -jar app.jar
+```
+
+The JVM option `-Dotel.instrumentation.logging.pattern-injection.enabled=true` is equivalent. Supported layouts are Logback classic 1.0+, Log4j 1.2 PatternLayout, and Log4j2 2.7+ PatternLayout; keep the corresponding MDC/context-data instrumentation enabled. JSON layouts and Log4j2 PatternSelector branches are excluded. The service name remains available outside a valid span, but the Agent does not generate Trace/Span IDs for those logs. See the [release logging reference](https://github.com/beacon-observability/beacon-java/blob/v1.3.4/beacon/LOGGING.md).
 
 ## Profiling
 

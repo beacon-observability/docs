@@ -6,7 +6,7 @@ description: 通过现有 beacon 命令启用 Beacon Security。
 
 # Python Security
 
-Beacon Python 1.1.0 已在 `beacon-otel` wheel 中包含 Security。它支持标准 GIL 的
+Beacon Python 1.2.4 已在 `beacon-otel` wheel 中包含 Security。它支持标准 GIL 的
 CPython 3.11 至 3.14，并继续使用现有 `beacon` 命令，无需独立 Security 发行包。
 
 ## 启用 Security
@@ -32,6 +32,7 @@ beacon uvicorn orders.asgi:application --host 0.0.0.0 --port 8000
 | `BEACON_SECURITY_ENABLED` | `false` | 启用 Security 生命周期和运行时 SBOM。 |
 | `BEACON_SECURITY_PYTHON_INCLUDE` | 空 | 选择参与安全发现采集的应用模块前缀。 |
 | `BEACON_SECURITY_PYTHON_EXCLUDE` | 空 | 排除模块前缀，优先级高于 include。 |
+| `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED` | `false` | 设为 `true` 后导出 `attack_evidence.status=no_evidence` 的安全发现。 |
 | `BEACON_SECURITY_SBOM_ENABLED` | `true` | 在 Security 启用时采集运行时 SBOM。 |
 | `BEACON_SECURITY_LOCAL_OUTPUT_ENABLED` | `false` | 启用进程本地诊断文件。 |
 | `BEACON_SECURITY_OUTPUT` | `./beacon-security-output/<instance-id>` | 设置诊断目录。 |
@@ -39,10 +40,14 @@ beacon uvicorn orders.asgi:application --host 0.0.0.0 --port 8000
 
 安全发现与 SBOM 记录使用 OpenTelemetry Logs 管道。本地输出是诊断证据，默认保持关闭。
 
+## 安全发现的导出策略
+
+默认不导出 `attack_evidence.status=no_evidence` 的安全发现；`unknown`、`suspected` 和 SBOM 的导出资格不变。需要恢复旧行为时，设置 `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED=true`。该开关影响 OpenTelemetry Logs 和证据 JSONL，不关闭内部检测、本地发现快照或 Span 摘要，也不阻止同一请求中的证据升级。参阅[统一导出策略](index.md#finding-export-policy)。
+
 ## Kubernetes 与 Gunicorn
 
-在应用镜像中安装 `beacon-otel==1.1.0`，并参考
-[固定版本的 Deployment 示例](https://github.com/beacon-observability/beacon-python/blob/v1.1.0/beacon-otel/examples/kubernetes/deployment.yaml)。
+在应用镜像中安装 `beacon-otel==1.2.4`，并参考
+[固定版本的 Deployment 示例](https://github.com/beacon-observability/beacon-python/blob/v1.2.4/beacon-otel/examples/kubernetes/deployment.yaml)。
 不需要 Security sidecar 或 init container。
 
 Gunicorn 必须在每个 Worker fork 后初始化遥测。请使用该版本提供的

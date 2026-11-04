@@ -6,7 +6,7 @@ description: Enable Beacon Security through the Node.js ESM preload.
 
 # Node.js Security
 
-Beacon Node.js 1.2.0 includes Security in
+Beacon Node.js 2.0.1 includes Security in
 `@beacon-observability/nodejs`. Applications normally install only that
 complete package. Security requires Node.js 22.22.3+ or 24.11.1+ because it
 uses synchronous module hooks for scoped source transformation.
@@ -17,7 +17,7 @@ Use the ESM `--import` preload. The CommonJS `--require` preload still starts
 normal telemetry and profiling but cannot activate Security transformation.
 
 ```bash
-npm install @beacon-observability/nodejs@1.2.0
+npm install @beacon-observability/nodejs@2.0.1
 
 export NODE_OPTIONS="--import @beacon-observability/nodejs/register"
 export BEACON_SECURITY_ENABLED=true
@@ -41,6 +41,7 @@ transformed.
 | `BEACON_SECURITY_ENABLED` | `false` | Enables the Security lifecycle and runtime SBOM. |
 | `BEACON_SECURITY_NODE_INCLUDE` | Empty | Selects application source roots for finding collection. |
 | `BEACON_SECURITY_NODE_EXCLUDE` | Empty | Excludes source roots and takes precedence over include. |
+| `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED` | `false` | Exports findings classified as `attack_evidence.status=no_evidence` when set to `true`. |
 | `BEACON_SECURITY_SBOM_ENABLED` | `true` | Collects runtime SBOM while Security is enabled. |
 | `BEACON_SECURITY_LOCAL_OUTPUT_ENABLED` | `false` | Enables process-local diagnostic files. |
 | `BEACON_SECURITY_OUTPUT` | `./beacon-security-output/<instance-id>` | Sets the diagnostic directory. |
@@ -48,10 +49,14 @@ transformed.
 Findings and SBOM records use the OpenTelemetry Logs pipeline. Local output is
 diagnostic evidence and remains off by default.
 
+## Finding export policy
+
+Findings classified as `attack_evidence.status=no_evidence` are not exported by default. `unknown`, `suspected`, and SBOM records remain eligible for export. Set `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED=true` to restore the previous behavior. The switch controls OpenTelemetry Logs and evidence JSONL; internal detection, local finding snapshots, span summaries, and same-request evidence upgrades remain available. See the [shared export policy](index.md#finding-export-policy).
+
 ## Kubernetes
 
 Install the complete package in the application image and follow the
-[version-pinned Deployment example](https://github.com/beacon-observability/beacon-nodejs/blob/v1.2.0/packages/security-nodejs/examples/kubernetes/deployment.yaml).
+[version-pinned Deployment example](https://github.com/beacon-observability/beacon-nodejs/blob/v2.0.1/packages/security-nodejs/examples/kubernetes/deployment.yaml).
 The normal application container only needs the ESM preload and environment
 variables; no Security sidecar or init container is required.
 

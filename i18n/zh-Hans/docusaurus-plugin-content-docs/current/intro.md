@@ -40,3 +40,5 @@ Rust 应用请使用 **[Fastrace Rust SDK](fastrace.md)**，可用版本与下�
 Ruby 当前提供源码发行包，已验证 Net::HTTP 链路路径；未发布 Beacon gem 或零代码预加载入口，验收环境与限制请参阅 [Ruby 指南](ruby.md)。Fastrace 需要在应用代码中显式埋点并初始化 reporter。
 
 Security 默认关闭。已发布的 Java、Python 和 Node.js 启用方式及运行时范围请参阅 [Security 指南](security/index.md)。
+
+Java 1.3.4、Python 1.2.4 和 Node.js 2.0.1 默认过滤无利用证据的安全发现，并提供恢复导出的开关。参阅 [Security 导出策略](security/index.md#finding-export-policy)。
