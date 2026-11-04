@@ -42,6 +42,7 @@ const sidebars: SidebarsConfig = {
         'security/nodejs',
         'security/dotnet',
         'security/php',
+        'security/ruby',
         'security/findings',
       ],
     },
