@@ -1,4 +1,5 @@
 ---
+sidebar_label: Java
 sidebar_position: 1
 title: Java profiling
 description: Export Beacon Java JFR profiles to local files or an HTTP receiver.

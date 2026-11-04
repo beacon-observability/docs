@@ -1,4 +1,5 @@
 ---
+sidebar_label: Ruby
 sidebar_position: 5
 title: Ruby Security
 description: Enable the GitHub-distributed Beacon Ruby Security gem and verify findings and runtime inventories.

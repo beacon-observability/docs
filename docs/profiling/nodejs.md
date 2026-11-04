@@ -1,4 +1,5 @@
 ---
+sidebar_label: Node.js
 sidebar_position: 3
 title: Node.js profiling
 description: Upload Beacon Node.js wall and heap profiles over HTTP.

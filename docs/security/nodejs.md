@@ -1,4 +1,5 @@
 ---
+sidebar_label: Node.js
 sidebar_position: 3
 title: Node.js Security
 description: Enable Beacon Security through the Node.js ESM preload.

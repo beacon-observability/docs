@@ -1,4 +1,5 @@
 ---
+sidebar_label: .NET
 sidebar_position: 4
 title: .NET Security
 description: 在 Beacon .NET 中启用实验性 Security 与运行时程序集清单。

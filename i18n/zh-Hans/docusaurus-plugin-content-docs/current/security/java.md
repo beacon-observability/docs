@@ -1,4 +1,5 @@
 ---
+sidebar_label: Java
 sidebar_position: 1
 title: Java Security
 description: 在完整 Beacon Java Agent 中启用 Security。

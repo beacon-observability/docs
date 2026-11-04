@@ -1,4 +1,5 @@
 ---
+sidebar_label: Python
 sidebar_position: 2
 title: Python profiling
 description: Export Beacon Python profiles with OTLP/HTTP or pprof.

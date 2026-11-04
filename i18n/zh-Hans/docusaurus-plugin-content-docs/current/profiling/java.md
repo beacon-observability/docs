@@ -1,4 +1,5 @@
 ---
+sidebar_label: Java
 sidebar_position: 1
 title: Java Profile
 description: 将 Beacon Java JFR Profile 写入本地文件或发送到 HTTP 接收端。

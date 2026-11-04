@@ -1,4 +1,5 @@
 ---
+sidebar_label: Java
 sidebar_position: 1
 title: Java Security
 description: Enable Beacon Security in the complete Beacon Java Agent.

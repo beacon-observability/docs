@@ -1,4 +1,5 @@
 ---
+sidebar_label: PHP
 sidebar_position: 4
 title: PHP Security
 description: 在已发布的 Beacon PHP Agent 中启用实验性 Security 与运行时 SBOM。

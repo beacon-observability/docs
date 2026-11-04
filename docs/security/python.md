@@ -1,4 +1,5 @@
 ---
+sidebar_label: Python
 sidebar_position: 2
 title: Python Security
 description: Enable Beacon Security through the existing beacon command.
