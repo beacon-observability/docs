@@ -1,4 +1,5 @@
 ---
+sidebar_label: Ruby
 sidebar_position: 5
 title: Ruby Security
 description: 启用通过 GitHub 分发的 Beacon Ruby Security gem，验证安全发现和运行时清单。

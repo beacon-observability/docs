@@ -1,4 +1,5 @@
 ---
+sidebar_label: .NET
 sidebar_position: 4
 title: .NET Security
 description: Enable experimental Security and runtime assembly inventory in Beacon .NET.

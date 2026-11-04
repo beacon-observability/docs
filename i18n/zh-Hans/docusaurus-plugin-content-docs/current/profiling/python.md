@@ -1,4 +1,5 @@
 ---
+sidebar_label: Python
 sidebar_position: 2
 title: Python Profile
 description: 通过 OTLP/HTTP 或 pprof 导出 Beacon Python Profile。

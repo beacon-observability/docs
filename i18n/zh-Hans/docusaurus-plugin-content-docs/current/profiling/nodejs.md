@@ -1,4 +1,5 @@
 ---
+sidebar_label: Node.js
 sidebar_position: 3
 title: Node.js Profile
 description: 通过 HTTP 上传 Beacon Node.js wall 与 heap profile。

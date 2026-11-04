@@ -1,4 +1,5 @@
 ---
+sidebar_label: PHP
 sidebar_position: 4
 title: PHP Security
 description: Enable experimental Security and runtime SBOM in the released Beacon PHP Agent.
