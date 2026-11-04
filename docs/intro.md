@@ -30,7 +30,7 @@ Zero-code setups require deployment configuration, while application source code
 | [Python](zero-code/python.md) | Zero-code | Launcher: `beacon` | [Opt in](profiling/python.md) | [Opt in](security/python.md) | [Releases](https://github.com/beacon-observability/beacon-python/releases) |
 | [Node.js](zero-code/nodejs.md) | Zero-code | Preload: `NODE_OPTIONS` | [Opt in](profiling/nodejs.md) | [Opt in](security/nodejs.md) | [Releases](https://github.com/beacon-observability/beacon-nodejs/releases) |
 | [.NET](zero-code/dotnet.md) | Zero-code | Launcher: `beacon-dotnet run` | No supported setup | No released capability | [Releases](https://github.com/beacon-observability/beacon-dotnet/releases) |
-| [PHP](zero-code/php.md) | Zero-code | Native hook + Composer autoload | No supported setup | No released capability | [Composer](https://github.com/beacon-observability/beacon-php/releases) · [Extension](https://github.com/beacon-observability/beacon-php-instrumentation/releases) |
+| [PHP](zero-code/php.md) | Zero-code | Installer: `beacon-setup.php` | No supported setup | [Experimental, opt in](security/php.md) | [Releases](https://github.com/beacon-observability/beacon-php/releases) |
 | [Ruby](ruby.md) | SDK (source integration) | Source integration: Net::HTTP tracing | Outside validated scope | Outside validated scope | [Releases](https://github.com/beacon-observability/beacon-ruby/releases) |
 | [Rust / Fastrace](fastrace.md) | SDK | Tracing SDK: explicit instrumentation | Not provided | Not provided | [Releases](https://github.com/beacon-observability/fastrace/releases) |
 | [Browser / Rumable](rumable.md) | Zero-code | Web SDK injection: Nginx / IIS | Not provided | Not provided | [Releases](https://github.com/beacon-observability/rumable/releases) |
@@ -39,4 +39,4 @@ Each project is versioned and released independently. Follow the release links f
 
 Ruby currently provides a source release with a validated Net::HTTP trace path. It does not publish a Beacon gem or a zero-code preload; see the [Ruby guide](ruby.md) for the validated environment and limitations. Fastrace requires application code instrumentation and reporter initialization.
 
-Security is disabled by default. See the [Security guides](security/index.md) for the released Java, Python, and Node.js activation and runtime scope.
+Security is disabled by default. See the [Security guides](security/index.md) for the released Java, Python, Node.js, and PHP activation and runtime scope.

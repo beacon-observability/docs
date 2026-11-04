@@ -36,7 +36,7 @@ const sidebars: SidebarsConfig = {
       type: 'category',
       label: 'Security',
       link: {type: 'doc', id: 'security/index'},
-      items: ['security/java', 'security/python', 'security/nodejs'],
+      items: ['security/java', 'security/python', 'security/nodejs', 'security/php'],
     },
     'configuration/index',
     'troubleshooting/index',
