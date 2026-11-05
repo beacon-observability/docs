@@ -6,21 +6,21 @@ description: 通过 Nginx 或 IIS 接入浏览器真实用户监测，无需修�
 
 # Rumable
 
-Rumable 是 Beacon 的浏览器真实用户监测（RUM）[零代码接入](zero-code/index.md)项目。它通过 Nginx 或 IIS 在 HTML 响应中注入随包提供的 Web SDK，无需修改应用源代码。浏览器直接向配置的 RUM 接收端发送数据，CLI 在部署完成后退出。
+Rumable 是 Beacon 的浏览器真实用户监测（RUM）[零代码接入](zero-code/index.md)项目。它通过 Nginx 或 IIS 在 HTML 响应中注入随包提供或配置为 CDN 来源的 Web SDK，无需修改应用源代码。浏览器直接向配置的 RUM 接收端发送数据，CLI 在部署完成后退出。
 
-当前版本为 **[v0.1.9](https://github.com/beacon-observability/rumable/releases/tag/v0.1.9)**。Rumable 保留自己的名称、`rumable` 命令、TOML 配置和独立发布节奏。
+当前版本为 **[v0.1.11](https://github.com/beacon-observability/rumable/releases/tag/v0.1.11)**。Rumable 保留自己的名称、`rumable` 命令、TOML 配置和独立发布节奏。
 
 ## 前置条件
 
-- **Linux / Nginx：** Bash、curl、sudo，以及启用了 `http_sub_module` 的 Nginx。
+- **Linux / Nginx：** Bash、curl、sudo，以及启用了 `http_sub_module` 的 Nginx 1.9.4+。HTML 必须包含普通 `<head>` 标签；匹配不区分大小写，不支持标签属性或标签内额外空白。
 - **Windows / IIS：** 管理员权限、PowerShell 5.1 或更高版本、URL Rewrite、静态内容功能，以及已启动的独立应用池。一键 IIS 接入要求 64 位操作系统。
 - 已创建浏览器 RUM 应用，接收端兼容随包提供的 SDK。准备应用 ID、上报地址，以及浏览器网关模式需要的浏览器 Client Token。
 
-Linux 和 Windows 安装包均从 [GitHub Releases](https://github.com/beacon-observability/rumable/releases/latest) 下载。安装器会检测架构并选择匹配的包，在适用系统上选择兼容版。操作系统和服务器要求请参阅[兼容性指南](https://github.com/beacon-observability/rumable/blob/v0.1.9/docs/compatibility.md)。目标服务器无需安装 Go 或 Node.js。
+Linux 和 Windows 安装包均从 [GitHub Releases](https://github.com/beacon-observability/rumable/releases/latest) 下载。安装器会检测架构并选择匹配的包，在适用系统上选择兼容版。操作系统和服务器要求请参阅[兼容性指南](https://github.com/beacon-observability/rumable/blob/v0.1.11/docs/compatibility.md)。目标服务器无需安装 Go 或 Node.js。
 
 ## 接入网站
 
-1. 打开[英文配置页](https://beacon-observability.github.io/rumable/latest/setup/index.html)。本次发布也提供[固定版本配置页](https://beacon-observability.github.io/rumable/0.1.9/setup/index.html)。
+1. 打开[配置页](https://beacon-observability.github.io/rumable/latest/setup/index.html)。本次发布也提供[固定版本配置页](https://beacon-observability.github.io/rumable/0.1.11/setup/index.html)。页面支持英文、简体中文、繁体中文、印尼语、日语和韩语。
 2. 填写应用 ID、上报方式、地址和所需的浏览器 Token，选择 Linux / Nginx 或 Windows / IIS，并确认采样与隐私设置。默认从网站同源地址提供随包 SDK；Session Replay 可按需开启。
 3. 确认页面已加载匹配的版本清单，再复制生成的命令。配置在浏览器中生成。命令中的浏览器 Token 使用 Base64 编码，编码不等于加密；应使用浏览器 Client Token，不能使用管理 API Key。
 4. 使用所需的管理员权限，在目标 Web 服务器执行命令。安装器从固定版本的 GitHub Release 下载包、校验 SHA256，并发现目标网站。只有一个候选站点时自动选择；存在多个候选时需要交互式终端。
@@ -32,20 +32,28 @@ Linux 和 Windows 安装包均从 [GitHub Releases](https://github.com/beacon-ob
 Linux 安装完成后，将 `REPLACE_SITE_ID` 替换为接入时输出的站点 ID：
 
 ```bash
-rumable=/opt/rumable/0.1.9/rumable
+rumable=/opt/rumable/0.1.11/rumable
 sudo "$rumable" status --state-dir /var/lib/rumable --site REPLACE_SITE_ID
 sudo "$rumable" probe --state-dir /var/lib/rumable --site REPLACE_SITE_ID
 ```
 
 随后在浏览器打开网站，检查 SDK 初始化与请求，并确认接收端已收到事件。HTTP 探测通过只说明注入和脚本可访问，不代表浏览器执行与数据入库已经验证。
 
-更新时保留原站点 ID 和状态。仅安装新版 CLI 不会升级已部署站点的 SDK，还需要对该站点重新执行 setup 或 enable。Windows 命令、手工指定目标、禁用和回滚请参阅[用户指南](https://github.com/beacon-observability/rumable/blob/v0.1.9/USER-GUIDE.md)。
+更新时保留原站点 ID 和状态。仅安装新版 CLI 不会升级已部署站点的 SDK，还需要对该站点重新执行 setup 或 enable。Windows 命令、手工指定目标、禁用和回滚请参阅[用户指南](https://github.com/beacon-observability/rumable/blob/v0.1.11/USER-GUIDE.md)。
+
+## SDK 来源与 Nginx 验收
+
+默认从网站同源地址提供随包 SDK。可选的 HTTPS CDN 支持稳定版 v3 SDK；启用时检查格式，记录实际版本与 SHA-256，无须与内置版本一致。请选择可信来源，并在变更后验证采集与回放。部署后的 probe 和回滚仍要求匹配已保存摘要。可选 SRI 会拒绝变化后的内容，且需要 CDN 支持 CORS；建议使用内容固定的地址，避免被动更新。回滚无法恢复已被覆盖的 CDN 文件；CDN 加载失败不会自动切换至本地资源。
+
+Nginx 的 `includePaths` 和 `excludePaths` 控制注入范围，`probePaths` 仅选择验收页面；未列入验收路径的普通 head 页面仍可注入。请覆盖各页面模板。带 Range 的请求绕过 Rumable 注入。更新旧版属性 head 部署时，模板不兼容会在修改配置前停止；停用与回滚保留历史兼容能力。详见[普通 head 支持边界](https://github.com/beacon-observability/rumable/blob/v0.1.11/docs/nginx-plain-head.md)。
+
+本版保留 v0.1.10 对 IIS OTel 空环境快照的修复。发布打包会检查 Windows 可执行文件启动及 PowerShell 契约；v0.1.11 未重复执行原生 IIS 验收和真实数据入库验证。详见[发布说明](https://github.com/beacon-observability/rumable/releases/tag/v0.1.11)。
 
 ## 浏览器与服务端数据
 
 Rumable 浏览器上报使用 TOML 和随包 SDK 的接收端设置。[公共配置](configuration/index.md)中的 `OTEL_EXPORTER_OTLP_*` 环境变量用于服务端语言探针，不用于配置浏览器 RUM 接收端。
 
-可选的服务端 OpenTelemetry 集成需要单独配置，详见 [Rumable OTel 指南](https://github.com/beacon-observability/rumable/blob/v0.1.9/docs/otel.md)。
+可选的服务端 OpenTelemetry 集成需要单独配置，详见 [Rumable OTel 指南](https://github.com/beacon-observability/rumable/blob/v0.1.11/docs/otel.md)。
 
 - [源代码仓库](https://github.com/beacon-observability/rumable)
 - [发布与下载指南](https://github.com/beacon-observability/rumable/blob/main/docs/github-release.md)
