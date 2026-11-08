@@ -6,13 +6,13 @@ description: Install Beacon PHP with one setup script and automatically load the
 
 # PHP zero-code instrumentation
 
-[Beacon PHP 1.3.0](https://github.com/beacon-observability/beacon-php/releases/tag/v1.3.0) supports PHP 8.2, 8.3 and 8.4. The default standalone installer selects Beacon native extension 1.0.1 and installs an isolated Agent runtime. It requires no Composer and preserves application dependencies. Linux glibc x86_64 has passed standalone acceptance; see the [release-specific deployment guide](https://github.com/beacon-observability/beacon-php/blob/v1.3.0/docs/standalone.md) for platform constraints.
+[Beacon PHP 1.3.1](https://github.com/beacon-observability/beacon-php/releases/tag/v1.3.1) supports PHP 8.2, 8.3 and 8.4. The default standalone installer selects Beacon native extension 1.1.0 and installs an isolated Agent runtime. It requires no Composer and preserves application dependencies. Linux glibc x86_64 has passed standalone acceptance; see the [release-specific deployment guide](https://github.com/beacon-observability/beacon-php/blob/v1.3.1/docs/standalone.md) for platform constraints.
 
 ## Install
 
 ```bash
 curl --fail --location --output beacon-setup.php \
-  https://github.com/beacon-observability/beacon-php/releases/download/v1.3.0/beacon-setup.php
+  https://github.com/beacon-observability/beacon-php/releases/download/v1.3.1/beacon-setup.php
 php beacon-setup.php --php-bin=all \
   --service-name=my-php-service \
   --otlp-endpoint=http://127.0.0.1:4318
@@ -20,7 +20,7 @@ php beacon-setup.php --php-bin=all \
 
 Run with permission to write PHP's extension/INI directories and the installation directory, which defaults to `/opt/beacon/php` on Unix. `--dry-run` previews changes. The release includes `SHA256SUMS` for independent installer verification; the installer verifies its downloaded runtime and native archives.
 
-The runtime loads before application code and includes selected official PDO, cURL, Guzzle, Laravel and Symfony instrumentation. Existing `auto_prepend_file` behavior is preserved. Applications that need manual spans to share the Agent's SDK/context can use the [advanced Composer project mode](https://github.com/beacon-observability/beacon-php/blob/v1.3.0/docs/standalone.md#advanced-composer-project-integration).
+The runtime loads before application code and includes selected official PDO, cURL, Guzzle, Laravel and Symfony instrumentation. Existing `auto_prepend_file` behavior is preserved. Applications that need manual spans to share the Agent's SDK/context can use the [advanced Composer project mode](https://github.com/beacon-observability/beacon-php/blob/v1.3.1/docs/standalone.md#advanced-composer-project-integration).
 
 ## Run and manage
 
@@ -47,8 +47,8 @@ php beacon-setup.php uninstall --php-bin=all
 [Beacon PHP Instrumentation 1.1.0](https://github.com/beacon-observability/beacon-php-instrumentation/releases/tag/v1.1.0)
 is a separate native extension release based on OpenTelemetry extension 1.5.0.
 Its asset/product version is 1.1.0; `phpversion("opentelemetry")` reports 1.5.0.
-The PHP Agent 1.3.0 installer above still selects native extension 1.0.1.
-Running its upgrade command does not select native extension 1.1.0.
+The PHP Agent 1.3.1 installer selects native extension 1.1.0.
+Download that installer before upgrading an existing installation.
 
 For an explicitly managed native installation, use the matching archive and
 `SHA256SUMS` from that release. Match PHP 8.2/8.3/8.4, operating system,
