@@ -42,6 +42,20 @@ php beacon-setup.php uninstall --php-bin=all
 
 [Security 与运行时 SBOM](../security/php.md) 为实验性能力，需要显式开启。Beacon PHP 当前不提供 Profile 组件。
 
+## 原生扩展 1.1.0
+
+[Beacon PHP Instrumentation 1.1.0](https://github.com/beacon-observability/beacon-php-instrumentation/releases/tag/v1.1.0)
+是基于 OpenTelemetry 扩展 1.5.0 的独立原生扩展发布。产物与产品版本为 1.1.0，
+`phpversion("opentelemetry")` 返回 1.5.0。
+上述 PHP Agent 1.3.0 安装器仍选择原生扩展 1.0.1，其升级命令不会选择原生扩展 1.1.0。
+
+显式管理原生扩展时，从该 Release 下载匹配的归档并用 `SHA256SUMS` 校验。
+PHP 8.2/8.3/8.4、操作系统、架构、NTS/TS 和 Windows 编译器 ABI 必须完全匹配；
+Windows PHP 8.2/8.3 使用 VS16，PHP 8.4 使用 VS17。参阅
+[固定版本的原生安装说明](https://github.com/beacon-observability/beacon-php-instrumentation/blob/v1.1.0/beacon/README.md)。
+Linux x86_64/PHP 8.3 产物已与正式 Agent 1.3.0 运行时完成真实 PDO 链路接收验收。
+发布 CI 矩阵不等于完整的应用或框架兼容性保证。
+
 ## 调试与诊断
 
 ```bash

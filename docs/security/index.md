@@ -14,7 +14,7 @@ explicit Rack/SDK setup. Security is disabled by default.
 | --- | --- | --- | --- |
 | [Java](java.md) | [1.3.4](https://github.com/beacon-observability/beacon-java/releases/tag/v1.3.4) | The complete Java Agent | One Agent JAR |
 | [Python](python.md) | [1.2.4](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.4) | Standard-GIL CPython 3.11–3.14 | The existing `beacon` command |
-| [Node.js](nodejs.md) | [2.0.1](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v2.0.1) | Node.js 22.22.3+ or 24.11.1+ | The existing package with ESM preload |
+| [Node.js](nodejs.md) | [2.0.2](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v2.0.2) | Node.js 22.22.3+ or 24.11.1+ | The existing package with ESM preload |
 | [.NET](dotnet.md) | 1.1.1, experimental | CoreCLR .NET 8–10: Linux glibc x64, Windows x64, macOS ARM64 | The existing `beacon-dotnet run` command |
 | [PHP](php.md) | 1.3.0, experimental | PHP 8.2–8.4, Linux glibc x86_64 validated | The existing installer and Agent runtime |
 | [Ruby](ruby.md) | 1.1.0 / gem 0.1.0 | Linux CRuby 3.3/3.4/4.0 CI; 3.3.12 Collector acceptance | GitHub gem and Rack middleware |
@@ -40,4 +40,4 @@ approximate correlation; see [Ruby Security](ruby.md) for its coverage.
 
 ## Finding export policy {#finding-export-policy}
 
-Java 1.3.4, Node.js 2.0.1, and Python 1.2.4 filter `no_evidence` events by default, so an absent event does not mean no risk was detected. Set `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED=true` to include them; the default is `false`. See [Findings and evidence](findings.md) for status meanings, same-request upgrades, and delivery limits.
+Java 1.3.4, Node.js 2.0.2, and Python 1.2.4 filter `no_evidence` events by default, so an absent event does not mean no risk was detected. Set `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED=true` to include them; the default is `false`. See [Findings and evidence](findings.md) for status meanings, same-request upgrades, and delivery limits.

@@ -42,6 +42,23 @@ php beacon-setup.php uninstall --php-bin=all
 
 [Security and runtime SBOM](../security/php.md) are experimental and opt-in. Beacon PHP does not currently ship a profiling component.
 
+## Native extension 1.1.0
+
+[Beacon PHP Instrumentation 1.1.0](https://github.com/beacon-observability/beacon-php-instrumentation/releases/tag/v1.1.0)
+is a separate native extension release based on OpenTelemetry extension 1.5.0.
+Its asset/product version is 1.1.0; `phpversion("opentelemetry")` reports 1.5.0.
+The PHP Agent 1.3.0 installer above still selects native extension 1.0.1.
+Running its upgrade command does not select native extension 1.1.0.
+
+For an explicitly managed native installation, use the matching archive and
+`SHA256SUMS` from that release. Match PHP 8.2/8.3/8.4, operating system,
+architecture, NTS/TS and Windows compiler ABI exactly; Windows PHP 8.2/8.3
+use VS16, and PHP 8.4 uses VS17. See the
+[versioned native installation guide](https://github.com/beacon-observability/beacon-php-instrumentation/blob/v1.1.0/beacon/README.md).
+The Linux x86_64/PHP 8.3 artifact passed real PDO trace receipt with the
+published Agent 1.3.0 runtime. The release CI matrix is not an application or
+framework compatibility guarantee.
+
 ## Debugging and diagnostics
 
 ```bash

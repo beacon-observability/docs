@@ -13,7 +13,7 @@ Ruby 通过可选 gem 分发，需要显式配置 Rack/SDK。Security 默认关�
 | --- | --- | --- | --- |
 | [Java](java.md) | [1.3.4](https://github.com/beacon-observability/beacon-java/releases/tag/v1.3.4) | 完整 Java Agent | 单个 Agent JAR |
 | [Python](python.md) | [1.2.4](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.4) | 标准 GIL 的 CPython 3.11–3.14 | 现有 `beacon` 命令 |
-| [Node.js](nodejs.md) | [2.0.1](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v2.0.1) | Node.js 22.22.3+ 或 24.11.1+ | 现有软件包加 ESM 预加载 |
+| [Node.js](nodejs.md) | [2.0.2](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v2.0.2) | Node.js 22.22.3+ 或 24.11.1+ | 现有软件包加 ESM 预加载 |
 | [.NET](dotnet.md) | 1.1.1，实验性 | CoreCLR .NET 8–10：Linux glibc x64、Windows x64、macOS ARM64 | 现有 `beacon-dotnet run` 命令 |
 | [PHP](php.md) | 1.3.0，实验性 | PHP 8.2–8.4，已验证 Linux glibc x86_64 | 现有安装器与 Agent 运行时 |
 | [Ruby](ruby.md) | 1.1.0 / gem 0.1.0 | Linux CRuby 3.3/3.4/4.0 CI，3.3.12 Collector 验收 | GitHub gem 与 Rack 中间件 |
@@ -35,4 +35,4 @@ schema v1/v2 差异；不能据此推断 PHP、.NET 或 Ruby 具有相同覆盖�
 
 ## 安全发现的导出策略 {#finding-export-policy}
 
-Java 1.3.4、Node.js 2.0.1 和 Python 1.2.4 默认过滤 `no_evidence` 事件，没有收到事件不代表没有检测到风险。设置 `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED=true` 可恢复导出，默认值为 `false`。参见[安全发现与证据](findings.md)，了解状态含义、同请求升级与投递限制。
+Java 1.3.4、Node.js 2.0.2 和 Python 1.2.4 默认过滤 `no_evidence` 事件，没有收到事件不代表没有检测到风险。设置 `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED=true` 可恢复导出，默认值为 `false`。参见[安全发现与证据](findings.md)，了解状态含义、同请求升级与投递限制。
