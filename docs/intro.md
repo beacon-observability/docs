@@ -11,6 +11,8 @@ Beacon combines independently released OpenTelemetry-based server agents, source
 
 For Rust applications, use the **[Fastrace Rust SDK](fastrace.md)**. See [Releases](https://github.com/beacon-observability/fastrace/releases) for available versions and downloads. Add fixed-tag Cargo dependencies, instrument application code, and initialize a reporter to send traces to local DataKit over OTLP/gRPC. Its guide covers installation, a working example, trace context, verification, and rollback.
 
+For C++ applications, use the [Beacon C++ SDK](cpp.md) source release. Build the fixed-version source archive, initialize the SDK, and instrument application code explicitly; its guide covers OTLP/HTTP trace reception and rollback.
+
 ## Start here
 
 1. Choose a language or project from [Language projects](#language-projects) and open its guide.
@@ -33,6 +35,7 @@ Zero-code setups require deployment configuration, while application source code
 | [PHP](zero-code/php.md) | Zero-code | Installer: `beacon-setup.php` | No supported setup | [Experimental, opt in](security/php.md) | [Releases](https://github.com/beacon-observability/beacon-php/releases) |
 | [Ruby](ruby.md) | SDK (source integration) | Source integration: Net::HTTP tracing | Outside validated scope | [Opt-in gem](security/ruby.md) | [Releases](https://github.com/beacon-observability/beacon-ruby/releases) |
 | [Rust / Fastrace](fastrace.md) | SDK | Tracing SDK: explicit instrumentation | Not provided | Not provided | [Releases](https://github.com/beacon-observability/fastrace/releases) |
+| [C++](cpp.md) | SDK | Source SDK: explicit instrumentation | Not provided | Not provided | [Releases](https://github.com/beacon-observability/beacon-cpp/releases) |
 | [Browser / Rumable](rumable.md) | Zero-code | Web SDK injection: Nginx / IIS | Not provided | Not provided | [Releases](https://github.com/beacon-observability/rumable/releases) |
 
 Each project is versioned and released independently. Follow the release links for available versions and download assets, and the language guides for runtime requirements. Profiling and Security in this table refer to server-side agent features; Rumable provides browser RUM.
