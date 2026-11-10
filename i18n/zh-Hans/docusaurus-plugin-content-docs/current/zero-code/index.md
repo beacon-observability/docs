@@ -6,7 +6,7 @@ description: 无需修改应用源代码，选择服务端探针或浏览器 RUM
 
 # 零代码接入
 
-零代码接入无需修改应用源代码，但仍需调整部署配置。服务端探针通过运行时 Agent、预加载 Hook、包装命令或原生扩展加载 OpenTelemetry；OBI 对选定的 Linux 进程挂载 eBPF 探针；Rumable 通过 Nginx 或 IIS 注入随包提供的浏览器 Web SDK。
+零代码接入无需修改应用源代码，但仍需调整部署配置。服务端探针通过运行时 Agent、预加载 Hook、包装命令或原生扩展加载 OpenTelemetry；OBI 对选定的 Linux 进程挂载 eBPF 探针；Rumable 通过 Nginx 或 IIS 注入随包提供或配置为 CDN 来源的浏览器 Web SDK。
 
 ## 选择接入项目
 
