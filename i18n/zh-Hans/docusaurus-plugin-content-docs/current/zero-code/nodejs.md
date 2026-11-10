@@ -6,14 +6,21 @@ description: 无需修改应用源码，通过预加载方式接入 Beacon Node.
 
 # Node.js 零代码接入
 
-Beacon Node.js 2.0.1 在 CI 中覆盖 Node.js 18.19+、20.6+、22 和 24。
+Beacon Node.js 2.0.2 在 CI 中覆盖 Node.js 18.19+、20.6+、22 和 24。
 Security 的运行时要求更严格，详见下文。
 
 ## 安装
 
 ```bash
-npm install @beacon-observability/nodejs@2.0.1
+npm install @beacon-observability/nodejs@2.0.2
 ```
+
+## 升级
+
+安装上面的固定版本 2.0.2，保留现有预加载配置并重启应用。
+[2.0.2 发布说明](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v2.0.2)
+记录了本次 Contrib 源码同步；客户软件包仍采用 auto-instrumentation 0.80.x 和
+OpenTelemetry Core 2.x 依赖范围，本次发布不将客户运行时迁移至 Core 3.x。
 
 ## 启动
 

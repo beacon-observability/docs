@@ -7,11 +7,11 @@ description: 在已发布的 Beacon PHP Agent 中启用实验性 Security 与运
 
 # PHP Security
 
-Beacon PHP 1.3.0 已在正常 Agent 运行时中包含实验性 Security。它默认关闭，与 [PHP 零代码接入](../zero-code/php.md) 共用原生扩展和安装生命周期。
+Beacon PHP 1.3.1 已在正常 Agent 运行时中包含实验性 Security。它默认关闭，与 [PHP 零代码接入](../zero-code/php.md) 共用原生扩展和安装生命周期。
 
 ## 开启 Security
 
-下载 1.3.0 安装器后，在安装或幂等重装时开启 Security：
+下载 1.3.1 安装器后，在安装或幂等重装时开启 Security：
 
 ```bash
 php beacon-setup.php --php-bin=all --enable-security
@@ -40,4 +40,4 @@ BEACON_SECURITY_ENABLED=true OTEL_LOGS_EXPORTER=otlp php public/index.php
 
 覆盖常规 CLI 与 PHP 请求生命周期；长驻多请求 Worker 暂无请求重置集成。运行时 SBOM 明确为部分清单，包含已加载扩展和通过已包含文件观测到的 Composer 包。
 
-使用安装器的 `--disable-security` 清除安装级开启默认值，并移除或关闭应用中的 `BEACON_SECURITY_ENABLED` 覆盖设置。完整覆盖范围、诊断输出与限制见[对应版本的 Security 参考](https://github.com/beacon-observability/beacon-php/blob/v1.3.0/docs/security.md)。请核验接收端的实际 Logs 记录；启动成功或 `doctor` 通过不确认接收端投递。
+使用安装器的 `--disable-security` 清除安装级开启默认值，并移除或关闭应用中的 `BEACON_SECURITY_ENABLED` 覆盖设置。完整覆盖范围、诊断输出与限制见[对应版本的 Security 参考](https://github.com/beacon-observability/beacon-php/blob/v1.3.1/docs/security.md)。请核验接收端的实际 Logs 记录；启动成功或 `doctor` 通过不确认接收端投递。
