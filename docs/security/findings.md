@@ -17,7 +17,7 @@ Python versions; it does not imply equivalent analysis in PHP or .NET. See
 | Language | Per-request occurrences and attack evidence introduced | Schema v2 introduced | Version used by this guide |
 | --- | --- | --- | --- |
 | Java | [1.3.0](https://github.com/beacon-observability/beacon-java/releases/tag/v1.3.0) | [1.3.3](https://github.com/beacon-observability/beacon-java/releases/tag/v1.3.3) | [1.3.4](https://github.com/beacon-observability/beacon-java/releases/tag/v1.3.4) |
-| Node.js | [1.3.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v1.3.0) | [2.0.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v2.0.0) | [2.0.1](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v2.0.1) |
+| Node.js | [1.3.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v1.3.0) | [2.0.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v2.0.0) | [2.0.2](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v2.0.2) |
 | Python | [1.2.0](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.0) | [1.2.3](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.3) | [1.2.4](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.4) |
 
 Read `schema_version` before interpreting a record. The event name remains
@@ -111,7 +111,7 @@ and [Java v2 reference](https://github.com/beacon-observability/beacon-java/blob
 
 ## Export policy and delivery limits
 
-Java 1.3.4, Node.js 2.0.1, and Python 1.2.4 exclude `no_evidence` findings from OpenTelemetry
+Java 1.3.4, Node.js 2.0.2, and Python 1.2.4 exclude `no_evidence` findings from OpenTelemetry
 Logs and evidence JSONL by default. Set
 `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED=true` to restore their export.
 `unknown` and `suspected` remain eligible, and SBOM is unaffected. Filtering

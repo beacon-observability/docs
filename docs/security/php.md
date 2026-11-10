@@ -7,11 +7,11 @@ description: Enable experimental Security and runtime SBOM in the released Beaco
 
 # PHP Security
 
-Beacon PHP 1.3.0 includes experimental Security in the normal Agent runtime. It is disabled by default and uses the same native extension and installation lifecycle as [PHP zero-code instrumentation](../zero-code/php.md).
+Beacon PHP 1.3.1 includes experimental Security in the normal Agent runtime. It is disabled by default and uses the same native extension and installation lifecycle as [PHP zero-code instrumentation](../zero-code/php.md).
 
 ## Enable Security
 
-After downloading the 1.3.0 installer, enable Security during installation or an idempotent reinstall:
+After downloading the 1.3.1 installer, enable Security during installation or an idempotent reinstall:
 
 ```bash
 php beacon-setup.php --php-bin=all --enable-security
@@ -40,4 +40,4 @@ Selected PDO, file, command and cURL sinks observe bounded value correlations wi
 
 Conventional CLI and PHP request lifecycles are covered. Long-running multi-request workers do not have request-reset integration. Runtime SBOM is explicitly partial and includes loaded extensions and Composer packages observed through included files.
 
-Use `--disable-security` with the installer to clear its enablement default, and remove or disable any application `BEACON_SECURITY_ENABLED` override. See the [versioned Security reference](https://github.com/beacon-observability/beacon-php/blob/v1.3.0/docs/security.md) for detailed coverage, diagnostic output and limits. Verify actual Logs receipt; successful startup or `doctor` does not confirm receiver delivery.
+Use `--disable-security` with the installer to clear its enablement default, and remove or disable any application `BEACON_SECURITY_ENABLED` override. See the [versioned Security reference](https://github.com/beacon-observability/beacon-php/blob/v1.3.1/docs/security.md) for detailed coverage, diagnostic output and limits. Verify actual Logs receipt; successful startup or `doctor` does not confirm receiver delivery.

@@ -6,14 +6,22 @@ description: Preload Beacon Node.js without changing application source.
 
 # Node.js zero-code instrumentation
 
-Beacon Node.js 2.0.1 covers Node.js 18.19+, 20.6+, 22, and 24 in its CI matrix. Security has a narrower runtime
+Beacon Node.js 2.0.2 covers Node.js 18.19+, 20.6+, 22, and 24 in its CI matrix. Security has a narrower runtime
 requirement documented below.
 
 ## Install
 
 ```bash
-npm install @beacon-observability/nodejs@2.0.1
+npm install @beacon-observability/nodejs@2.0.2
 ```
+
+## Upgrade
+
+Install the exact 2.0.2 package above and restart the application with its existing preload configuration.
+[Release 2.0.2](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v2.0.2)
+adopts updated Contrib source while retaining the customer package's auto-instrumentation
+0.80.x and OpenTelemetry Core 2.x dependency ranges. This release does not migrate the
+customer runtime to Core 3.x.
 
 ## Run
 

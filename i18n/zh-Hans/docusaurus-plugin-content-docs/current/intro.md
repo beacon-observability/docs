@@ -13,6 +13,8 @@ Rust 应用请使用 **[Fastrace Rust SDK](fastrace.md)**，可用版本与下�
 
 C++ 应用使用 [Beacon C++ SDK](cpp.md) 源码发行版。构建固定版本源码归档、初始化 SDK 并显式修改应用代码埋点；指南涵盖 OTLP/HTTP 链路接收验证及回滚。
 
+使用 [OBI（eBPF）](zero-code/obi.md)时，通过独立进程采集选定的 Linux 应用；应用保持原有启动方式。其权限要求与已验证范围见 OBI 指南。
+
 ## 从这里开始
 
 1. 从[语言项目](#语言项目)中选择语言或项目，打开对应指南。
@@ -36,6 +38,7 @@ C++ 应用使用 [Beacon C++ SDK](cpp.md) 源码发行版。构建固定版本�
 | [Ruby](ruby.md) | SDK（源码集成） | 源码集成：Net::HTTP 链路追踪 | 不在已验证范围内 | [可选 gem](security/ruby.md) | [Releases](https://github.com/beacon-observability/beacon-ruby/releases) |
 | [Rust / Fastrace](fastrace.md) | SDK | 链路追踪 SDK：显式代码埋点 | 不提供 | 不提供 | [Releases](https://github.com/beacon-observability/fastrace/releases) |
 | [C++](cpp.md) | SDK | 源码 SDK：显式埋点 | 未提供 | 未提供 | [Releases](https://github.com/beacon-observability/beacon-cpp/releases) |
+| [OBI（eBPF）](zero-code/obi.md) | 零代码 | 独立 eBPF 进程 | 不在已验证范围 | 不在已验证范围 | [Releases](https://github.com/beacon-observability/beacon-obi/releases) |
 | [浏览器 / Rumable](rumable.md) | 零代码 | Web SDK 注入：Nginx / IIS | 不提供 | 不提供 | [Releases](https://github.com/beacon-observability/rumable/releases) |
 
 各项目独立维护版本与发布节奏。请通过发布链接查看可用版本与下载资源，通过对应语言指南查看运行时要求。表中的 Profile 和 Security 指服务端探针能力；Rumable 提供浏览器 RUM。
@@ -44,4 +47,4 @@ Ruby 当前提供源码发行包，已验证 Net::HTTP 链路路径；v1.1.0 还
 
 Security 默认关闭。已发布的 Java、Python、Node.js、.NET、PHP 和 Ruby 启用方式及运行时范围请参阅 [Security 指南](security/index.md)。
 
-Java 1.3.4、Python 1.2.4 和 Node.js 2.0.1 默认过滤无利用证据的安全发现，并提供恢复导出的开关。参阅 [Security 导出策略](security/index.md#finding-export-policy)。
+Java 1.3.4、Python 1.2.4 和 Node.js 2.0.2 默认过滤无利用证据的安全发现，并提供恢复导出的开关。参阅 [Security 导出策略](security/index.md#finding-export-policy)。

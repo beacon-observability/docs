@@ -6,7 +6,7 @@ description: Choose zero-code server instrumentation or browser RUM without chan
 
 # Zero-code instrumentation
 
-Zero-code instrumentation adds telemetry without modifying application source code. Setup still changes deployment configuration: server agents load OpenTelemetry through a runtime agent, preload hook, wrapper, or native extension; Rumable injects the bundled browser Web SDK through Nginx or IIS.
+Zero-code instrumentation adds telemetry without modifying application source code. Setup still changes deployment configuration: server agents load OpenTelemetry through a runtime agent, preload hook, wrapper, or native extension; OBI attaches eBPF probes to a selected Linux process; Rumable injects the bundled or configured CDN browser Web SDK through Nginx or IIS.
 
 ## Choose a project
 
@@ -17,6 +17,7 @@ Zero-code instrumentation adds telemetry without modifying application source co
 | [Node.js](nodejs.md) | Node.js applications | Preload one module with `NODE_OPTIONS` |
 | [.NET](dotnet.md) | .NET applications | Launch the existing process with `beacon-dotnet run` |
 | [PHP](php.md) | PHP applications | Install the native extension and standalone runtime with `beacon-setup.php` |
+| [OBI (eBPF)](obi.md) | Linux amd64 HTTP services | Attach eBPF probes to a selected process |
 | [Rumable (browser RUM)](../rumable.md) | Websites served through Nginx or IIS | Generate and run a server setup command to inject the Web SDK |
 
 ## Configure and verify

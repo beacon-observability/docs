@@ -6,21 +6,21 @@ description: Add browser real user monitoring through Nginx or IIS without chang
 
 # Rumable
 
-Rumable provides [zero-code instrumentation](zero-code/index.md) for browser real user monitoring (RUM) in Beacon. It injects the bundled Web SDK into HTML responses through Nginx or IIS, without changing application source code. Browsers send telemetry directly to the configured RUM receiver; the CLI exits after deployment.
+Rumable provides [zero-code instrumentation](zero-code/index.md) for browser real user monitoring (RUM) in Beacon. It injects the bundled or configured CDN Web SDK into HTML responses through Nginx or IIS, without changing application source code. Browsers send telemetry directly to the configured RUM receiver; the CLI exits after deployment.
 
-The current release is **[v0.1.9](https://github.com/beacon-observability/rumable/releases/tag/v0.1.9)**. Rumable keeps its own name, `rumable` command, TOML configuration, and independent release schedule.
+The current release is **[v0.1.11](https://github.com/beacon-observability/rumable/releases/tag/v0.1.11)**. Rumable keeps its own name, `rumable` command, TOML configuration, and independent release schedule.
 
 ## Requirements
 
-- **Linux / Nginx:** Bash, curl, sudo, and Nginx with `http_sub_module` enabled.
+- **Linux / Nginx:** Bash, curl, sudo, and Nginx 1.9.4+ with `http_sub_module` enabled. HTML must contain a plain `<head>` tag; matching is case-insensitive, but attributes and extra whitespace inside the tag are unsupported.
 - **Windows / IIS:** administrator access, PowerShell 5.1 or later, URL Rewrite, Static Content, and a started, dedicated application pool. One-command IIS setup requires a 64-bit OS.
 - A browser RUM application and a receiver compatible with the bundled SDK. Prepare its application ID, reporting endpoint, and browser Client Token when using a browser gateway.
 
-Linux and Windows archives are available from [GitHub Releases](https://github.com/beacon-observability/rumable/releases/latest). The installer detects architecture and selects a matching package, including legacy builds where applicable. Check the [compatibility guide](https://github.com/beacon-observability/rumable/blob/v0.1.9/docs/compatibility.md) for supported systems and server requirements. Go and Node.js are not required on the target server.
+Linux and Windows archives are available from [GitHub Releases](https://github.com/beacon-observability/rumable/releases/latest). The installer detects architecture and selects a matching package, including legacy builds where applicable. Check the [compatibility guide](https://github.com/beacon-observability/rumable/blob/v0.1.11/docs/compatibility.md) for supported systems and server requirements. Go and Node.js are not required on the target server.
 
 ## Set up a website
 
-1. Open the [English configuration page](https://beacon-observability.github.io/rumable/latest/setup/index.html). For this release, the [versioned page](https://beacon-observability.github.io/rumable/0.1.9/setup/index.html) is also available.
+1. Open the [configuration page](https://beacon-observability.github.io/rumable/latest/setup/index.html). For this release, the [versioned page](https://beacon-observability.github.io/rumable/0.1.11/setup/index.html) is also available. The page supports English, Simplified Chinese, Traditional Chinese, Indonesian, Japanese, and Korean.
 2. Enter the application ID, reporting method, endpoint, and browser token if required. Choose Linux / Nginx or Windows / IIS, then review sampling and privacy settings. The default SDK source serves bundled assets from your website's origin; Session Replay is optional.
 3. Confirm that the page has loaded the matching release manifest, then copy the generated command. Configuration is generated in the browser. The command contains the browser token encoded as Base64, which is not encryption; use a browser Client Token rather than a management API key.
 4. Run the command on the target Web server with the required administrator privileges. It downloads a version-pinned GitHub Release package, verifies its SHA256, and discovers the target website. A unique site is selected automatically; multiple candidates require an interactive terminal.
@@ -32,20 +32,28 @@ Setup changes the server configuration and keeps recovery records. Nginx configu
 For a Linux installation, replace `REPLACE_SITE_ID` with the ID printed by setup:
 
 ```bash
-rumable=/opt/rumable/0.1.9/rumable
+rumable=/opt/rumable/0.1.11/rumable
 sudo "$rumable" status --state-dir /var/lib/rumable --site REPLACE_SITE_ID
 sudo "$rumable" probe --state-dir /var/lib/rumable --site REPLACE_SITE_ID
 ```
 
 Then open the website in a browser, verify SDK initialization and requests, and confirm that events reach the receiving application. A passing HTTP probe verifies injection and script availability; it does not prove browser execution or ingestion.
 
-Keep the original site ID and state when updating. Installing a newer CLI alone does not upgrade a deployed site's SDK; reapply setup or enable for that site. See the [user guide](https://github.com/beacon-observability/rumable/blob/v0.1.9/USER-GUIDE.md) for Windows commands, manual targeting, disabling, and rollback.
+Keep the original site ID and state when updating. Installing a newer CLI alone does not upgrade a deployed site's SDK; reapply setup or enable for that site. See the [user guide](https://github.com/beacon-observability/rumable/blob/v0.1.11/USER-GUIDE.md) for Windows commands, manual targeting, disabling, and rollback.
+
+## SDK delivery and Nginx verification
+
+The default bundled SDK is served from the website origin. Optional HTTPS CDN delivery accepts a stable v3 SDK; activation validates its format and records the actual version and SHA-256, which need not match the bundled SDK. Choose a trusted source and verify collection and replay after changes. Deployed probes and rollback require the saved digest. Optional SRI rejects changed bytes and requires CDN CORS support; use an immutable URL to avoid passive changes. Rollback cannot restore overwritten CDN files, and failed CDN loads do not fall back automatically to local assets.
+
+For Nginx, `includePaths` and `excludePaths` control injection scope. `probePaths` selects verification pages only; unlisted plain-head pages can still receive scripts. Cover each page template. Range requests bypass Rumable injection. When updating legacy attribute-head deployments, incompatible templates stop the update before configuration changes; disable and rollback retain historical support. See [plain head support](https://github.com/beacon-observability/rumable/blob/v0.1.11/docs/nginx-plain-head.md).
+
+The release retains v0.1.10 fixes for empty IIS OTel environment snapshots. Release packaging checks Windows executable startup and PowerShell contracts; native IIS acceptance and live ingestion were not repeated for v0.1.11. See the [release notes](https://github.com/beacon-observability/rumable/releases/tag/v0.1.11).
 
 ## Browser and server telemetry
 
 Rumable browser reporting uses TOML and the bundled SDK's receiver settings. The `OTEL_EXPORTER_OTLP_*` variables in [common configuration](configuration/index.md) configure the server-side language agents; they do not configure the browser RUM receiver.
 
-Optional server-side OpenTelemetry integration is configured separately in the [Rumable OTel guide](https://github.com/beacon-observability/rumable/blob/v0.1.9/docs/otel.md).
+Optional server-side OpenTelemetry integration is configured separately in the [Rumable OTel guide](https://github.com/beacon-observability/rumable/blob/v0.1.11/docs/otel.md).
 
 - [Source repository](https://github.com/beacon-observability/rumable)
 - [Release and download guide](https://github.com/beacon-observability/rumable/blob/main/docs/github-release.md)
