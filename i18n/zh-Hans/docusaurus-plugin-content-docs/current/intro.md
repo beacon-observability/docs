@@ -11,6 +11,8 @@ Beacon 提供独立发布的 OpenTelemetry 服务端探针、源码集成和链�
 
 Rust 应用请使用 **[Fastrace Rust SDK](fastrace.md)**，可用版本与下载资源请参阅 [Releases](https://github.com/beacon-observability/fastrace/releases)。该英文接入指南涵盖固定 Git 标签的 Cargo 依赖、显式代码埋点、通过 OTLP/gRPC 向本地 DataKit 上报链路、链路上下文、验证和回滚。
 
+C++ 应用使用 [Beacon C++ SDK](cpp.md) 源码发行版。构建固定版本源码归档、初始化 SDK 并显式修改应用代码埋点；指南涵盖 OTLP/HTTP 链路接收验证及回滚。
+
 使用 [OBI（eBPF）](zero-code/obi.md)时，通过独立进程采集选定的 Linux 应用；应用保持原有启动方式。其权限要求与已验证范围见 OBI 指南。
 
 ## 从这里开始
@@ -35,6 +37,7 @@ Rust 应用请使用 **[Fastrace Rust SDK](fastrace.md)**，可用版本与下�
 | [PHP](zero-code/php.md) | 零代码 | 统一安装器：`beacon-setup.php` | 暂无受支持的配置 | [实验性，显式开启](security/php.md) | [Releases](https://github.com/beacon-observability/beacon-php/releases) |
 | [Ruby](ruby.md) | SDK（源码集成） | 源码集成：Net::HTTP 链路追踪 | 不在已验证范围内 | [可选 gem](security/ruby.md) | [Releases](https://github.com/beacon-observability/beacon-ruby/releases) |
 | [Rust / Fastrace](fastrace.md) | SDK | 链路追踪 SDK：显式代码埋点 | 不提供 | 不提供 | [Releases](https://github.com/beacon-observability/fastrace/releases) |
+| [C++](cpp.md) | SDK | 源码 SDK：显式埋点 | 未提供 | 未提供 | [Releases](https://github.com/beacon-observability/beacon-cpp/releases) |
 | [OBI（eBPF）](zero-code/obi.md) | 零代码 | 独立 eBPF 进程 | 不在已验证范围 | 不在已验证范围 | [Releases](https://github.com/beacon-observability/beacon-obi/releases) |
 | [浏览器 / Rumable](rumable.md) | 零代码 | Web SDK 注入：Nginx / IIS | 不提供 | 不提供 | [Releases](https://github.com/beacon-observability/rumable/releases) |
 
