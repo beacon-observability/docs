@@ -59,5 +59,5 @@ If the application fails only when the agent is active, disable the agent first 
 - [Java 1.3.4](https://github.com/beacon-observability/beacon-java/blob/v1.3.4/javaagent-tooling/src/main/java/io/opentelemetry/javaagent/tooling/config/EarlyInitAgentConfig.java)
 - [Python 1.2.4](https://github.com/beacon-observability/beacon-python/blob/v1.2.4/beacon-otel/src/beacon_otel/cli.py)
 - [Node.js 2.0.2](https://github.com/beacon-observability/beacon-nodejs/blob/v2.0.2/packages/nodejs/README.md)
-- [.NET 1.1.1](https://github.com/beacon-observability/beacon-dotnet/blob/v1.1.1/docs/config.md#internal-logs)
+- [.NET 1.1.2](https://github.com/beacon-observability/beacon-dotnet/blob/v1.1.2/docs/config.md#internal-logs)
 - [PHP 1.3.1](https://github.com/beacon-observability/beacon-php/blob/v1.3.1/docs/standalone.md)

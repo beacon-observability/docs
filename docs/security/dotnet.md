@@ -7,7 +7,7 @@ description: Enable experimental Security and runtime assembly inventory in Beac
 
 # .NET Security
 
-[Beacon .NET 1.1.1](https://github.com/beacon-observability/beacon-dotnet/releases/tag/v1.1.1) includes experimental Security in the existing zero-code package. It is disabled by default and uses the normal [`beacon-dotnet run` launcher](../zero-code/dotnet.md).
+[Beacon .NET 1.1.2](https://github.com/beacon-observability/beacon-dotnet/releases/tag/v1.1.2) includes experimental Security in the existing zero-code package. It is disabled by default and uses the normal [`beacon-dotnet run` launcher](../zero-code/dotnet.md).
 
 ## Enable and verify
 
@@ -55,4 +55,4 @@ Enable `BEACON_SECURITY_LOCAL_OUTPUT_ENABLED=true` separately when local snapsho
 
 Local writing is asynchronous and bounded. Overload or filesystem failure can lose diagnostics while OTLP export continues independently. Files are neither a durable history nor a multi-process aggregation mechanism, and old process directories are not automatically removed. Return local output to `false` after diagnosis and manage retained files separately.
 
-See the [versioned Security reference](https://github.com/beacon-observability/beacon-dotnet/tree/v1.1.1/beacon/security) for modeled calls, request budgets and contract provenance, and the [release notes](https://github.com/beacon-observability/beacon-dotnet/releases/tag/v1.1.1) for release acceptance and limitations.
+See the [versioned Security reference](https://github.com/beacon-observability/beacon-dotnet/tree/v1.1.2/beacon/security) for modeled calls, request budgets and contract provenance, and the [release notes](https://github.com/beacon-observability/beacon-dotnet/releases/tag/v1.1.2) for release acceptance and limitations.
