@@ -7,16 +7,16 @@ description: 通过现有 beacon 命令启用 Beacon Security。
 
 # Python Security
 
-Beacon Python 1.2.4 已在 `beacon-otel` wheel 中包含 Security。它支持标准 GIL 的
+Beacon Python 1.2.6 已在 `beacon-otel` wheel 中包含 Security。它支持标准 GIL 的
 CPython 3.11 至 3.14，并继续使用现有 `beacon` 命令，无需独立 Security 发行包。
 
 ## 启用 Security
 
-先在应用现有虚拟环境内升级到 1.2.4；同时保留应用使用的框架 extras，
-若已安装可选的 `beacon-profiling`，也将其升级到 1.2.4：
+先在应用现有虚拟环境内升级到 1.2.6；同时保留应用使用的框架 extras，
+若已安装可选的 `beacon-profiling`，也将其升级到 1.2.6：
 
 ```bash
-pip install 'beacon-otel==1.2.4'
+pip install 'beacon-otel==1.2.6'
 beacon --version
 ```
 
@@ -37,7 +37,7 @@ beacon uvicorn orders.asgi:application --host 0.0.0.0 --port 8000
 ## 安全发现与分析
 
 逐请求记录与请求级攻击证据自 1.2.0 起提供，schema v2 自 1.2.3 起提供。
-本页使用 1.2.4，以 `occurrence_id` 标识请求记录。详细证据采样独立于请求记录导出和
+本页使用 1.2.6，以 `occurrence_id` 标识请求记录。详细证据采样独立于请求记录导出和
 Trace 采样；空证据数组可以省略，采样本身不表示截断。在线载荷没有累计发生次数，
 消费端应对已收到的 occurrence 去重后聚合。参见[安全发现与证据](findings.md)，了解
 `unknown`、`no_evidence`、`suspected`、证据升级及投递限制；任何状态都不保证利用成功。
@@ -52,11 +52,11 @@ Shell 分析支持简单 POSIX `sh`、`bash`、`dash`、`ksh`、`zsh` 命令、�
 分隔符；展开、重定向、复合语法和其他 Shell 保持 `unknown`。普通 argv 与固定目标的
 路径/查询输入是独立的观测。未实现网络允许列表或文件系统根目录策略，相关边界判断
 仍为 `unknown`；规范化不代表安全。字节串不按已知文本方言分析。
-详见[固定版本的分析参考](https://github.com/beacon-observability/beacon-python/blob/v1.2.4/beacon-otel/README.md)。
+详见[固定版本的分析参考](https://github.com/beacon-observability/beacon-python/blob/v1.2.6/beacon-otel/README.md)。
 
 ### 无攻击证据发现的导出
 
-1.2.4 默认不向 OpenTelemetry Logs 和证据 JSONL 导出 `no_evidence` 发现。
+1.2.6 默认不向 OpenTelemetry Logs 和证据 JSONL 导出 `no_evidence` 发现。
 设置 `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED=true` 可恢复导出。`unknown`、
 `suspected` 仍可导出，SBOM 不受影响。过滤发生在入队前，不算导出丢失；内部检测、
 同请求去重和证据升级仍会执行。本地发现快照和 Span 摘要可保留未导出的观测。
@@ -81,8 +81,8 @@ Shell 分析支持简单 POSIX `sh`、`bash`、`dash`、`ksh`、`zsh` 命令、�
 
 ## Kubernetes 与 Gunicorn
 
-在应用镜像中安装 `beacon-otel==1.2.4`，并参考
-[固定版本的 Deployment 示例](https://github.com/beacon-observability/beacon-python/blob/v1.2.4/beacon-otel/examples/kubernetes/deployment.yaml)。
+在应用镜像中安装 `beacon-otel==1.2.6`，并参考
+[固定版本的 Deployment 示例](https://github.com/beacon-observability/beacon-python/blob/v1.2.6/beacon-otel/examples/kubernetes/deployment.yaml)。
 不需要 Security sidecar 或 init container。
 
 Gunicorn 必须在每个 Worker fork 后初始化遥测。请使用该版本提供的

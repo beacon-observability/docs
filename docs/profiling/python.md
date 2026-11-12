@@ -10,7 +10,7 @@ description: Export Beacon Python profiles with OTLP/HTTP or pprof.
 Install the profiling extra in the application's virtual environment:
 
 ```bash
-pip install 'beacon-otel[fastapi,profiling]==1.2.4'
+pip install 'beacon-otel[fastapi,profiling]==1.2.6'
 ```
 
 Replace `fastapi` with the integration used by the application.
@@ -28,28 +28,20 @@ beacon uvicorn myapp:app
 
 The receiver must implement the OpenTelemetry development Profiles endpoint.
 
-## Upload pprof over HTTP
-
-```bash
-export OTEL_SERVICE_NAME=my-python-service
-export OTEL_PROFILING_ENABLED=true
-export OTEL_PROFILING_EXPORTER=pprof_http
-export OTEL_PROFILING_PPROF_UPLOAD_URL=http://127.0.0.1:9529/profiling/v1/input
-beacon uvicorn myapp:app
-```
-
-When authentication is required, set `OTEL_PROFILING_PPROF_HEADERS` to a comma-separated list of `name:value` headers.
-
 ## Write pprof files locally
 
 ```bash
 export OTEL_PROFILING_ENABLED=true
-export OTEL_PROFILING_EXPORTER=pprof
-export OTEL_PROFILING_PPROF_PATH="$PWD/profiles"
+export OTEL_PROFILING_EXPORTER=file
+export OTEL_PROFILING_FILE_PATH="$PWD/profiles"
 beacon uvicorn myapp:app
 ```
 
-Create the target directory first and include it in the deployment's retention policy.
+Beacon creates the target directory and writes gzip-compressed pprof files. Include it in the deployment's retention policy. File mode ignores OTLP endpoint and transport settings.
+
+## Upgrade to 1.2.6
+
+When upgrading, replace `pprof` with `file` and replace `OTEL_PROFILING_PPROF_PATH` with the directory variable `OTEL_PROFILING_FILE_PATH`. `pprof_http`, `none`, and the old pprof HTTP upload settings have been removed; use OTLP for remote export. Disable profiling with `OTEL_PROFILING_ENABLED=false`.
 
 ## Additional collectors
 
@@ -73,7 +65,7 @@ Environment-variable names are case-sensitive. Interval values in the runtime ta
 | Environment variable | Type / accepted values | Default | Description |
 | --- | --- | --- | --- |
 | `OTEL_PROFILING_ENABLED` | Boolean | `false` | Starts the profiler during auto-instrumentation bootstrap. |
-| `OTEL_PROFILING_EXPORTER` | `none`, `pprof`, `pprof_http`, `otlp` | Automatic | Selects the exporter. If unset, a configured pprof upload URL selects `pprof_http`; otherwise Beacon selects `otlp`. |
+| `OTEL_PROFILING_EXPORTER` | `otlp`, `file` | `otlp` | Selects OTLP or local file export. Disable profiling with `OTEL_PROFILING_ENABLED=false`. |
 | `OTEL_PROFILING_SAMPLE_INTERVAL` | Positive number | `0.01` | Stack sampling interval. |
 | `OTEL_PROFILING_EXPORT_INTERVAL` | Positive number | `60` | Profile flush and export interval. |
 | `OTEL_PROFILING_MAX_FRAMES` | Positive integer | `64` | Maximum stack frames captured per sample. |
@@ -87,13 +79,11 @@ Environment-variable names are case-sensitive. Interval values in the runtime ta
 | `OTEL_PROFILING_MEMORY_TOP_STATS` | Positive integer | `200` | Maximum memory statistics retained per capture. |
 | `OTEL_PROFILING_MEMORY_IGNORE_PROFILER` | Boolean | `true` | Excludes allocations attributed to the profiler itself. |
 
-### pprof export
+### File export
 
 | Environment variable | Type / accepted values | Default | Description |
 | --- | --- | --- | --- |
-| `OTEL_PROFILING_PPROF_PATH` | File-path prefix | `otel-profiles` | Prefix for generated `.pprof` files. Both pprof exporters write a local copy. |
-| `OTEL_PROFILING_PPROF_UPLOAD_URL` | HTTP(S) URL | `http://localhost:8126/profiling/v1/input` | Upload URL used by `pprof_http`. Setting it while the exporter is unset also selects `pprof_http`. |
-| `OTEL_PROFILING_PPROF_HEADERS` | Comma-separated `name:value` pairs | Empty | Extra HTTP request headers. |
+| `OTEL_PROFILING_FILE_PATH` | Directory path | `otel-profiles` | Directory for gzip pprof files from the `file` exporter; created automatically. |
 
 ### OTLP Profiles export
 

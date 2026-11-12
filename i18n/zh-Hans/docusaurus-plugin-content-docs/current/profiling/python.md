@@ -10,7 +10,7 @@ description: 通过 OTLP/HTTP 或 pprof 导出 Beacon Python Profile。
 在应用使用的虚拟环境中安装 profiling extra：
 
 ```bash
-pip install 'beacon-otel[fastapi,profiling]==1.2.4'
+pip install 'beacon-otel[fastapi,profiling]==1.2.6'
 ```
 
 请将 `fastapi` 替换为应用实际使用的组件。
@@ -28,28 +28,20 @@ beacon uvicorn myapp:app
 
 接收端必须实现 OpenTelemetry 开发阶段的 Profiles 接口。
 
-## 通过 HTTP 上传 pprof
-
-```bash
-export OTEL_SERVICE_NAME=my-python-service
-export OTEL_PROFILING_ENABLED=true
-export OTEL_PROFILING_EXPORTER=pprof_http
-export OTEL_PROFILING_PPROF_UPLOAD_URL=http://127.0.0.1:9529/profiling/v1/input
-beacon uvicorn myapp:app
-```
-
-如需认证，可使用 `OTEL_PROFILING_PPROF_HEADERS` 设置以逗号分隔的 `名称:值` HTTP Header。
-
 ## 写入本地 pprof 文件
 
 ```bash
 export OTEL_PROFILING_ENABLED=true
-export OTEL_PROFILING_EXPORTER=pprof
-export OTEL_PROFILING_PPROF_PATH="$PWD/profiles"
+export OTEL_PROFILING_EXPORTER=file
+export OTEL_PROFILING_FILE_PATH="$PWD/profiles"
 beacon uvicorn myapp:app
 ```
 
-请先创建目标目录，并将其纳入部署环境的文件保留策略。
+Beacon 会创建目标目录并写入 gzip 压缩的 pprof 文件。请将其纳入部署环境的文件保留策略。文件模式忽略 OTLP 地址和传输配置。
+
+## 升级到 1.2.6
+
+从旧版本升级时，将 `pprof` 改为 `file`，将 `OTEL_PROFILING_PPROF_PATH` 改为目录变量 `OTEL_PROFILING_FILE_PATH`。`pprof_http`、`none` 和旧的 pprof HTTP 上传配置已移除；远程导出改用 OTLP。关闭 Profile 使用 `OTEL_PROFILING_ENABLED=false`。
 
 ## 额外采集器
 
@@ -73,7 +65,7 @@ export OTEL_PROFILING_EXCEPTION_ENABLED=true
 | 环境变量 | 类型 / 可选值 | 默认值 | 说明 |
 | --- | --- | --- | --- |
 | `OTEL_PROFILING_ENABLED` | 布尔值 | `false` | 在自动插桩启动阶段启动 Profiler。 |
-| `OTEL_PROFILING_EXPORTER` | `none`、`pprof`、`pprof_http`、`otlp` | 自动选择 | 选择导出器。未设置时，如配置了 pprof 上传 URL，则选择 `pprof_http`，否则选择 `otlp`。 |
+| `OTEL_PROFILING_EXPORTER` | `otlp`、`file` | `otlp` | 选择 OTLP 或本地文件导出。使用 `OTEL_PROFILING_ENABLED=false` 关闭 Profile。 |
 | `OTEL_PROFILING_SAMPLE_INTERVAL` | 正数 | `0.01` | 调用栈采样间隔。 |
 | `OTEL_PROFILING_EXPORT_INTERVAL` | 正数 | `60` | Profile 刷新和导出间隔。 |
 | `OTEL_PROFILING_MAX_FRAMES` | 正整数 | `64` | 单次采样捕获的最大栈帧数。 |
@@ -87,13 +79,11 @@ export OTEL_PROFILING_EXCEPTION_ENABLED=true
 | `OTEL_PROFILING_MEMORY_TOP_STATS` | 正整数 | `200` | 每次内存采集保留的最大统计项数量。 |
 | `OTEL_PROFILING_MEMORY_IGNORE_PROFILER` | 布尔值 | `true` | 排除 Profiler 自身产生的内存分配。 |
 
-### pprof 导出
+### 文件导出
 
 | 环境变量 | 类型 / 可选值 | 默认值 | 说明 |
 | --- | --- | --- | --- |
-| `OTEL_PROFILING_PPROF_PATH` | 文件路径前缀 | `otel-profiles` | 生成 `.pprof` 文件的路径前缀；两种 pprof 导出器都会保留本地副本。 |
-| `OTEL_PROFILING_PPROF_UPLOAD_URL` | HTTP(S) URL | `http://localhost:8126/profiling/v1/input` | `pprof_http` 使用的上传地址。导出器未设置时，配置此变量也会选择 `pprof_http`。 |
-| `OTEL_PROFILING_PPROF_HEADERS` | 逗号分隔的 `名称:值` | 空 | 附加 HTTP 请求头。 |
+| `OTEL_PROFILING_FILE_PATH` | 目录路径 | `otel-profiles` | `file` 导出器写入 gzip pprof 文件的目录，自动创建。 |
 
 ### OTLP Profiles 导出
 
