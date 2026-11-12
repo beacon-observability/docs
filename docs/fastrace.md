@@ -13,7 +13,7 @@ Applications add the SDK, instrument their code, and initialize a reporter expli
 ## Requirements
 
 - Rust **1.91.0 or newer** and Cargo, with access to GitHub and dependency sources.
-- A running local DataKit with its OpenTelemetry gRPC receiver enabled at **`http://127.0.0.1:4317`**. Release ingestion acceptance used **DataKit 1.94.2 on Linux**.
+- A running local DataKit with its OpenTelemetry gRPC receiver enabled at **`http://127.0.0.1:4317`**. The ingestion example uses **DataKit 1.94.2 on Linux**.
 
 ## Install and instrument
 
@@ -84,7 +84,7 @@ The reporting path is **application → Fastrace OpenTelemetry reporter → OTLP
 
 Trace IDs are **128-bit values**, represented as 32 hexadecimal characters; span IDs are **64-bit values**, represented as 16 hexadecimal characters. For cross-service HTTP propagation, explicitly inject and extract W3C `traceparent` and `tracestate` using `W3CTraceContext`. The SDK does not automatically instrument HTTP boundaries or retain arbitrary `tracestate` through internal spans.
 
-The [versioned acceptance guide](https://github.com/beacon-observability/fastrace/blob/v0.1.0/docs/validation.md) provides a runnable two-process HTTP example and backend verifier. From the release source, run:
+The [versioned integration guide](https://github.com/beacon-observability/fastrace/blob/v0.1.0/docs/validation.md) provides a runnable two-process HTTP example and backend verifier. From the release source, run:
 
 ```bash
 python3 beacon/validation/otlp/run.py --output /tmp/fastrace-datakit-acceptance
@@ -96,7 +96,7 @@ The runner requires Python 3.9 or newer on Linux, the gRPC receiver above, and D
 
 GitHub Releases provides `fastrace-0.1.0-source.tar.gz`, `release-manifest.json`, and `SHA256SUMS`. Download all three assets into one directory and run `sha256sum --check SHA256SUMS` before extraction. The [versioned installation guide](https://github.com/beacon-observability/fastrace/blob/v0.1.0/docs/installation.md) covers archive builds, dependency provenance, upgrades, and rollback.
 
-Release ingestion acceptance covers **traces through local DataKit OTLP/gRPC on Linux**. Metrics, logs, other receiver/protocol combinations, and automatic instrumentation are outside that acceptance. The source release does not publish a Beacon-owned crates.io package or prebuilt agent executable. A possible future `beacon-rust` project based on OpenTelemetry Rust remains separate.
+This release supports **traces through local DataKit OTLP/gRPC on Linux**. Metrics, logs, other receiver/protocol combinations, and automatic instrumentation are outside this support scope. The source release does not publish a Beacon-owned crates.io package or prebuilt agent executable. A possible future `beacon-rust` project based on OpenTelemetry Rust remains separate.
 
 - [Source repository](https://github.com/beacon-observability/fastrace)
 - [Versioned SDK documentation](https://github.com/beacon-observability/fastrace/blob/v0.1.0/docs/README.md)

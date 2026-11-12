@@ -19,11 +19,11 @@ prebuilt binaries, or a package-index distribution.
 
 ## Requirements
 
-Release acceptance covers Linux x86_64, Debian 13, GCC 14.2.0, CMake 3.31.6,
+The build example uses Linux x86_64, Debian 13, GCC 14.2.0, CMake 3.31.6,
 C++17 standard-library mode, static SDK libraries, ABI v1, and OTLP/HTTP Protobuf
 traces to OpenTelemetry Collector Contrib 0.135.0. Install `g++`, `cmake`, `make`,
 `libprotobuf-dev`, `protobuf-compiler`, `libcurl4-openssl-dev`, and
-`nlohmann-json3-dev`. Other toolchains and platforms are outside this acceptance.
+`nlohmann-json3-dev`. Other toolchains and platforms are outside this build example.
 
 Run a reachable OTLP/HTTP receiver before starting the application. The example
 uses the trace-specific URL `http://127.0.0.1:4318/v1/traces`. In containers,
@@ -61,14 +61,14 @@ and `exit-final` child; it prints the trace ID after provider shutdown.
 
 ## Verify reception
 
-Follow the [versioned acceptance guide](https://github.com/beacon-observability/beacon-cpp/blob/v0.1.0/beacon/acceptance/README.md)
+Follow the [versioned integration guide](https://github.com/beacon-observability/beacon-cpp/blob/v0.1.0/beacon/acceptance/README.md)
 to start the pinned Collector and verify the exact trace ID in its file output.
 The verifier checks all three spans, nonzero trace/span IDs, service identity,
 parent relationships, and final delivery during shutdown. A separate check covers
 a bounded exporter failure when a local endpoint refuses connections.
 
-The validated path is **application → OTLP/HTTP Protobuf → Collector file exporter**.
-Application exit status alone does not establish reception. Collector acceptance
+The export path is **application → OTLP/HTTP Protobuf → Collector file exporter**.
+Application exit status alone does not establish reception. Collector reception
 does not establish DataKit compatibility or storage in a downstream backend.
 Network context propagation requires explicit injection/extraction in application
 code; server-agent environment settings do not replace SDK initialization.
@@ -83,6 +83,6 @@ or ABI modes from different builds. See the
 for dependency and rollback details.
 
 Metrics, Logs, OTLP/gRPC, DataKit, TLS/authentication, Profiling, Security,
-automatic instrumentation, and other platforms are outside first-release acceptance.
-The source retains upstream components beyond the validated trace configuration;
+automatic instrumentation, and other platforms are outside first-release support.
+The source retains upstream components beyond the documented trace configuration;
 their presence does not establish Beacon support.

@@ -6,9 +6,22 @@ description: Attach Beacon Java to an application with -javaagent.
 
 # Java zero-code instrumentation
 
-Beacon Java 1.3.4 ships as one Agent JAR. Its [full release validation](https://github.com/beacon-observability/beacon-java/actions/runs/41728142815) covers JDK 8, 11, 17, 21, 25, and 26. Experimental profiling requires JDK 11 or later. The same JAR contains the optional Security capability.
+Beacon Java 1.3.4 ships as one Agent JAR, including the optional Security capability.
+
+## Supported versions
+
+| Runtime | Tracing | Experimental profiling |
+| --- | --- | --- |
+| JDK 1.8 (Java 8) | Supported | Not supported |
+| JDK 11 | Supported | Supported |
+| JDK 17 | Supported | Supported |
+| JDK 21 | Supported | Supported |
+| JDK 25 | Supported | Supported |
+| JDK 26 | Supported | Supported |
 
 ## Install
+
+[Download the Agent JAR](https://github.com/beacon-observability/beacon-java/releases/download/v1.3.4/beacon-javaagent-1.3.4.jar) and save it as `beacon-javaagent.jar`, or run:
 
 ```bash
 curl -fL -o beacon-javaagent.jar \

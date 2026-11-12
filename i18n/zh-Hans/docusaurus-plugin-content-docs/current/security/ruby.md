@@ -89,9 +89,9 @@ Collector 0.135.0 镜像运行 `python3 test/collector_smoke.py`。开发依赖�
 客户端，MySQL 需要客户端开发头文件和库。此检查验证真实 findings/inventory Logs、
 scope、资源身份、事件名及 Trace 关联。
 
-Security CI 通过 Linux CRuby 3.3/3.4/4.0，本地 Collector 验收使用 CRuby 3.3.12。
+Security CI 通过 Linux CRuby 3.3/3.4/4.0，本地 Collector 接入示例使用 CRuby 3.3.12。
 JRuby、其他操作系统、DataKit 和后端入库未验证。详见[固定版本参考](https://github.com/beacon-observability/beacon-ruby/blob/v1.1.0/security/README.md)
-和[验收记录](https://github.com/beacon-observability/beacon-ruby/blob/v1.1.0/beacon/validation/security-1.1.0.md)。
+和[技术参考](https://github.com/beacon-observability/beacon-ruby/blob/v1.1.0/beacon/validation/security-1.1.0.md)。
 
 未收到记录时，检查启用配置、中间件位置、客户端加载顺序，以及应用实际的 Logs
 exporter 和接收管道。finding 需要匹配模型中的输入，没有事件不代表安全。设置

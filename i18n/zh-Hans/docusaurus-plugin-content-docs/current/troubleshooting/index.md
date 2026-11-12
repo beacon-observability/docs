@@ -42,7 +42,7 @@ description: 排查零代码接入后没有遥测数据的问题。
   `--import` 预加载。
 - [.NET](../security/dotnet.md)：必须启用自动 SDK 初始化。关闭自动 Logs 会阻止
   Security 的 OTLP 导出，但单独启用的本地输出仍可工作。查询参数来源需经受支持的
-  字符串拼接到达已建模的 sink 才会产生安全发现，并需核对已验证的运行时范围。
+  字符串拼接到达已建模的 sink 才会产生安全发现，并需核对运行时支持范围。
 - 运行时 SBOM 可能先于安全发现产生。请生成一条经过已建模 source 和 sink 的实际请求；
   仅启动应用不会产生安全发现。
 - Java 1.3.4、Python 1.2.4、Node.js 2.0.2 默认不导出 `attack_evidence.status=no_evidence` 的安全发现，这不表示采集失败。按需设置 `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED=true`；参阅[导出策略](../security/index.md#finding-export-policy)。

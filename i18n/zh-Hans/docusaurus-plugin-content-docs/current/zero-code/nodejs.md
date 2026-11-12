@@ -6,7 +6,7 @@ description: 无需修改应用源码，通过预加载方式接入 Beacon Node.
 
 # Node.js 零代码接入
 
-Beacon Node.js 2.0.2 在 CI 中覆盖 Node.js 18.19+、20.6+、22 和 24。
+Beacon Node.js 2.0.2 支持 Node.js 18.19+、20.6+、22 和 24。
 Security 的运行时要求更严格，详见下文。
 
 ## 安装

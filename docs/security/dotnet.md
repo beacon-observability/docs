@@ -41,7 +41,7 @@ These are environment-variable bindings. Setting an output path alone does not e
 
 ## Coverage and compatibility
 
-Security flow and export tests cover CoreCLR .NET 8, 9 and 10 on Linux glibc x64, Windows x64 and macOS ARM64. .NET Framework runtime behavior, cross-AppDomain identity, other Security architectures and production performance remain outside the verified scope. Downloadable archives for other platforms do not imply Security acceptance on those platforms.
+Security flow and export tests cover CoreCLR .NET 8, 9 and 10 on Linux glibc x64, Windows x64 and macOS ARM64. .NET Framework runtime behavior, cross-AppDomain identity, other Security architectures and production performance remain outside the documented support scope. Downloadable archives for other platforms do not imply Security support on those platforms.
 
 The model tracks ASP.NET Core query values by string identity through the two-, three- and four-string `String.Concat` overloads. Supported sensitive calls observe file reads through `File.ReadAllText(string)`, ADO.NET text-command templates, asynchronous HTTP destinations and `Process.Start` invocations. Bound SQL parameter values do not taint a constant command template.
 
@@ -55,4 +55,4 @@ Enable `BEACON_SECURITY_LOCAL_OUTPUT_ENABLED=true` separately when local snapsho
 
 Local writing is asynchronous and bounded. Overload or filesystem failure can lose diagnostics while OTLP export continues independently. Files are neither a durable history nor a multi-process aggregation mechanism, and old process directories are not automatically removed. Return local output to `false` after diagnosis and manage retained files separately.
 
-See the [versioned Security reference](https://github.com/beacon-observability/beacon-dotnet/tree/v1.1.2/beacon/security) for modeled calls, request budgets and contract provenance, and the [release notes](https://github.com/beacon-observability/beacon-dotnet/releases/tag/v1.1.2) for release acceptance and limitations.
+See the [versioned Security reference](https://github.com/beacon-observability/beacon-dotnet/tree/v1.1.2/beacon/security) for modeled calls, request budgets and contract provenance, and the [release notes](https://github.com/beacon-observability/beacon-dotnet/releases/tag/v1.1.2) for release support and limitations.

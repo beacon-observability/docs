@@ -41,13 +41,13 @@ sudo "$rumable" probe --state-dir /var/lib/rumable --site REPLACE_SITE_ID
 
 更新时保留原站点 ID 和状态。仅安装新版 CLI 不会升级已部署站点的 SDK，还需要对该站点重新执行 setup 或 enable。Windows 命令、手工指定目标、禁用和回滚请参阅[用户指南](https://github.com/beacon-observability/rumable/blob/v0.1.11/USER-GUIDE.md)。
 
-## SDK 来源与 Nginx 验收
+## SDK 来源与 Nginx 接入
 
 默认从网站同源地址提供随包 SDK。可选的 HTTPS CDN 支持稳定版 v3 SDK；启用时检查格式，记录实际版本与 SHA-256，无须与内置版本一致。请选择可信来源，并在变更后验证采集与回放。部署后的 probe 和回滚仍要求匹配已保存摘要。可选 SRI 会拒绝变化后的内容，且需要 CDN 支持 CORS；建议使用内容固定的地址，避免被动更新。回滚无法恢复已被覆盖的 CDN 文件；CDN 加载失败不会自动切换至本地资源。
 
-Nginx 的 `includePaths` 和 `excludePaths` 控制注入范围，`probePaths` 仅选择验收页面；未列入验收路径的普通 head 页面仍可注入。请覆盖各页面模板。带 Range 的请求绕过 Rumable 注入。更新旧版属性 head 部署时，模板不兼容会在修改配置前停止；停用与回滚保留历史兼容能力。详见[普通 head 支持边界](https://github.com/beacon-observability/rumable/blob/v0.1.11/docs/nginx-plain-head.md)。
+Nginx 的 `includePaths` 和 `excludePaths` 控制注入范围，`probePaths` 仅选择检查页面；未列入检查路径的普通 head 页面仍可注入。请覆盖各页面模板。带 Range 的请求绕过 Rumable 注入。更新旧版属性 head 部署时，模板不兼容会在修改配置前停止；停用与回滚保留历史兼容能力。详见[普通 head 支持边界](https://github.com/beacon-observability/rumable/blob/v0.1.11/docs/nginx-plain-head.md)。
 
-本版保留 v0.1.10 对 IIS OTel 空环境快照的修复。发布打包会检查 Windows 可执行文件启动及 PowerShell 契约；v0.1.11 未重复执行原生 IIS 验收和真实数据入库验证。详见[发布说明](https://github.com/beacon-observability/rumable/releases/tag/v0.1.11)。
+本版保留 v0.1.10 对 IIS OTel 空环境快照的修复。发布打包会检查 Windows 可执行文件启动及 PowerShell 契约；v0.1.11 未重复执行原生 IIS 部署与数据接收检查。详见[发布说明](https://github.com/beacon-observability/rumable/releases/tag/v0.1.11)。
 
 ## 浏览器与服务端数据
 

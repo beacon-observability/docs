@@ -6,9 +6,22 @@ description: 使用 -javaagent 为 Java 应用挂载 Beacon。
 
 # Java 零代码接入
 
-Beacon Java 1.3.4 以单个 Agent JAR 交付。[完整发布验收](https://github.com/beacon-observability/beacon-java/actions/runs/41728142815)覆盖 JDK 8、11、17、21、25 和 26。实验性 Profile 要求 JDK 11 或更高版本；同一个 JAR 包含可选的 Security 能力。
+Beacon Java 1.3.4 以单个 Agent JAR 交付，包含可选的 Security 能力。
+
+## 支持版本
+
+| 运行时 | 链路追踪 | 实验性 Profile |
+| --- | --- | --- |
+| JDK 1.8（Java 8） | 支持 | 不支持 |
+| JDK 11 | 支持 | 支持 |
+| JDK 17 | 支持 | 支持 |
+| JDK 21 | 支持 | 支持 |
+| JDK 25 | 支持 | 支持 |
+| JDK 26 | 支持 | 支持 |
 
 ## 安装
+
+[下载 Agent JAR](https://github.com/beacon-observability/beacon-java/releases/download/v1.3.4/beacon-javaagent-1.3.4.jar)，保存为 `beacon-javaagent.jar`；也可执行：
 
 ```bash
 curl -fL -o beacon-javaagent.jar \

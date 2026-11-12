@@ -10,7 +10,7 @@ Beacon Ruby **[v1.1.0](https://github.com/beacon-observability/beacon-ruby/relea
 
 ## Requirements
 
-- The validated environment is **Ubuntu 24.04 x86_64, CRuby 3.3.12, and Bundler 2.5.22**. The source gem specifications require Ruby 3.3 or newer; Security CI also passes Linux CRuby 3.3, 3.4 and 4.0. Collector acceptance uses CRuby 3.3.12; other engines/platforms are outside the validated scope.
+- The example environment is **Ubuntu 24.04 x86_64, CRuby 3.3.12, and Bundler 2.5.22**. The source gem specifications require Ruby 3.3 or newer; Security CI also passes Linux CRuby 3.3, 3.4 and 4.0. The Collector example uses CRuby 3.3.12; other engines/platforms are outside the documented support scope.
 - Download access to GitHub and RubyGems.
 - Python 3 and Docker for the receiver check below.
 
@@ -33,7 +33,7 @@ tar -xzf "${ruby_archive}"
 cd "beacon-ruby-${ruby_release_version}"
 ```
 
-Continue only if checksum verification succeeds. `SOURCE.txt` records the source commit and upstream baseline. The archive includes source and licenses; the Security gem is a separate checksummed asset. Dependencies are installed separately. The validated environment and scope on this page describe v1.1.0; review the selected release's notes for changes.
+Continue only if checksum verification succeeds. `SOURCE.txt` records the source commit and upstream baseline. The archive includes source and licenses; the Security gem is a separate checksummed asset. Dependencies are installed separately. The example environment and scope on this page describe v1.1.0; review the selected release's notes for changes.
 
 ## Verify Net::HTTP traces
 
@@ -56,9 +56,9 @@ The harness removes its temporary servers, container, and trace output afterward
 
 ## Application integration and scope
 
-Use the release's [Gemfile](https://github.com/beacon-observability/beacon-ruby/blob/v1.1.0/beacon/validation/Gemfile) and [Ruby example](https://github.com/beacon-observability/beacon-ruby/blob/v1.1.0/beacon/validation/http_smoke.rb) as references for the validated Net::HTTP path. The Gemfile loads the base and Net::HTTP instrumentation from the released source and pins the Core SDK and OTLP exporter. Load the required libraries before initializing the SDK and enabling `OpenTelemetry::Instrumentation::Net::HTTP`.
+Use the release's [Gemfile](https://github.com/beacon-observability/beacon-ruby/blob/v1.1.0/beacon/validation/Gemfile) and [Ruby example](https://github.com/beacon-observability/beacon-ruby/blob/v1.1.0/beacon/validation/http_smoke.rb) as references for the Net::HTTP integration. The Gemfile loads the base and Net::HTTP instrumentation from the released source and pins the Core SDK and OTLP exporter. Load the required libraries before initializing the SDK and enabling `OpenTelemetry::Instrumentation::Net::HTTP`.
 
-Release acceptance covers the shared instrumentation base, Net::HTTP modes, and local Collector trace export. Security findings and runtime inventories also have a validated Logs path; see [Ruby Security](security/ruby.md). Rails-specific adapters, other integrations, DataKit, metrics, general application logs and profiling are outside the validated scope. See the [source installation guide](https://github.com/beacon-observability/beacon-ruby/blob/v1.1.0/beacon/INSTALLATION.md) and [release notes](https://github.com/beacon-observability/beacon-ruby/releases/tag/v1.1.0) before adapting the example.
+This release provides the shared instrumentation base, Net::HTTP modes, and local Collector trace export. Security findings and runtime inventories also have a Logs export path; see [Ruby Security](security/ruby.md). Rails-specific adapters, other integrations, DataKit, metrics, general application logs and profiling are outside the documented support scope. See the [source installation guide](https://github.com/beacon-observability/beacon-ruby/blob/v1.1.0/beacon/INSTALLATION.md) and [release notes](https://github.com/beacon-observability/beacon-ruby/releases/tag/v1.1.0) before adapting the example.
 
 ## Enable Security
 
@@ -81,4 +81,4 @@ Keep each source release in a separate directory. Retain the verified archive, c
 
 - [Source repository](https://github.com/beacon-observability/beacon-ruby)
 - [Releases and downloads](https://github.com/beacon-observability/beacon-ruby/releases)
-- [Versioned acceptance record](https://github.com/beacon-observability/beacon-ruby/blob/v1.1.0/beacon/validation/README.md)
+- [Versioned technical reference](https://github.com/beacon-observability/beacon-ruby/blob/v1.1.0/beacon/validation/README.md)

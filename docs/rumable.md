@@ -47,7 +47,7 @@ The default bundled SDK is served from the website origin. Optional HTTPS CDN de
 
 For Nginx, `includePaths` and `excludePaths` control injection scope. `probePaths` selects verification pages only; unlisted plain-head pages can still receive scripts. Cover each page template. Range requests bypass Rumable injection. When updating legacy attribute-head deployments, incompatible templates stop the update before configuration changes; disable and rollback retain historical support. See [plain head support](https://github.com/beacon-observability/rumable/blob/v0.1.11/docs/nginx-plain-head.md).
 
-The release retains v0.1.10 fixes for empty IIS OTel environment snapshots. Release packaging checks Windows executable startup and PowerShell contracts; native IIS acceptance and live ingestion were not repeated for v0.1.11. See the [release notes](https://github.com/beacon-observability/rumable/releases/tag/v0.1.11).
+The release retains v0.1.10 fixes for empty IIS OTel environment snapshots. Release packaging checks Windows executable startup and PowerShell contracts; native IIS deployment and live ingestion checks were not repeated for v0.1.11. See the [release notes](https://github.com/beacon-observability/rumable/releases/tag/v0.1.11).
 
 ## Browser and server telemetry
 

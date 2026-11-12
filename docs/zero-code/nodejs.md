@@ -6,7 +6,7 @@ description: Preload Beacon Node.js without changing application source.
 
 # Node.js zero-code instrumentation
 
-Beacon Node.js 2.0.2 covers Node.js 18.19+, 20.6+, 22, and 24 in its CI matrix. Security has a narrower runtime
+Beacon Node.js 2.0.2 supports Node.js 18.19+, 20.6+, 22, and 24. Security has a narrower runtime
 requirement documented below.
 
 ## Install

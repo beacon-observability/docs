@@ -13,7 +13,7 @@ Rust 应用请使用 **[Fastrace Rust SDK](fastrace.md)**，可用版本与下�
 
 C++ 应用使用 [Beacon C++ SDK](cpp.md) 源码发行版。构建固定版本源码归档、初始化 SDK 并显式修改应用代码埋点；指南涵盖 OTLP/HTTP 链路接收验证及回滚。
 
-使用 [OBI（eBPF）](zero-code/obi.md)时，通过独立进程采集选定的 Linux 应用；应用保持原有启动方式。其权限要求与已验证范围见 OBI 指南。
+使用 [OBI（eBPF）](zero-code/obi.md)时，通过独立进程采集选定的 Linux 应用；应用保持原有启动方式。其权限要求与本文支持范围见 OBI 指南。
 
 ## 从这里开始
 
@@ -26,6 +26,21 @@ C++ 应用使用 [Beacon C++ SDK](cpp.md) 源码发行版。构建固定版本�
 
 零代码接入仍需调整部署配置，但无需修改应用源代码。自动采集范围以各指南中列明的框架、依赖库或网站响应为准。
 
+## 支持的语言版本
+
+以下版本对应各语言指南中的 Beacon 发行版；Profile 和 Security 的额外要求见对应指南。
+
+| 语言 | 版本要求 |
+| --- | --- |
+| [Java](zero-code/java.md) | JDK 1.8（Java 8）、11、17、21、25、26 |
+| [Python](zero-code/python.md) | Python 3.10、3.11、3.12、3.13、3.14 |
+| [Node.js](zero-code/nodejs.md) | Node.js 18.19+、20.6+、22、24 |
+| [.NET](zero-code/dotnet.md) | CoreCLR .NET 8、9、10；系统与架构限制见语言指南 |
+| [PHP](zero-code/php.md) | PHP 8.2、8.3、8.4 |
+| [Ruby](ruby.md) | CRuby 3.3.12；源码 gem 要求 Ruby 3.3+，其他运行时支持请参阅语言指南 |
+| [Rust / Fastrace](fastrace.md) | Rust 1.91.0+ 与 Cargo |
+| [C++](cpp.md) | C++17；构建环境见语言指南 |
+
 ## 语言项目
 
 | 语言 / 项目 | 接入类型 | 接入方式 | Profile | Security | 发布地址 |
@@ -35,15 +50,15 @@ C++ 应用使用 [Beacon C++ SDK](cpp.md) 源码发行版。构建固定版本�
 | [Node.js](zero-code/nodejs.md) | 零代码 | 预加载：`NODE_OPTIONS` | [需主动开启](profiling/nodejs.md) | [需主动开启](security/nodejs.md) | [Releases](https://github.com/beacon-observability/beacon-nodejs/releases) |
 | [.NET](zero-code/dotnet.md) | 零代码 | 启动器：`beacon-dotnet run` | 暂无受支持的配置 | [实验性，显式开启](security/dotnet.md) | [Releases](https://github.com/beacon-observability/beacon-dotnet/releases) |
 | [PHP](zero-code/php.md) | 零代码 | 统一安装器：`beacon-setup.php` | 暂无受支持的配置 | [实验性，显式开启](security/php.md) | [Releases](https://github.com/beacon-observability/beacon-php/releases) |
-| [Ruby](ruby.md) | SDK（源码集成） | 源码集成：Net::HTTP 链路追踪 | 不在已验证范围内 | [可选 gem](security/ruby.md) | [Releases](https://github.com/beacon-observability/beacon-ruby/releases) |
+| [Ruby](ruby.md) | SDK（源码集成） | 源码集成：Net::HTTP 链路追踪 | 不在本文支持范围内 | [可选 gem](security/ruby.md) | [Releases](https://github.com/beacon-observability/beacon-ruby/releases) |
 | [Rust / Fastrace](fastrace.md) | SDK | 链路追踪 SDK：显式代码埋点 | 不提供 | 不提供 | [Releases](https://github.com/beacon-observability/fastrace/releases) |
 | [C++](cpp.md) | SDK | 源码 SDK：显式埋点 | 未提供 | 未提供 | [Releases](https://github.com/beacon-observability/beacon-cpp/releases) |
-| [OBI（eBPF）](zero-code/obi.md) | 零代码 | 独立 eBPF 进程 | 不在已验证范围 | 不在已验证范围 | [Releases](https://github.com/beacon-observability/beacon-obi/releases) |
+| [OBI（eBPF）](zero-code/obi.md) | 零代码 | 独立 eBPF 进程 | 不在本文支持范围 | 不在本文支持范围 | [Releases](https://github.com/beacon-observability/beacon-obi/releases) |
 | [浏览器 / Rumable](rumable.md) | 零代码 | Web SDK 注入：Nginx / IIS | 不提供 | 不提供 | [Releases](https://github.com/beacon-observability/rumable/releases) |
 
 各项目独立维护版本与发布节奏。请通过发布链接查看可用版本与下载资源，通过对应语言指南查看运行时要求。表中的 Profile 和 Security 指服务端探针能力；Rumable 提供浏览器 RUM。
 
-Ruby 当前提供源码发行包，已验证 Net::HTTP 链路路径；v1.1.0 还通过 GitHub 分发需要显式 Rack/SDK 配置的可选 Security gem，未提供零代码预加载入口，验收环境与限制请参阅 [Ruby 指南](ruby.md)。Fastrace 需要在应用代码中显式埋点并初始化 reporter。
+Ruby 当前提供源码发行包，支持 Net::HTTP 链路追踪；v1.1.0 还通过 GitHub 分发需要显式 Rack/SDK 配置的可选 Security gem，未提供零代码预加载入口，示例环境与限制请参阅 [Ruby 指南](ruby.md)。Fastrace 需要在应用代码中显式埋点并初始化 reporter。
 
 Security 默认关闭。已发布的 Java、Python、Node.js、.NET、PHP 和 Ruby 启用方式及运行时范围请参阅 [Security 指南](security/index.md)。
 
