@@ -13,7 +13,7 @@ For Rust applications, use the **[Fastrace Rust SDK](fastrace.md)**. See [Releas
 
 For C++ applications, use the [Beacon C++ SDK](cpp.md) source release. Build the fixed-version source archive, initialize the SDK, and instrument application code explicitly; its guide covers OTLP/HTTP trace reception and rollback.
 
-With [OBI (eBPF)](zero-code/obi.md), run a standalone process against a selected Linux application while preserving the application launch command. See the OBI guide for privileges and validated scope.
+With [OBI (eBPF)](zero-code/obi.md), run a standalone process against a selected Linux application while preserving the application launch command. See the OBI guide for privileges and documented support scope.
 
 ## Start here
 
@@ -26,6 +26,21 @@ Server agents use OpenTelemetry settings such as `OTEL_SERVICE_NAME` and `OTEL_E
 
 Zero-code setups require deployment configuration, while application source code stays unchanged. Automatic collection covers the supported frameworks, libraries, or website responses described in each guide.
 
+## Supported language versions
+
+These versions apply to the Beacon releases in the language guides. See those guides for additional profiling and Security requirements.
+
+| Language | Version requirements |
+| --- | --- |
+| [Java](zero-code/java.md) | JDK 1.8 (Java 8), 11, 17, 21, 25, 26 |
+| [Python](zero-code/python.md) | Python 3.10, 3.11, 3.12, 3.13, 3.14 |
+| [Node.js](zero-code/nodejs.md) | Node.js 18.19+, 20.6+, 22, 24 |
+| [.NET](zero-code/dotnet.md) | CoreCLR .NET 8, 9, 10; see the language guide for OS and architecture limits |
+| [PHP](zero-code/php.md) | PHP 8.2, 8.3, 8.4 |
+| [Ruby](ruby.md) | CRuby 3.3.12; source gems require Ruby 3.3+, see the language guide for other runtimes |
+| [Rust / Fastrace](fastrace.md) | Rust 1.91.0+ and Cargo |
+| [C++](cpp.md) | C++17; see the language guide for build requirements |
+
 ## Language projects
 
 | Language / project | Integration type | Integration | Profiling | Security | Releases |
@@ -35,15 +50,15 @@ Zero-code setups require deployment configuration, while application source code
 | [Node.js](zero-code/nodejs.md) | Zero-code | Preload: `NODE_OPTIONS` | [Opt in](profiling/nodejs.md) | [Opt in](security/nodejs.md) | [Releases](https://github.com/beacon-observability/beacon-nodejs/releases) |
 | [.NET](zero-code/dotnet.md) | Zero-code | Launcher: `beacon-dotnet run` | No supported setup | [Experimental, opt in](security/dotnet.md) | [Releases](https://github.com/beacon-observability/beacon-dotnet/releases) |
 | [PHP](zero-code/php.md) | Zero-code | Installer: `beacon-setup.php` | No supported setup | [Experimental, opt in](security/php.md) | [Releases](https://github.com/beacon-observability/beacon-php/releases) |
-| [Ruby](ruby.md) | SDK (source integration) | Source integration: Net::HTTP tracing | Outside validated scope | [Opt-in gem](security/ruby.md) | [Releases](https://github.com/beacon-observability/beacon-ruby/releases) |
+| [Ruby](ruby.md) | SDK (source integration) | Source integration: Net::HTTP tracing | Outside documented support scope | [Opt-in gem](security/ruby.md) | [Releases](https://github.com/beacon-observability/beacon-ruby/releases) |
 | [Rust / Fastrace](fastrace.md) | SDK | Tracing SDK: explicit instrumentation | Not provided | Not provided | [Releases](https://github.com/beacon-observability/fastrace/releases) |
 | [C++](cpp.md) | SDK | Source SDK: explicit instrumentation | Not provided | Not provided | [Releases](https://github.com/beacon-observability/beacon-cpp/releases) |
-| [OBI (eBPF)](zero-code/obi.md) | Zero-code | Standalone eBPF process | Outside validated scope | Outside validated scope | [Releases](https://github.com/beacon-observability/beacon-obi/releases) |
+| [OBI (eBPF)](zero-code/obi.md) | Zero-code | Standalone eBPF process | Outside documented support scope | Outside documented support scope | [Releases](https://github.com/beacon-observability/beacon-obi/releases) |
 | [Browser / Rumable](rumable.md) | Zero-code | Web SDK injection: Nginx / IIS | Not provided | Not provided | [Releases](https://github.com/beacon-observability/rumable/releases) |
 
 Each project is versioned and released independently. Follow the release links for available versions and download assets, and the language guides for runtime requirements. Profiling and Security in this table refer to server-side agent features; Rumable provides browser RUM.
 
-Ruby currently provides a source release with a validated Net::HTTP trace path. Release v1.1.0 also distributes an opt-in Security gem on GitHub, with explicit Rack/SDK setup; it does not provide a zero-code preload; see the [Ruby guide](ruby.md) for the validated environment and limitations. Fastrace requires application code instrumentation and reporter initialization.
+Ruby currently provides a source release with Net::HTTP tracing. Release v1.1.0 also distributes an opt-in Security gem on GitHub, with explicit Rack/SDK setup; it does not provide a zero-code preload; see the [Ruby guide](ruby.md) for the example environment and limitations. Fastrace requires application code instrumentation and reporter initialization.
 
 Security is disabled by default. See the [Security guides](security/index.md) for the released Java, Python, Node.js, .NET, PHP, and Ruby activation and runtime scope.
 

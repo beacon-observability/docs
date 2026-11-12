@@ -10,7 +10,7 @@ Beacon Ruby **[v1.1.0](https://github.com/beacon-observability/beacon-ruby/relea
 
 ## 环境要求
 
-- 已验证环境为 **Ubuntu 24.04 x86_64、CRuby 3.3.12 和 Bundler 2.5.22**。源码中的 gem 规格要求 Ruby 3.3 或更新版本；Security CI 还通过 Linux CRuby 3.3、3.4 和 4.0。Collector 验收使用 CRuby 3.3.12，其他引擎和平台不在已验证范围内。
+- 本文示例使用 **Ubuntu 24.04 x86_64、CRuby 3.3.12 和 Bundler 2.5.22**。源码中的 gem 规格要求 Ruby 3.3 或更新版本；Security CI 还通过 Linux CRuby 3.3、3.4 和 4.0。Collector 接入示例使用 CRuby 3.3.12，其他引擎和平台不在本文支持范围内。
 - 能够从 GitHub 和 RubyGems 下载所需资源。
 - 下方接收端验证需要 Python 3 和 Docker。
 
@@ -33,7 +33,7 @@ tar -xzf "${ruby_archive}"
 cd "beacon-ruby-${ruby_release_version}"
 ```
 
-校验通过后再继续。`SOURCE.txt` 记录源码提交和上游基线。压缩包包含源码与许可证，Security gem 是独立的受校验资产，依赖需要单独安装。本页的验收环境和能力范围对应 v1.1.0；使用其他版本时，请查阅所选版本的发布说明。
+校验通过后再继续。`SOURCE.txt` 记录源码提交和上游基线。压缩包包含源码与许可证，Security gem 是独立的受校验资产，依赖需要单独安装。本页的示例环境和能力范围对应 v1.1.0；使用其他版本时，请查阅所选版本的发布说明。
 
 ## 验证 Net::HTTP 链路
 
@@ -56,9 +56,9 @@ Collector received the service identity and correlated root/client spans.
 
 ## 应用集成与能力范围
 
-已验证的 Net::HTTP 路径可参考发布版本中的 [Gemfile](https://github.com/beacon-observability/beacon-ruby/blob/v1.1.0/beacon/validation/Gemfile) 和 [Ruby 示例](https://github.com/beacon-observability/beacon-ruby/blob/v1.1.0/beacon/validation/http_smoke.rb)。Gemfile 从已发布源码加载基础插桩库和 Net::HTTP 插桩库，并固定 Core SDK 与 OTLP exporter 的版本。先加载所需库，再初始化 SDK 并启用 `OpenTelemetry::Instrumentation::Net::HTTP`。
+Net::HTTP 接入方式可参考发布版本中的 [Gemfile](https://github.com/beacon-observability/beacon-ruby/blob/v1.1.0/beacon/validation/Gemfile) 和 [Ruby 示例](https://github.com/beacon-observability/beacon-ruby/blob/v1.1.0/beacon/validation/http_smoke.rb)。Gemfile 从已发布源码加载基础插桩库和 Net::HTTP 插桩库，并固定 Core SDK 与 OTLP exporter 的版本。先加载所需库，再初始化 SDK 并启用 `OpenTelemetry::Instrumentation::Net::HTTP`。
 
-本次发布验收覆盖基础插桩库、Net::HTTP 语义模式以及本地 Collector 链路导出。Security 安全发现与运行时清单还具备已验证的 Logs 路径，参见 [Ruby Security](security/ruby.md)。Rails 专属适配、其他集成、DataKit、指标、通用应用日志和 Profile 不在已验证范围内。将示例用于应用前，请阅读[源码安装指南](https://github.com/beacon-observability/beacon-ruby/blob/v1.1.0/beacon/INSTALLATION.md)和[发布说明](https://github.com/beacon-observability/beacon-ruby/releases/tag/v1.1.0)。
+本版本提供基础插桩库、Net::HTTP 语义模式以及本地 Collector 链路导出。Security 安全发现与运行时清单还具备Logs 导出能力，参见 [Ruby Security](security/ruby.md)。Rails 专属适配、其他集成、DataKit、指标、通用应用日志和 Profile 不在本文支持范围内。将示例用于应用前，请阅读[源码安装指南](https://github.com/beacon-observability/beacon-ruby/blob/v1.1.0/beacon/INSTALLATION.md)和[发布说明](https://github.com/beacon-observability/beacon-ruby/releases/tag/v1.1.0)。
 
 ## 启用 Security
 
@@ -80,4 +80,4 @@ gem install ./beacon-security-0.1.0.gem --no-document
 
 - [源码仓库](https://github.com/beacon-observability/beacon-ruby)
 - [发布与下载](https://github.com/beacon-observability/beacon-ruby/releases)
-- [固定版本验收记录](https://github.com/beacon-observability/beacon-ruby/blob/v1.1.0/beacon/validation/README.md)
+- [固定版本技术参考](https://github.com/beacon-observability/beacon-ruby/blob/v1.1.0/beacon/validation/README.md)

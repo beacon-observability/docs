@@ -6,7 +6,7 @@ description: Install Beacon PHP with one setup script and automatically load the
 
 # PHP zero-code instrumentation
 
-[Beacon PHP 1.3.1](https://github.com/beacon-observability/beacon-php/releases/tag/v1.3.1) supports PHP 8.2, 8.3 and 8.4. The default standalone installer selects Beacon native extension 1.1.0 and installs an isolated Agent runtime. It requires no Composer and preserves application dependencies. Linux glibc x86_64 has passed standalone acceptance; see the [release-specific deployment guide](https://github.com/beacon-observability/beacon-php/blob/v1.3.1/docs/standalone.md) for platform constraints.
+[Beacon PHP 1.3.1](https://github.com/beacon-observability/beacon-php/releases/tag/v1.3.1) supports PHP 8.2, 8.3 and 8.4. The default standalone installer selects Beacon native extension 1.1.0 and installs an isolated Agent runtime. It requires no Composer and preserves application dependencies. Linux glibc x86_64 has supports standalone installation; see the [release-specific deployment guide](https://github.com/beacon-observability/beacon-php/blob/v1.3.1/docs/standalone.md) for platform constraints.
 
 ## Install
 

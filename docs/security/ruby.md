@@ -96,10 +96,9 @@ Collector 0.135.0 image. The development bundle includes native database clients
 MySQL needs client development headers/libraries. This checks real finding and
 inventory Logs, scope/resource identity, event names and trace correlation.
 
-Security CI passes Linux CRuby 3.3/3.4/4.0; local Collector acceptance uses CRuby
-3.3.12. JRuby, other operating systems, DataKit and backend ingestion are not
-validated. See the [versioned reference](https://github.com/beacon-observability/beacon-ruby/blob/v1.1.0/security/README.md)
-and [acceptance](https://github.com/beacon-observability/beacon-ruby/blob/v1.1.0/beacon/validation/security-1.1.0.md).
+Security CI passes Linux CRuby 3.3/3.4/4.0; the local Collector example uses CRuby
+3.3.12. JRuby, other operating systems, DataKit and backend ingestion are outside this guide’s support scope. See the [versioned reference](https://github.com/beacon-observability/beacon-ruby/blob/v1.1.0/security/README.md)
+and [technical reference](https://github.com/beacon-observability/beacon-ruby/blob/v1.1.0/beacon/validation/security-1.1.0.md).
 
 If no records arrive, check opt-in settings, middleware placement, client load
 order and the application's actual Logs exporter/receiver pipeline. Findings

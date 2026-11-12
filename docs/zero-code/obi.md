@@ -8,7 +8,7 @@ description: Collect Linux HTTP server traces and metrics with the standalone Be
 
 Beacon OBI **0.1.0** provides a standalone Linux amd64 executable based on upstream OpenTelemetry eBPF Instrumentation 1.0.0. It attaches eBPF probes to a selected application without adding an application SDK. Beacon versions and upstream versions are independent.
 
-The accepted environment is Ubuntu 24.04, kernel 6.11, CPython 3.14.3, HTTP/1 server requests, and a local OTLP HTTP/protobuf receiver. Other platforms, protocols, runtimes, production receivers, Kubernetes, Profiling, and Security are outside this release's validated scope.
+The example environment is Ubuntu 24.04, kernel 6.11, CPython 3.14.3, HTTP/1 server requests, and a local OTLP HTTP/protobuf receiver. Other platforms, protocols, runtimes, production receivers, Kubernetes, Profiling, and Security are outside this release's documented support scope.
 
 ## Download and verify
 
@@ -24,7 +24,7 @@ cd beacon-obi-0.1.0
 ./obi --version
 ```
 
-The command remains `obi`. Check that its output includes `Beacon OBI 0.1.0` and the release source commit. The release includes licenses, third-party notices, a component inventory, local build provenance, and an acceptance record. It does not claim a Beacon artifact signature or GitHub build attestation; checksums detect corruption.
+The command remains `obi`. Check that its output includes `Beacon OBI 0.1.0` and the release source commit. The release includes licenses, third-party notices, a component inventory, local build provenance, and a technical reference. It does not claim a Beacon artifact signature or GitHub build attestation; checksums detect corruption.
 
 ## Run
 
@@ -45,7 +45,7 @@ Replace the port, service name, and endpoint. This command uses the retained ups
 
 ## Verify and diagnose
 
-Send requests to the application. Verify the service name, nonzero trace/span identifiers, HTTP server spans with the expected response status, and `http.server.request.duration` observations in the receiver. Starting OBI successfully does not prove that telemetry arrived. Initial acceptance can observe a late metrics-upload message after the exporter closes during shutdown; a successful exit does not establish lossless final flushing.
+Send requests to the application. Verify the service name, nonzero trace/span identifiers, HTTP server spans with the expected response status, and `http.server.request.duration` observations in the receiver. Starting OBI successfully does not prove that telemetry arrived. A late metrics-upload message can appear after the exporter closes during shutdown; a successful exit does not establish lossless final flushing.
 
 If data is absent, check the selected listening port, BTF availability, privileges, probe attachment logs, receiver reachability, and export errors. Add `OTEL_EBPF_LOG_LEVEL=debug` to the same command for diagnostics, then remove it afterward. Metadata and application details may appear in diagnostic logs.
 
@@ -53,4 +53,4 @@ If data is absent, check the selected listening port, BTF availability, privileg
 
 Verify each new archive, retain the previous executable and configuration, stop OBI with SIGTERM or Ctrl+C, and start one replacement with the same explicit settings. Check telemetry again. To roll back, stop the replacement and restart the retained executable. To remove instrumentation, stop OBI; application source changes are not required.
 
-See the [versioned installation guide](https://github.com/beacon-observability/beacon-obi/blob/v0.1.0/beacon/INSTALLATION.md) for detailed scope and the [release record](https://github.com/beacon-observability/beacon-obi/releases/tag/v0.1.0) for artifact acceptance. The downloaded upstream-derived source may contain additional features whose presence does not establish Beacon support.
+See the [versioned installation guide](https://github.com/beacon-observability/beacon-obi/blob/v0.1.0/beacon/INSTALLATION.md) for detailed scope and the [release record](https://github.com/beacon-observability/beacon-obi/releases/tag/v0.1.0) for artifact details. The downloaded upstream-derived source may contain additional features whose presence does not establish Beacon support.

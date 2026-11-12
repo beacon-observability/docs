@@ -6,7 +6,7 @@ description: 通过统一安装脚本部署 Beacon PHP，并在应用代码运�
 
 # PHP 零代码接入
 
-[Beacon PHP 1.3.1](https://github.com/beacon-observability/beacon-php/releases/tag/v1.3.1) 支持 PHP 8.2、8.3 和 8.4。默认独立安装器会选择 Beacon 原生扩展 1.1.0，并安装隔离的 Agent 运行时，无需 Composer，保留应用原有依赖。Linux glibc x86_64 已通过独立安装验收；其他平台限制见[对应版本的部署说明](https://github.com/beacon-observability/beacon-php/blob/v1.3.1/docs/standalone.md)。
+[Beacon PHP 1.3.1](https://github.com/beacon-observability/beacon-php/releases/tag/v1.3.1) 支持 PHP 8.2、8.3 和 8.4。默认独立安装器会选择 Beacon 原生扩展 1.1.0，并安装隔离的 Agent 运行时，无需 Composer，保留应用原有依赖。Linux glibc x86_64 支持独立安装；其他平台限制见[对应版本的部署说明](https://github.com/beacon-observability/beacon-php/blob/v1.3.1/docs/standalone.md)。
 
 ## 安装
 
@@ -53,7 +53,7 @@ PHP Agent 1.3.1 安装器已选择原生扩展 1.1.0；升级已有安装前，�
 PHP 8.2/8.3/8.4、操作系统、架构、NTS/TS 和 Windows 编译器 ABI 必须完全匹配；
 Windows PHP 8.2/8.3 使用 VS16，PHP 8.4 使用 VS17。参阅
 [固定版本的原生安装说明](https://github.com/beacon-observability/beacon-php-instrumentation/blob/v1.1.0/beacon/README.md)。
-Linux x86_64/PHP 8.3 产物已与正式 Agent 1.3.0 运行时完成真实 PDO 链路接收验收。
+Linux x86_64/PHP 8.3 产物可配合正式 Agent 1.3.0 运行时采集 PDO 链路。
 发布 CI 矩阵不等于完整的应用或框架兼容性保证。
 
 ## 调试与诊断
