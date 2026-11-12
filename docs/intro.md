@@ -50,7 +50,7 @@ These versions apply to the Beacon releases in the language guides. See those gu
 | [Node.js](zero-code/nodejs.md) | Zero-code | Preload: `NODE_OPTIONS` | [Opt in](profiling/nodejs.md) | [Opt in](security/nodejs.md) | [Releases](https://github.com/beacon-observability/beacon-nodejs/releases) |
 | [.NET](zero-code/dotnet.md) | Zero-code | Launcher: `beacon-dotnet run` | No supported setup | [Experimental, opt in](security/dotnet.md) | [Releases](https://github.com/beacon-observability/beacon-dotnet/releases) |
 | [PHP](zero-code/php.md) | Zero-code | Installer: `beacon-setup.php` | No supported setup | [Experimental, opt in](security/php.md) | [Releases](https://github.com/beacon-observability/beacon-php/releases) |
-| [Ruby](ruby.md) | SDK (source integration) | Source integration: Net::HTTP tracing | Outside documented support scope | [Opt-in gem](security/ruby.md) | [Releases](https://github.com/beacon-observability/beacon-ruby/releases) |
+| [Ruby](ruby.md) | SDK (source integration) | Source integration: Net::HTTP tracing | [Experimental profiling](ruby.md#profiling) | [Opt-in gem](security/ruby.md) | [Releases](https://github.com/beacon-observability/beacon-ruby/releases) |
 | [Rust / Fastrace](fastrace.md) | SDK | Tracing SDK: explicit instrumentation | Not provided | Not provided | [Releases](https://github.com/beacon-observability/fastrace/releases) |
 | [C++](cpp.md) | SDK | Source SDK: explicit instrumentation | Not provided | Not provided | [Releases](https://github.com/beacon-observability/beacon-cpp/releases) |
 | [OBI (eBPF)](zero-code/obi.md) | Zero-code | Standalone eBPF process | Outside documented support scope | Outside documented support scope | [Releases](https://github.com/beacon-observability/beacon-obi/releases) |
@@ -58,7 +58,7 @@ These versions apply to the Beacon releases in the language guides. See those gu
 
 Each project is versioned and released independently. Follow the release links for available versions and download assets, and the language guides for runtime requirements. Profiling and Security in this table refer to server-side agent features; Rumable provides browser RUM.
 
-Ruby currently provides a source release with Net::HTTP tracing. Release v1.1.0 also distributes an opt-in Security gem on GitHub, with explicit Rack/SDK setup; it does not provide a zero-code preload; see the [Ruby guide](ruby.md) for the example environment and limitations. Fastrace requires application code instrumentation and reporter initialization.
+Ruby currently provides a source release with Net::HTTP tracing. Release v1.2.0 distributes opt-in Security and experimental profiling gems on GitHub. Tracing and Security require explicit SDK setup; profiling has a separate preload; see the [Ruby guide](ruby.md) for the example environment and limitations. Fastrace requires application code instrumentation and reporter initialization.
 
 Security is disabled by default. See the [Security guides](security/index.md) for the released Java, Python, Node.js, .NET, PHP, and Ruby activation and runtime scope.
 

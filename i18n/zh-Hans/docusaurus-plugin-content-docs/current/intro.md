@@ -50,7 +50,7 @@ C++ 应用使用 [Beacon C++ SDK](cpp.md) 源码发行版。构建固定版本�
 | [Node.js](zero-code/nodejs.md) | 零代码 | 预加载：`NODE_OPTIONS` | [需主动开启](profiling/nodejs.md) | [需主动开启](security/nodejs.md) | [Releases](https://github.com/beacon-observability/beacon-nodejs/releases) |
 | [.NET](zero-code/dotnet.md) | 零代码 | 启动器：`beacon-dotnet run` | 暂无受支持的配置 | [实验性，显式开启](security/dotnet.md) | [Releases](https://github.com/beacon-observability/beacon-dotnet/releases) |
 | [PHP](zero-code/php.md) | 零代码 | 统一安装器：`beacon-setup.php` | 暂无受支持的配置 | [实验性，显式开启](security/php.md) | [Releases](https://github.com/beacon-observability/beacon-php/releases) |
-| [Ruby](ruby.md) | SDK（源码集成） | 源码集成：Net::HTTP 链路追踪 | 不在本文支持范围内 | [可选 gem](security/ruby.md) | [Releases](https://github.com/beacon-observability/beacon-ruby/releases) |
+| [Ruby](ruby.md) | SDK（源码集成） | 源码集成：Net::HTTP 链路追踪 | [实验性 Profiling](ruby.md#profiling) | [可选 gem](security/ruby.md) | [Releases](https://github.com/beacon-observability/beacon-ruby/releases) |
 | [Rust / Fastrace](fastrace.md) | SDK | 链路追踪 SDK：显式代码埋点 | 不提供 | 不提供 | [Releases](https://github.com/beacon-observability/fastrace/releases) |
 | [C++](cpp.md) | SDK | 源码 SDK：显式埋点 | 未提供 | 未提供 | [Releases](https://github.com/beacon-observability/beacon-cpp/releases) |
 | [OBI（eBPF）](zero-code/obi.md) | 零代码 | 独立 eBPF 进程 | 不在本文支持范围 | 不在本文支持范围 | [Releases](https://github.com/beacon-observability/beacon-obi/releases) |
@@ -58,7 +58,7 @@ C++ 应用使用 [Beacon C++ SDK](cpp.md) 源码发行版。构建固定版本�
 
 各项目独立维护版本与发布节奏。请通过发布链接查看可用版本与下载资源，通过对应语言指南查看运行时要求。表中的 Profile 和 Security 指服务端探针能力；Rumable 提供浏览器 RUM。
 
-Ruby 当前提供源码发行包，支持 Net::HTTP 链路追踪；v1.1.0 还通过 GitHub 分发需要显式 Rack/SDK 配置的可选 Security gem，未提供零代码预加载入口，示例环境与限制请参阅 [Ruby 指南](ruby.md)。Fastrace 需要在应用代码中显式埋点并初始化 reporter。
+Ruby 当前提供源码发行包，支持 Net::HTTP 链路追踪；v1.2.0 通过 GitHub 分发可选 Security 和实验性 Profiling gem，链路追踪和 Security 仍需显式 SDK 配置，Profiling 提供独立预加载入口，示例环境与限制请参阅 [Ruby 指南](ruby.md)。Fastrace 需要在应用代码中显式埋点并初始化 reporter。
 
 Security 默认关闭。已发布的 Java、Python、Node.js、.NET、PHP 和 Ruby 启用方式及运行时范围请参阅 [Security 指南](security/index.md)。
 

@@ -13,5 +13,6 @@ Profile 与 Trace、指标和日志分别配置。普通 OTLP 遥测地址并不
 | [Java](java.md) | JFR | 本地文件、HTTP multipart 上传 | 实验性 |
 | [Python](python.md) | OTLP Profiles、pprof | OTLP/HTTP、pprof HTTP 上传、本地文件 | 可选 |
 | [Node.js](nodejs.md) | pprof | HTTP 上传 | 可选 |
+| [Ruby](../ruby.md#profiling) | pprof | HTTP multipart 上传、本地文件 | 实验性 |
 
 Beacon .NET 和 PHP 当前未提供受支持的用户级 Profile 配置。

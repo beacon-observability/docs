@@ -16,7 +16,7 @@ Ruby 通过可选 gem 分发，需要显式配置 Rack/SDK。Security 默认关�
 | [Node.js](nodejs.md) | [2.0.2](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v2.0.2) | Node.js 22.22.3+ 或 24.11.1+ | 现有软件包加 ESM 预加载 |
 | [.NET](dotnet.md) | 1.1.2，实验性 | CoreCLR .NET 8–10：Linux glibc x64、Windows x64、macOS ARM64 | 现有 `beacon-dotnet run` 命令 |
 | [PHP](php.md) | 1.3.1，实验性 | PHP 8.2–8.4，Linux glibc x86_64 | 现有安装器与 Agent 运行时 |
-| [Ruby](ruby.md) | 1.1.0 / gem 0.1.0 | Linux CRuby 3.3/3.4/4.0 CI，3.3.12 Collector 接入示例 | GitHub gem 与 Rack 中间件 |
+| [Ruby](ruby.md) | 1.2.0 / gem 0.1.0 | Linux CRuby 3.3/3.4/4.0 CI，3.3.12 Collector 接入示例 | GitHub gem 与 Rack 中间件 |
 
 启用后，Security 通过应用现有的 OpenTelemetry Logs 管道发送安全发现和运行时软件
 清单。运行时 SBOM 在 Security 生命周期中默认开启；进程本地诊断文件仍保持关闭，
