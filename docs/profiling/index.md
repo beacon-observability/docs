@@ -11,7 +11,7 @@ Profiling is configured separately from traces, metrics, and logs. A normal OTLP
 | Language | Profile formats | Export options | Status |
 | --- | --- | --- | --- |
 | [Java](java.md) | JFR | Local files, HTTP multipart upload | Experimental |
-| [Python](python.md) | OTLP Profiles, pprof | OTLP/HTTP, pprof HTTP upload, local files | Optional |
+| [Python](python.md) | pprof | HTTP multipart upload, local files | Optional |
 | [Node.js](nodejs.md) | pprof | HTTP upload | Optional |
 | [Ruby](../ruby.md#profiling) | pprof | HTTP multipart upload, local files | Experimental |
 

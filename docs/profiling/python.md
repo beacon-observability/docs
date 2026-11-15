@@ -2,7 +2,7 @@
 sidebar_label: Python
 sidebar_position: 2
 title: Python profiling
-description: Export Beacon Python profiles with OTLP/HTTP or pprof.
+description: Upload Beacon Python pprof profiles over HTTP or write local files.
 ---
 
 # Python profiling
@@ -10,23 +10,22 @@ description: Export Beacon Python profiles with OTLP/HTTP or pprof.
 Install the profiling extra in the application's virtual environment:
 
 ```bash
-pip install 'beacon-otel[fastapi,profiling]==1.2.6'
+pip install 'beacon-otel[fastapi,profiling]==1.2.7'
 ```
 
 Replace `fastapi` with the integration used by the application.
 
-## Export with OTLP/HTTP
+## Upload with HTTP
 
 ```bash
 export OTEL_SERVICE_NAME=my-python-service
 export OTEL_PROFILING_ENABLED=true
-export OTEL_PROFILING_EXPORTER=otlp
-export OTEL_EXPORTER_OTLP_PROFILES_PROTOCOL=http/protobuf
-export OTEL_EXPORTER_OTLP_PROFILES_ENDPOINT=http://127.0.0.1:4318/v1development/profiles
+export OTEL_PROFILING_EXPORTER=http
+export OTEL_PROFILING_ENDPOINT=http://127.0.0.1:9529/profiling/v1/input
 beacon uvicorn myapp:app
 ```
 
-The receiver must implement the OpenTelemetry development Profiles endpoint.
+Enable the DataKit profiling input before starting the application. The exporter sends multipart gzip pprof and event metadata; it does not use OTLP Profiles. Across hosts or containers, replace `127.0.0.1` with an address reachable by the application.
 
 ## Write pprof files locally
 
@@ -37,11 +36,11 @@ export OTEL_PROFILING_FILE_PATH="$PWD/profiles"
 beacon uvicorn myapp:app
 ```
 
-Beacon creates the target directory and writes gzip-compressed pprof files. Include it in the deployment's retention policy. File mode ignores OTLP endpoint and transport settings.
+Beacon creates the target directory and writes gzip-compressed pprof files. Include it in the deployment's retention policy. File mode does not upload profiles.
 
-## Upgrade to 1.2.6
+## Upgrade to 1.2.7
 
-When upgrading, replace `pprof` with `file` and replace `OTEL_PROFILING_PPROF_PATH` with the directory variable `OTEL_PROFILING_FILE_PATH`. `pprof_http`, `none`, and the old pprof HTTP upload settings have been removed; use OTLP for remote export. Disable profiling with `OTEL_PROFILING_ENABLED=false`.
+When upgrading from 1.2.6, select `http` and set `OTEL_PROFILING_ENDPOINT` as above. Environment configuration no longer selects OTLP Profiles export; `otlp` is reserved for future protocol support. Legacy `datakit` and `pprof_http` aliases remain compatible, and an explicit `OTEL_PROFILING_PPROF_UPLOAD_URL` takes precedence over the shared profiling endpoint. The `file` configuration remains available. Disable profiling with `OTEL_PROFILING_ENABLED=false`.
 
 ## Additional collectors
 
@@ -65,7 +64,7 @@ Environment-variable names are case-sensitive. Interval values in the runtime ta
 | Environment variable | Type / accepted values | Default | Description |
 | --- | --- | --- | --- |
 | `OTEL_PROFILING_ENABLED` | Boolean | `false` | Starts the profiler during auto-instrumentation bootstrap. |
-| `OTEL_PROFILING_EXPORTER` | `otlp`, `file` | `otlp` | Selects OTLP or local file export. Disable profiling with `OTEL_PROFILING_ENABLED=false`. |
+| `OTEL_PROFILING_EXPORTER` | `http`, `file` | `http` | Selects multipart HTTP or local file export. Legacy `datakit` and `pprof_http` aliases remain accepted. |
 | `OTEL_PROFILING_SAMPLE_INTERVAL` | Positive number | `0.01` | Stack sampling interval. |
 | `OTEL_PROFILING_EXPORT_INTERVAL` | Positive number | `60` | Profile flush and export interval. |
 | `OTEL_PROFILING_MAX_FRAMES` | Positive integer | `64` | Maximum stack frames captured per sample. |
@@ -85,18 +84,12 @@ Environment-variable names are case-sensitive. Interval values in the runtime ta
 | --- | --- | --- | --- |
 | `OTEL_PROFILING_FILE_PATH` | Directory path | `otel-profiles` | Directory for gzip pprof files from the `file` exporter; created automatically. |
 
-### OTLP Profiles export
-
-Profile-specific variables take precedence over their shared `OTEL_EXPORTER_OTLP_*` counterparts.
+### HTTP upload
 
 | Environment variable | Type / accepted values | Default | Description |
 | --- | --- | --- | --- |
-| `OTEL_EXPORTER_OTLP_PROFILES_PROTOCOL` | `grpc`, `http/protobuf` | Shared OTLP protocol, then `grpc` | Selects the transport. |
-| `OTEL_EXPORTER_OTLP_PROFILES_ENDPOINT` | URL | Protocol-dependent | HTTP defaults to `http://localhost:4318/v1development/profiles`; gRPC falls back to the shared OTLP endpoint and exporter default. |
-| `OTEL_EXPORTER_OTLP_PROFILES_INSECURE` | Boolean | Unset | Enables an insecure gRPC channel; not used by HTTP. |
-| `OTEL_EXPORTER_OTLP_PROFILES_HEADERS` | Comma-separated key-value pairs | Shared OTLP headers, then empty | Request metadata or HTTP headers. |
-| `OTEL_EXPORTER_OTLP_PROFILES_TIMEOUT` | Positive number, seconds | Shared OTLP timeout, then `10` | Export timeout. |
-| `OTEL_EXPORTER_OTLP_PROFILES_COMPRESSION` | `none`, `gzip`, `deflate` for HTTP; gRPC-supported compression | Shared OTLP compression, then none | Payload compression; `deflate` is HTTP-only. |
-| `OTEL_EXPORTER_OTLP_PROFILES_CERTIFICATE` | File path | Shared OTLP certificate, then system trust | Server CA certificate. |
-| `OTEL_EXPORTER_OTLP_PROFILES_CLIENT_KEY` | File path | Shared OTLP client key, then unset | Client private key for mutual TLS. |
-| `OTEL_EXPORTER_OTLP_PROFILES_CLIENT_CERTIFICATE` | File path | Shared OTLP client certificate, then unset | Client certificate for mutual TLS. |
+| `OTEL_PROFILING_ENDPOINT` | HTTP(S) URL | `http://127.0.0.1:9529/profiling/v1/input` | Receiver for multipart pprof uploads. |
+| `OTEL_PROFILING_PPROF_UPLOAD_URL` | HTTP(S) URL | Unset | Compatibility override; takes precedence over `OTEL_PROFILING_ENDPOINT`. |
+| `OTEL_PROFILING_PPROF_HEADERS` | Comma-separated `name:value` pairs | Empty | Extra HTTP request headers. |
+
+An HTTP success only confirms receiver acceptance; verify stored profiles by service name at the backend.
