@@ -7,7 +7,7 @@ description: Enable the GitHub-distributed Beacon Ruby Security gem and verify f
 
 # Ruby Security
 
-[Beacon Ruby v1.2.0](https://github.com/beacon-observability/beacon-ruby/releases/tag/v1.2.0)
+[Beacon Ruby v1.2.1](https://github.com/beacon-observability/beacon-ruby/releases/tag/v1.2.1)
 distributes `beacon-security-0.1.0.gem` alongside its source archive. Security is
 disabled by default and requires explicit Rack middleware and SDK setup.
 Use the [Ruby download guide](../ruby.md) to verify the five Release assets first.
@@ -97,8 +97,8 @@ MySQL needs client development headers/libraries. This checks real finding and
 inventory Logs, scope/resource identity, event names and trace correlation.
 
 Security CI passes Linux CRuby 3.3/3.4/4.0; the local Collector example uses CRuby
-3.3.12. JRuby, other operating systems, DataKit and backend ingestion are outside this guide’s support scope. See the [versioned reference](https://github.com/beacon-observability/beacon-ruby/blob/v1.2.0/security/README.md)
-and [technical reference](https://github.com/beacon-observability/beacon-ruby/blob/v1.2.0/beacon/validation/security-1.1.0.md).
+3.3.12. JRuby, other operating systems, DataKit and backend ingestion are outside this guide’s support scope. See the [versioned reference](https://github.com/beacon-observability/beacon-ruby/blob/v1.2.1/security/README.md)
+and [technical reference](https://github.com/beacon-observability/beacon-ruby/blob/v1.2.1/beacon/validation/security-1.1.0.md).
 
 If no records arrive, check opt-in settings, middleware placement, client load
 order and the application's actual Logs exporter/receiver pipeline. Findings

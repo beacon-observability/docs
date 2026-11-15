@@ -2,7 +2,7 @@
 sidebar_label: Python
 sidebar_position: 2
 title: Python Profile
-description: 通过 OTLP/HTTP 或 pprof 导出 Beacon Python Profile。
+description: 通过 HTTP 上传 Beacon Python pprof Profile，或写入本地文件。
 ---
 
 # Python Profile
@@ -10,23 +10,22 @@ description: 通过 OTLP/HTTP 或 pprof 导出 Beacon Python Profile。
 在应用使用的虚拟环境中安装 profiling extra：
 
 ```bash
-pip install 'beacon-otel[fastapi,profiling]==1.2.6'
+pip install 'beacon-otel[fastapi,profiling]==1.2.7'
 ```
 
 请将 `fastapi` 替换为应用实际使用的组件。
 
-## 使用 OTLP/HTTP 导出
+## 使用 HTTP 上传
 
 ```bash
 export OTEL_SERVICE_NAME=my-python-service
 export OTEL_PROFILING_ENABLED=true
-export OTEL_PROFILING_EXPORTER=otlp
-export OTEL_EXPORTER_OTLP_PROFILES_PROTOCOL=http/protobuf
-export OTEL_EXPORTER_OTLP_PROFILES_ENDPOINT=http://127.0.0.1:4318/v1development/profiles
+export OTEL_PROFILING_EXPORTER=http
+export OTEL_PROFILING_ENDPOINT=http://127.0.0.1:9529/profiling/v1/input
 beacon uvicorn myapp:app
 ```
 
-接收端必须实现 OpenTelemetry 开发阶段的 Profiles 接口。
+启动应用前先启用 DataKit 的 profiling input。导出器发送 multipart gzip pprof 和事件元数据，不使用 OTLP Profiles。跨主机或容器部署时，将 `127.0.0.1` 换为应用可访问的地址。
 
 ## 写入本地 pprof 文件
 
@@ -37,11 +36,11 @@ export OTEL_PROFILING_FILE_PATH="$PWD/profiles"
 beacon uvicorn myapp:app
 ```
 
-Beacon 会创建目标目录并写入 gzip 压缩的 pprof 文件。请将其纳入部署环境的文件保留策略。文件模式忽略 OTLP 地址和传输配置。
+Beacon 会创建目标目录并写入 gzip 压缩的 pprof 文件。请将其纳入部署环境的文件保留策略。文件模式不上传 Profile。
 
-## 升级到 1.2.6
+## 升级到 1.2.7
 
-从旧版本升级时，将 `pprof` 改为 `file`，将 `OTEL_PROFILING_PPROF_PATH` 改为目录变量 `OTEL_PROFILING_FILE_PATH`。`pprof_http`、`none` 和旧的 pprof HTTP 上传配置已移除；远程导出改用 OTLP。关闭 Profile 使用 `OTEL_PROFILING_ENABLED=false`。
+从 1.2.6 升级时，将 exporter 改为 `http`，并设置上面的 `OTEL_PROFILING_ENDPOINT`。环境变量配置不再选择 OTLP Profiles 导出；`otlp` 名称保留供后续协议支持。旧的 `datakit`、`pprof_http` 名称仍兼容，显式 `OTEL_PROFILING_PPROF_UPLOAD_URL` 优先于通用 profiling 地址。`file` 导出配置保持可用。使用 `OTEL_PROFILING_ENABLED=false` 关闭 Profile。
 
 ## 额外采集器
 
@@ -65,7 +64,7 @@ export OTEL_PROFILING_EXCEPTION_ENABLED=true
 | 环境变量 | 类型 / 可选值 | 默认值 | 说明 |
 | --- | --- | --- | --- |
 | `OTEL_PROFILING_ENABLED` | 布尔值 | `false` | 在自动插桩启动阶段启动 Profiler。 |
-| `OTEL_PROFILING_EXPORTER` | `otlp`、`file` | `otlp` | 选择 OTLP 或本地文件导出。使用 `OTEL_PROFILING_ENABLED=false` 关闭 Profile。 |
+| `OTEL_PROFILING_EXPORTER` | `http`、`file` | `http` | 选择 multipart HTTP 或本地文件导出；仍兼容 `datakit` 和 `pprof_http` 别名。 |
 | `OTEL_PROFILING_SAMPLE_INTERVAL` | 正数 | `0.01` | 调用栈采样间隔。 |
 | `OTEL_PROFILING_EXPORT_INTERVAL` | 正数 | `60` | Profile 刷新和导出间隔。 |
 | `OTEL_PROFILING_MAX_FRAMES` | 正整数 | `64` | 单次采样捕获的最大栈帧数。 |
@@ -85,18 +84,12 @@ export OTEL_PROFILING_EXCEPTION_ENABLED=true
 | --- | --- | --- | --- |
 | `OTEL_PROFILING_FILE_PATH` | 目录路径 | `otel-profiles` | `file` 导出器写入 gzip pprof 文件的目录，自动创建。 |
 
-### OTLP Profiles 导出
-
-Profile 专用变量的优先级高于对应的通用 `OTEL_EXPORTER_OTLP_*` 变量。
+### HTTP 上传
 
 | 环境变量 | 类型 / 可选值 | 默认值 | 说明 |
 | --- | --- | --- | --- |
-| `OTEL_EXPORTER_OTLP_PROFILES_PROTOCOL` | `grpc`、`http/protobuf` | 通用 OTLP 协议，其次为 `grpc` | 选择传输协议。 |
-| `OTEL_EXPORTER_OTLP_PROFILES_ENDPOINT` | URL | 取决于协议 | HTTP 默认为 `http://localhost:4318/v1development/profiles`；gRPC 回退到通用 OTLP 地址和导出器默认值。 |
-| `OTEL_EXPORTER_OTLP_PROFILES_INSECURE` | 布尔值 | 未设置 | 为 gRPC 启用非安全连接；HTTP 不使用该参数。 |
-| `OTEL_EXPORTER_OTLP_PROFILES_HEADERS` | 逗号分隔的键值对 | 通用 OTLP 请求头，其次为空 | 请求元数据或 HTTP 请求头。 |
-| `OTEL_EXPORTER_OTLP_PROFILES_TIMEOUT` | 正数，秒 | 通用 OTLP 超时，其次为 `10` | 导出超时时间。 |
-| `OTEL_EXPORTER_OTLP_PROFILES_COMPRESSION` | HTTP 支持 `none`、`gzip`、`deflate`；gRPC 支持其导出器认可的压缩方式 | 通用 OTLP 压缩配置，其次不压缩 | 数据压缩方式；`deflate` 仅适用于 HTTP。 |
-| `OTEL_EXPORTER_OTLP_PROFILES_CERTIFICATE` | 文件路径 | 通用 OTLP CA 证书，其次为系统信任库 | 服务端 CA 证书。 |
-| `OTEL_EXPORTER_OTLP_PROFILES_CLIENT_KEY` | 文件路径 | 通用 OTLP 客户端私钥，其次未设置 | 双向 TLS 客户端私钥。 |
-| `OTEL_EXPORTER_OTLP_PROFILES_CLIENT_CERTIFICATE` | 文件路径 | 通用 OTLP 客户端证书，其次未设置 | 双向 TLS 客户端证书。 |
+| `OTEL_PROFILING_ENDPOINT` | HTTP(S) URL | `http://127.0.0.1:9529/profiling/v1/input` | 接收 multipart pprof 的地址。 |
+| `OTEL_PROFILING_PPROF_UPLOAD_URL` | HTTP(S) URL | 未设置 | 兼容原配置，优先于 `OTEL_PROFILING_ENDPOINT`。 |
+| `OTEL_PROFILING_PPROF_HEADERS` | 逗号分隔的 `name:value` | 空 | 额外 HTTP 请求头。 |
+
+HTTP 请求成功仅表示接收端接受了请求；还需按服务名检查后端 Profile 数据。
