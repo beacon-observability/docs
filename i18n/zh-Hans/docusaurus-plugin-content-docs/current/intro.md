@@ -35,7 +35,7 @@ C++ 应用使用 [Beacon C++ SDK](cpp.md) 源码发行版。构建固定版本�
 | [Java](zero-code/java.md) | JDK 1.8（Java 8）、11、17、21、25、26 |
 | [Python](zero-code/python.md) | Python 3.10、3.11、3.12、3.13、3.14 |
 | [Node.js](zero-code/nodejs.md) | Node.js 18.19+、20.6+、22、24 |
-| [.NET](zero-code/dotnet.md) | CoreCLR .NET 8、9、10；系统与架构限制见语言指南 |
+| [.NET](zero-code/dotnet.md) | CoreCLR .NET 10、11；系统与架构限制见语言指南 |
 | [PHP](zero-code/php.md) | PHP 8.2、8.3、8.4 |
 | [Ruby](ruby.md) | CRuby 3.3.12；源码 gem 要求 Ruby 3.3+，其他运行时支持请参阅语言指南 |
 | [Rust / Fastrace](fastrace.md) | Rust 1.91.0+ 与 Cargo |

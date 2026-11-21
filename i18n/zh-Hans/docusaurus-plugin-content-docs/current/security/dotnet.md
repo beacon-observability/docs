@@ -7,7 +7,7 @@ description: 在 Beacon .NET 中启用实验性 Security 与运行时程序集�
 
 # .NET Security
 
-[Beacon .NET 1.1.2](https://github.com/beacon-observability/beacon-dotnet/releases/tag/v1.1.2) 在现有零代码软件包中包含实验性 Security。它默认关闭，沿用常规的 [`beacon-dotnet run` 启动器](../zero-code/dotnet.md)。
+[Beacon .NET 1.1.3](https://github.com/beacon-observability/beacon-dotnet/releases/tag/v1.1.3) 在现有零代码软件包中包含实验性 Security。它默认关闭，沿用常规的 [`beacon-dotnet run` 启动器](../zero-code/dotnet.md)。
 
 ## 启用与验证
 
@@ -41,7 +41,7 @@ Security 复用标准 [OpenTelemetry 传输和资源配置](../configuration/ind
 
 ## 覆盖范围与兼容性
 
-Security 数据流和导出测试覆盖 Linux glibc x64、Windows x64、macOS ARM64 上的 CoreCLR .NET 8、9 和 10。.NET Framework 运行时行为、跨 AppDomain 标识、其他 Security 架构和生产性能仍不在本文支持范围内。提供其他平台的可下载归档不代表支持这些平台的 Security。
+Security 数据流和导出测试覆盖 Linux glibc x64、Windows x64、macOS ARM64 上的 CoreCLR .NET 10 和 11。.NET Framework 运行时行为、跨 AppDomain 标识、其他 Security 架构和生产性能仍不在本文支持范围内。提供其他平台的可下载归档不代表支持这些平台的 Security。
 
 模型按字符串对象标识跟踪 ASP.NET Core 查询参数值，并支持经过双字符串、三字符串和四字符串 `String.Concat` 重载的传播。受支持的敏感调用包括 `File.ReadAllText(string)` 文件读取、ADO.NET 文本命令模板、异步 HTTP 目标和 `Process.Start` 调用。绑定的 SQL 参数值不会污染常量命令模板。
 
@@ -55,4 +55,4 @@ Security 数据流和导出测试覆盖 Linux glibc x64、Windows x64、macOS AR
 
 本地写入异步执行且有容量限制。过载或文件系统错误可能丢失诊断数据，OTLP 导出仍独立继续。这些文件不提供持久历史或多进程聚合，旧进程目录也不会自动删除。诊断结束后将本地输出恢复为 `false`，并单独管理保留的文件。
 
-已建模调用、请求预算和合约来源请参阅[版本化 Security 参考](https://github.com/beacon-observability/beacon-dotnet/tree/v1.1.2/beacon/security)，版本说明与限制请参阅[发布说明](https://github.com/beacon-observability/beacon-dotnet/releases/tag/v1.1.2)。
+已建模调用、请求预算和合约来源请参阅[版本化 Security 参考](https://github.com/beacon-observability/beacon-dotnet/tree/v1.1.3/beacon/security)，版本说明与限制请参阅[发布说明](https://github.com/beacon-observability/beacon-dotnet/releases/tag/v1.1.3)。
