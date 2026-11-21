@@ -35,7 +35,7 @@ These versions apply to the Beacon releases in the language guides. See those gu
 | [Java](zero-code/java.md) | JDK 1.8 (Java 8), 11, 17, 21, 25, 26 |
 | [Python](zero-code/python.md) | Python 3.10, 3.11, 3.12, 3.13, 3.14 |
 | [Node.js](zero-code/nodejs.md) | Node.js 18.19+, 20.6+, 22, 24 |
-| [.NET](zero-code/dotnet.md) | CoreCLR .NET 8, 9, 10; see the language guide for OS and architecture limits |
+| [.NET](zero-code/dotnet.md) | CoreCLR .NET 10, 11; see the language guide for OS and architecture limits |
 | [PHP](zero-code/php.md) | PHP 8.2, 8.3, 8.4 |
 | [Ruby](ruby.md) | CRuby 3.3.12; source gems require Ruby 3.3+, see the language guide for other runtimes |
 | [Rust / Fastrace](fastrace.md) | Rust 1.91.0+ and Cargo |
