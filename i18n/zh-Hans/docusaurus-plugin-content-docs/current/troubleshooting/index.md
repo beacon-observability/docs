@@ -30,9 +30,9 @@ description: 排查零代码接入后没有遥测数据的问题。
 
 ## 没有 Profile 数据
 
-- Java：确认使用 JDK 11 或更高版本，并检查 Profile 目录是否可写。
+- Java：检查 JDK 11+、`OTEL_PROFILING_ENABLED=true` 和导出器。`file` 需要可写目录；`otlp` 需要支持开发版 OTLP Profiles 协议的接收端，参见 [Java Profiling](../profiling/java.md)。
 - Python 和 Node.js：确认已设置 `OTEL_PROFILING_ENABLED=true`、上传地址正确，且进程存活时间超过导出周期。
-- 不要把 Profile 数据发送到 OTLP Trace 地址；接收端必须支持文档所述的 pprof 上传格式。
+- 不要把 Profile 数据发送到 OTLP Trace 地址；接收端必须支持对应语言文档所述的 OTLP Profiles 或 pprof 上传格式。
 
 ## 没有 Security 数据
 
@@ -45,7 +45,7 @@ description: 排查零代码接入后没有遥测数据的问题。
   字符串拼接到达已建模的 sink 才会产生安全发现，并需核对运行时支持范围。
 - 运行时 SBOM 可能先于安全发现产生。请生成一条经过已建模 source 和 sink 的实际请求；
   仅启动应用不会产生安全发现。
-- Java 1.3.4、Python 1.2.4、Node.js 2.0.2 默认不导出 `attack_evidence.status=no_evidence` 的安全发现，这不表示采集失败。按需设置 `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED=true`；参阅[导出策略](../security/index.md#finding-export-policy)。
+- Java 1.4.1、Python 1.2.4、Node.js 2.0.2 默认不导出 `attack_evidence.status=no_evidence` 的安全发现，这不表示采集失败。按需设置 `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED=true`；参阅[导出策略](../security/index.md#finding-export-policy)。
 - 除非设置 `BEACON_SECURITY_LOCAL_OUTPUT_ENABLED=true`，否则本地诊断文件始终关闭。
   没有本地文件并不代表 OTLP Logs 导出失败。
 
@@ -53,7 +53,7 @@ description: 排查零代码接入后没有遥测数据的问题。
 
 ## 参数依据
 
-- [Java 1.3.4](https://github.com/beacon-observability/beacon-java/blob/v1.3.4/javaagent-tooling/src/main/java/io/opentelemetry/javaagent/tooling/config/EarlyInitAgentConfig.java)
+- [Java 1.4.1](https://github.com/beacon-observability/beacon-java/blob/v1.4.1/javaagent-tooling/src/main/java/io/opentelemetry/javaagent/tooling/config/EarlyInitAgentConfig.java)
 - [Python 1.2.4](https://github.com/beacon-observability/beacon-python/blob/v1.2.4/beacon-otel/src/beacon_otel/cli.py)
 - [Node.js 2.0.2](https://github.com/beacon-observability/beacon-nodejs/blob/v2.0.2/packages/nodejs/README.md)
 - [.NET 1.1.2](https://github.com/beacon-observability/beacon-dotnet/blob/v1.1.2/docs/config.md#internal-logs)

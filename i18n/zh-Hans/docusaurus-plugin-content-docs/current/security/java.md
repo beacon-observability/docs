@@ -7,13 +7,13 @@ description: 在完整 Beacon Java Agent 中启用 Security。
 
 # Java Security
 
-本指南使用 Beacon Java 1.3.4；Security 自 1.1.0 起嵌入完整 Agent JAR。继续使用
+本指南使用 Beacon Java 1.4.1；Security 自 1.1.0 起嵌入完整 Agent JAR。继续使用
 [Java 零代码指南](../zero-code/java.md)中的同一个 `-javaagent` 配置；无需安装或维护
 独立的 Security JAR。
 
 ## 启用 Security
 
-启用前，先从 [1.3.4 Release](https://github.com/beacon-observability/beacon-java/releases/tag/v1.3.4)
+启用前，先从 [1.4.1 Release](https://github.com/beacon-observability/beacon-java/releases/tag/v1.4.1)
 下载完整 Agent JAR，并将其命名为 `beacon-javaagent.jar`。
 
 ```bash
@@ -53,9 +53,9 @@ Shell 分析支持作为独立参数传给 `sh`、`bash`、`dash`、`ksh`、`zsh
 
 分析最多处理 8,192 个 UTF-16 代码单元和 64 个精确污点范围。不支持的输入、不精确范围及
 预算耗尽都保留不确定性。分析不会进行利用重放、网络探测、JDBC 元数据查询或文件系统
-解析。Java 1.3.4 没有网络允许列表或文件系统根目录策略；依赖边界策略的 SSRF、可执行文件
+解析。Java 1.4.1 没有网络允许列表或文件系统根目录策略；依赖边界策略的 SSRF、可执行文件
 选择及路径判断仍为 `unknown`，规范化不代表安全。参见
-[已发布的分析参考](https://github.com/beacon-observability/beacon-java/blob/v1.3.4/extensions/security/README.md#analysis-support-and-limits)。
+[已发布的分析参考](https://github.com/beacon-observability/beacon-java/blob/v1.4.1/extensions/security/README.md#analysis-support-and-limits)。
 
 ## 参数参考
 
@@ -81,7 +81,7 @@ Java 也可通过 JVM 参数 `-Dbeacon.security.export.no-evidence.enabled=true`
 
 ## Kubernetes
 
-可以将正式发布的完整 Agent JAR 放入应用镜像，或参考[固定版本的 initContainer 示例](https://github.com/beacon-observability/beacon-java/blob/v1.3.4/extensions/security/examples/kubernetes/init-container.yaml)。使用公开镜像时，将示例中的镜像版本改为 `ghcr.io/beacon-observability/beacon-java:1.3.4`，并按生产要求固定镜像摘要。init container 将同一个 JAR 复制到 `emptyDir`，应用通过 `JAVA_TOOL_OPTIONS` 加载它。普通工作负载应保持本地输出关闭。
+将正式发布的 1.4.1 Agent JAR 放入应用镜像或挂载卷，并通过 `JAVA_TOOL_OPTIONS=-javaagent:/path/to/beacon-javaagent.jar` 加载。容器镜像单独发布；按所选镜像实际包含的 JAR 版本和摘要部署。普通工作负载应保持本地输出关闭。
 
 移除 `BEACON_SECURITY_ENABLED` 或将其设为 `false` 即可关闭 Security，同时保留常规
 零代码遥测。
