@@ -30,9 +30,9 @@ Agent diagnostic logging is configured separately from telemetry log export cont
 
 ## Profiles are missing
 
-- Java: check JDK 11+, `OTEL_PROFILING_ENABLED=true`, and the selected exporter. `file` needs a writable directory; `otlp` needs a receiver supporting the development OTLP Profiles schema. See [Java profiling](../profiling/java.md).
+- Java: check JDK 11+, `OTEL_PROFILING_ENABLED=true`, and the selected exporter. `file` needs a writable directory; `http` needs a receiver accepting multipart JFR uploads. See [Java profiling](../profiling/java.md).
 - Python and Node.js: verify `OTEL_PROFILING_ENABLED=true`, the upload URL, and that the process lives longer than the export interval.
-- Do not send a profile payload to an OTLP traces endpoint; the receiver must accept the OTLP Profiles or pprof format documented for the selected language.
+- Do not send a profile payload to an OTLP traces endpoint; the receiver must accept the JFR multipart, OTLP Profiles, or pprof format documented for the selected language.
 
 ## Security data is missing
 

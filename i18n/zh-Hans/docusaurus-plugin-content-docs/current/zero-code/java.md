@@ -68,7 +68,7 @@ java -javaagent:./beacon-javaagent.jar -jar app.jar
 
 ## Profile
 
-Java 11 及以上可采集实验性 JFR Profile，导出为本地 JFR 文件或 OTLP Profiles。参阅 [Java Profile 指南](../profiling/java.md)。
+Java 11 及以上可采集实验性 JFR Profile，导出为本地 JFR 文件或通过 HTTP 上传 JFR。参阅 [Java Profile 指南](../profiling/java.md)。
 
 ## Security
 

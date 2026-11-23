@@ -30,9 +30,9 @@ description: 排查零代码接入后没有遥测数据的问题。
 
 ## 没有 Profile 数据
 
-- Java：检查 JDK 11+、`OTEL_PROFILING_ENABLED=true` 和导出器。`file` 需要可写目录；`otlp` 需要支持开发版 OTLP Profiles 协议的接收端，参见 [Java Profiling](../profiling/java.md)。
+- Java：检查 JDK 11+、`OTEL_PROFILING_ENABLED=true` 和导出器。`file` 需要可写目录；`http` 需要接受 multipart JFR 上传的接收端，参见 [Java Profiling](../profiling/java.md)。
 - Python 和 Node.js：确认已设置 `OTEL_PROFILING_ENABLED=true`、上传地址正确，且进程存活时间超过导出周期。
-- 不要把 Profile 数据发送到 OTLP Trace 地址；接收端必须支持对应语言文档所述的 OTLP Profiles 或 pprof 上传格式。
+- 不要把 Profile 数据发送到 OTLP Trace 地址；接收端必须支持对应语言文档所述的 JFR multipart、OTLP Profiles 或 pprof 上传格式。
 
 ## 没有 Security 数据
 

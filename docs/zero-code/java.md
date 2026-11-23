@@ -68,7 +68,7 @@ The JVM option `-Dotel.instrumentation.logging.pattern-injection.enabled=true` i
 
 ## Profiling
 
-Java 11 and later can collect experimental JFR profiles and export local JFR files or OTLP Profiles. See the [Java profiling guide](../profiling/java.md).
+Java 11 and later can collect experimental JFR profiles and export local JFR files or upload JFR over HTTP. See the [Java profiling guide](../profiling/java.md).
 
 ## Security
 
