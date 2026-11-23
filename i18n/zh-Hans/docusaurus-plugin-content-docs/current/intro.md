@@ -62,4 +62,4 @@ Ruby 当前提供源码发行包，支持 Net::HTTP 链路追踪；v1.2.0 通过
 
 Security 默认关闭。已发布的 Java、Python、Node.js、.NET、PHP 和 Ruby 启用方式及运行时范围请参阅 [Security 指南](security/index.md)。
 
-Java 1.3.4、Python 1.2.4 和 Node.js 2.0.3 默认过滤无利用证据的安全发现，并提供恢复导出的开关。参阅 [Security 导出策略](security/index.md#finding-export-policy)。
+Java 1.4.2、Python 1.2.4 和 Node.js 2.0.3 默认过滤无利用证据的安全发现，并提供恢复导出的开关。参阅 [Security 导出策略](security/index.md#finding-export-policy)。

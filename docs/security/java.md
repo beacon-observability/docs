@@ -7,14 +7,14 @@ description: Enable Beacon Security in the complete Beacon Java Agent.
 
 # Java Security
 
-This guide uses Beacon Java 1.3.4. Security has been embedded in the complete
+This guide uses Beacon Java 1.4.2. Security has been embedded in the complete
 Agent JAR since 1.1.0. Keep the same `-javaagent` setup from the [Java zero-code guide](../zero-code/java.md); there
 is no separate Security JAR to install or version.
 
 ## Enable Security
 
 Before enabling Security, download the complete Agent JAR from the
-[1.3.4 Release](https://github.com/beacon-observability/beacon-java/releases/tag/v1.3.4)
+[1.4.2 Release](https://github.com/beacon-observability/beacon-java/releases/tag/v1.4.2)
 and name it `beacon-javaagent.jar`.
 
 ```bash
@@ -61,10 +61,10 @@ argument risks remain possible.
 Analysis is limited to 8,192 UTF-16 code units and 64 exact taint ranges.
 Unsupported inputs, imprecise ranges, and exhausted budgets retain uncertainty.
 There is no exploit replay, network probing, JDBC metadata lookup, or filesystem
-resolution. Java 1.3.4 has no network allowlist or filesystem-root policy;
+resolution. Java 1.4.2 has no network allowlist or filesystem-root policy;
 boundary-dependent SSRF, executable-selection, and path judgments remain
 `unknown`. Normalization does not establish safety. See the
-[released analysis reference](https://github.com/beacon-observability/beacon-java/blob/v1.3.4/extensions/security/README.md#analysis-support-and-limits).
+[released analysis reference](https://github.com/beacon-observability/beacon-java/blob/v1.4.2/extensions/security/README.md#analysis-support-and-limits).
 
 ## Configuration reference
 
@@ -91,7 +91,7 @@ Java also accepts `-Dbeacon.security.export.no-evidence.enabled=true`; put the J
 
 ## Kubernetes
 
-Put the complete released Agent JAR in the application image, or follow the [version-pinned initContainer example](https://github.com/beacon-observability/beacon-java/blob/v1.3.4/extensions/security/examples/kubernetes/init-container.yaml). When using the public image, change the example image to `ghcr.io/beacon-observability/beacon-java:1.3.4` and pin its digest for production. The init container copies the same JAR into an `emptyDir`; the application loads it with `JAVA_TOOL_OPTIONS`. Keep local output disabled for normal workloads.
+Place the released 1.4.2 Agent JAR in the application image or a mounted volume and load it with `JAVA_TOOL_OPTIONS=-javaagent:/path/to/beacon-javaagent.jar`. Container images are published separately; deploy an image whose JAR version and digest match your chosen release. Keep local output disabled for normal workloads.
 
 Remove `BEACON_SECURITY_ENABLED` or set it to `false` to disable Security while
 leaving normal zero-code telemetry active.
