@@ -62,4 +62,4 @@ Ruby currently provides a source release with Net::HTTP tracing. Release v1.2.0 
 
 Security is disabled by default. See the [Security guides](security/index.md) for the released Java, Python, Node.js, .NET, PHP, and Ruby activation and runtime scope.
 
-Java 1.3.4, Python 1.2.4, and Node.js 2.0.2 suppress findings without exploitation evidence by default and provide a switch to include them. See the [Security export policy](security/index.md#finding-export-policy).
+Java 1.3.4, Python 1.2.4, and Node.js 2.0.3 suppress findings without exploitation evidence by default and provide a switch to include them. See the [Security export policy](security/index.md#finding-export-policy).
