@@ -1,34 +1,30 @@
 ---
 sidebar_label: Python
 sidebar_position: 2
-title: Python Profile
-description: 通过 OTLP/HTTP 或 pprof 导出 Beacon Python Profile。
+title: Python Profiling
+description: 通过 multipart HTTP 上报或本地 pprof 文件使用 Beacon Python Profiling。
 ---
 
-# Python Profile
+# Python Profiling
 
-在应用使用的虚拟环境中安装 profiling extra：
+在应用虚拟环境中安装 `pip install 'beacon-otel[fastapi,profiling]==1.3.0'`，
+并将 fastapi 替换为应用需要的框架插件。Profiling 仍为实验性功能。
 
-```bash
-pip install 'beacon-otel[fastapi,profiling]==1.2.6'
-```
-
-请将 `fastapi` 替换为应用实际使用的组件。
-
-## 使用 OTLP/HTTP 导出
+## HTTP 上报
 
 ```bash
 export OTEL_SERVICE_NAME=my-python-service
 export OTEL_PROFILING_ENABLED=true
-export OTEL_PROFILING_EXPORTER=otlp
-export OTEL_EXPORTER_OTLP_PROFILES_PROTOCOL=http/protobuf
-export OTEL_EXPORTER_OTLP_PROFILES_ENDPOINT=http://127.0.0.1:4318/v1development/profiles
+export OTEL_PROFILING_EXPORTER=http
+export OTEL_PROFILING_ENDPOINT=http://127.0.0.1:9529/profiling/v1/input
 beacon uvicorn myapp:app
 ```
 
-接收端必须实现 OpenTelemetry 开发阶段的 Profiles 接口。
+接收端需支持 multipart pprof 上传。`OTEL_PROFILING_PPROF_UPLOAD_URL` 优先于
+`OTEL_PROFILING_ENDPOINT`；`datakit`、`pprof_http` 名称仍是 `http` 的别名。
+设置 `OTEL_PROFILING_ENABLED=false` 可关闭采集。
 
-## 写入本地 pprof 文件
+## 本地文件
 
 ```bash
 export OTEL_PROFILING_ENABLED=true
@@ -37,24 +33,19 @@ export OTEL_PROFILING_FILE_PATH="$PWD/profiles"
 beacon uvicorn myapp:app
 ```
 
-Beacon 会创建目标目录并写入 gzip 压缩的 pprof 文件。请将其纳入部署环境的文件保留策略。文件模式忽略 OTLP 地址和传输配置。
+## 从 1.2.6 升级
 
-## 升级到 1.2.6
+将 `otlp` 改为 `http` 并配置上面的 multipart 接收地址。环境变量选择的上传器不再
+使用 `OTEL_EXPORTER_OTLP_PROFILES_*`，`otlp` 名称保留给后续协议支持。
+默认采样间隔为 0.01 秒，上报间隔为 60 秒，进程需持续运行以产生周期性上传。
 
-从旧版本升级时，将 `pprof` 改为 `file`，将 `OTEL_PROFILING_PPROF_PATH` 改为目录变量 `OTEL_PROFILING_FILE_PATH`。`pprof_http`、`none` 和旧的 pprof HTTP 上传配置已移除；远程导出改用 OTLP。关闭 Profile 使用 `OTEL_PROFILING_ENABLED=false`。
+## 采集器
 
-## 额外采集器
-
-开启 Profile 后默认采集调用栈。请按需增加其他采集器：
-
-```bash
-export OTEL_PROFILING_MEMORY_ENABLED=true
-export OTEL_PROFILING_LOCK_ENABLED=true
-# 仅限 Python 3.12 及以上
-export OTEL_PROFILING_EXCEPTION_ENABLED=true
-```
-
-默认导出周期为 60 秒，进程必须存活超过该周期才能进行周期性上传。
+按需设置 `OTEL_PROFILING_MEMORY_ENABLED=true`、`OTEL_PROFILING_LOCK_ENABLED=true`。
+Python 3.12 及以上还可设置 `OTEL_PROFILING_EXCEPTION_ENABLED=true`。
+使用 `OTEL_PROFILING_SAMPLE_INTERVAL`、`OTEL_PROFILING_EXPORT_INTERVAL` 调整秒数。
+`OTEL_PROFILING_MAX_FRAMES` 默认为 64，`OTEL_PROFILING_INCLUDE_TRACE_CONTEXT` 默认为 true。
+完整配置参考[固定版本源码说明](https://github.com/beacon-observability/beacon-python/blob/v1.3.0/sdk-extension/beacon-profiling/README.rst)。
 
 ## 参数参考
 
@@ -65,7 +56,7 @@ export OTEL_PROFILING_EXCEPTION_ENABLED=true
 | 环境变量 | 类型 / 可选值 | 默认值 | 说明 |
 | --- | --- | --- | --- |
 | `OTEL_PROFILING_ENABLED` | 布尔值 | `false` | 在自动插桩启动阶段启动 Profiler。 |
-| `OTEL_PROFILING_EXPORTER` | `otlp`、`file` | `otlp` | 选择 OTLP 或本地文件导出。使用 `OTEL_PROFILING_ENABLED=false` 关闭 Profile。 |
+| `OTEL_PROFILING_EXPORTER` | `http`、`file` | `http` | 选择 multipart pprof HTTP 或本地文件导出。使用 `OTEL_PROFILING_ENABLED=false` 关闭 Profile。 |
 | `OTEL_PROFILING_SAMPLE_INTERVAL` | 正数 | `0.01` | 调用栈采样间隔。 |
 | `OTEL_PROFILING_EXPORT_INTERVAL` | 正数 | `60` | Profile 刷新和导出间隔。 |
 | `OTEL_PROFILING_MAX_FRAMES` | 正整数 | `64` | 单次采样捕获的最大栈帧数。 |
@@ -85,18 +76,10 @@ export OTEL_PROFILING_EXCEPTION_ENABLED=true
 | --- | --- | --- | --- |
 | `OTEL_PROFILING_FILE_PATH` | 目录路径 | `otel-profiles` | `file` 导出器写入 gzip pprof 文件的目录，自动创建。 |
 
-### OTLP Profiles 导出
 
-Profile 专用变量的优先级高于对应的通用 `OTEL_EXPORTER_OTLP_*` 变量。
+### HTTP 导出
 
-| 环境变量 | 类型 / 可选值 | 默认值 | 说明 |
-| --- | --- | --- | --- |
-| `OTEL_EXPORTER_OTLP_PROFILES_PROTOCOL` | `grpc`、`http/protobuf` | 通用 OTLP 协议，其次为 `grpc` | 选择传输协议。 |
-| `OTEL_EXPORTER_OTLP_PROFILES_ENDPOINT` | URL | 取决于协议 | HTTP 默认为 `http://localhost:4318/v1development/profiles`；gRPC 回退到通用 OTLP 地址和导出器默认值。 |
-| `OTEL_EXPORTER_OTLP_PROFILES_INSECURE` | 布尔值 | 未设置 | 为 gRPC 启用非安全连接；HTTP 不使用该参数。 |
-| `OTEL_EXPORTER_OTLP_PROFILES_HEADERS` | 逗号分隔的键值对 | 通用 OTLP 请求头，其次为空 | 请求元数据或 HTTP 请求头。 |
-| `OTEL_EXPORTER_OTLP_PROFILES_TIMEOUT` | 正数，秒 | 通用 OTLP 超时，其次为 `10` | 导出超时时间。 |
-| `OTEL_EXPORTER_OTLP_PROFILES_COMPRESSION` | HTTP 支持 `none`、`gzip`、`deflate`；gRPC 支持其导出器认可的压缩方式 | 通用 OTLP 压缩配置，其次不压缩 | 数据压缩方式；`deflate` 仅适用于 HTTP。 |
-| `OTEL_EXPORTER_OTLP_PROFILES_CERTIFICATE` | 文件路径 | 通用 OTLP CA 证书，其次为系统信任库 | 服务端 CA 证书。 |
-| `OTEL_EXPORTER_OTLP_PROFILES_CLIENT_KEY` | 文件路径 | 通用 OTLP 客户端私钥，其次未设置 | 双向 TLS 客户端私钥。 |
-| `OTEL_EXPORTER_OTLP_PROFILES_CLIENT_CERTIFICATE` | 文件路径 | 通用 OTLP 客户端证书，其次未设置 | 双向 TLS 客户端证书。 |
+| 环境变量 | 用途 |
+| --- | --- |
+| `OTEL_PROFILING_ENDPOINT` | multipart pprof 接收地址；请显式配置。 |
+| `OTEL_PROFILING_PPROF_UPLOAD_URL` | 显式上传地址，优先于 endpoint。 |

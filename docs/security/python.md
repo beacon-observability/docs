@@ -7,18 +7,18 @@ description: Enable Beacon Security through the existing beacon command.
 
 # Python Security
 
-Beacon Python 1.2.6 includes Security in the `beacon-otel` wheel. It supports
+Beacon Python 1.3.0 includes Security in the `beacon-otel` wheel. It supports
 standard-GIL CPython 3.11 through 3.14 and uses the existing `beacon` command;
 there is no separate Security distribution.
 
 ## Enable Security
 
-Upgrade to 1.2.6 in the application's existing virtual environment first. Retain
+Upgrade to 1.3.0 in the application's existing virtual environment first. Retain
 the framework extras used by the application; if the optional `beacon-profiling`
-package is installed, upgrade it to 1.2.6 as well:
+package is installed, upgrade it to 1.3.0 as well:
 
 ```bash
-pip install 'beacon-otel==1.2.6'
+pip install 'beacon-otel==1.3.0'
 beacon --version
 ```
 
@@ -37,10 +37,24 @@ beacon uvicorn orders.asgi:application --host 0.0.0.0 --port 8000
 paths. Without it, the enabled lifecycle can export the runtime SBOM but does
 not transform application modules or produce modeled-flow findings.
 
+## SIEM output and migration
+
+Version 1.3.0 exports a SIEM envelope as its only format. `event_id` identifies the
+finding occurrence; `target` identifies the finding. The complete serialized
+Security evidence is retained in the string `message`. Parse it to access rule,
+attack evidence, request/sink context and multipart inventory metadata.
+`instance_id`, `trace_id`, and the active invocation `span_id` remain top-level
+correlation fields. `server_span_id` and `current_span_id` are removed; update
+queries to `span_id`. There is no legacy output switch. Fingerprint v1 is unchanged.
+Actor and client IP remain empty without trusted enrichment. Informational severity
+is a log level; finding outcome remains unknown. Inventory success means local
+collection succeeded, not that dependencies are free of vulnerabilities.
+
+
 ## Findings and analysis
 
 Per-request occurrences and request-specific attack evidence are available from
-1.2.0; schema v2 is available from 1.2.3. This page uses 1.2.6, with
+1.2.0; schema v2 is available from 1.2.3. This page uses 1.3.0, with
 `occurrence_id` identifying the request occurrence. Detail sampling is independent
 of occurrence export and trace sampling; empty evidence arrays may be omitted,
 and sampling alone does not mean truncation. Online bodies have no cumulative
@@ -63,11 +77,11 @@ fixed-destination path/query input are separate observations. Network allowlist
 and filesystem-root policies are not implemented, so related boundary judgments
 remain `unknown`; normalization does not establish safety. Byte strings are not
 analyzed as a known textual dialect. See the
-[version-pinned analysis reference](https://github.com/beacon-observability/beacon-python/blob/v1.2.6/beacon-otel/README.md).
+[version-pinned analysis reference](https://github.com/beacon-observability/beacon-python/blob/v1.3.0/beacon-otel/README.md).
 
 ### Exporting findings without attack evidence
 
-1.2.6 excludes `no_evidence` findings from OpenTelemetry Logs and evidence
+1.3.0 excludes `no_evidence` findings from OpenTelemetry Logs and evidence
 JSONL by default. Set `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED=true` to restore
 their export. `unknown` and `suspected` remain eligible, and SBOM is unaffected.
 Filtering happens before queue admission and is not export loss; internal
@@ -96,8 +110,8 @@ diagnostic evidence and remains off by default.
 
 ## Kubernetes and Gunicorn
 
-Install `beacon-otel==1.2.6` in the application image and follow the
-[version-pinned Deployment example](https://github.com/beacon-observability/beacon-python/blob/v1.2.6/beacon-otel/examples/kubernetes/deployment.yaml).
+Install `beacon-otel==1.3.0` in the application image and follow the
+[version-pinned Deployment example](https://github.com/beacon-observability/beacon-python/blob/v1.3.0/beacon-otel/examples/kubernetes/deployment.yaml).
 No Security sidecar or init container is needed.
 
 Gunicorn must initialize telemetry after each worker fork. Use the release's
