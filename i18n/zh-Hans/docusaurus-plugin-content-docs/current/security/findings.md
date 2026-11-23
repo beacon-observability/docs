@@ -15,10 +15,10 @@ PHP 或 .NET 具有相同的分析能力；.NET 已发布范围见 [.NET Securit
 | 语言 | 首次支持逐请求记录与攻击证据 | 首次使用 schema v2 | 本指南采用的版本 |
 | --- | --- | --- | --- |
 | Java | [1.3.0](https://github.com/beacon-observability/beacon-java/releases/tag/v1.3.0) | [1.3.3](https://github.com/beacon-observability/beacon-java/releases/tag/v1.3.3) | [1.3.4](https://github.com/beacon-observability/beacon-java/releases/tag/v1.3.4) |
-| Node.js | [1.3.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v1.3.0) | [2.0.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v2.0.0) | [2.0.2](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v2.0.2) |
+| Node.js | [1.3.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v1.3.0) | [2.0.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v2.0.0) | [3.0.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v3.0.0) |
 | Python | [1.2.0](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.0) | [1.2.3](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.3) | [1.2.4](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.4) |
 
-Python 1.3.0 需先将 SIEM 封装中的 `message` 解析为 JSON，再读取内部的 `schema_version`；顶层 `event_id`、`trace_id`、`span_id`、`instance_id` 用于关联。下文旧格式指原始事件正文。解读记录前先读取 `schema_version`。事件名称仍为 `beacon.security.finding`，指纹版本
+Node.js 3.0.0 和 Python 1.3.0 需先将 SIEM 封装中的 `message` 解析为 JSON，再读取内部的 `schema_version`；顶层 `event_id`、`trace_id`、`span_id`、`instance_id` 用于关联。下文旧格式指原始事件正文。解读记录前先读取 `schema_version`。事件名称仍为 `beacon.security.finding`，指纹版本
 仍为 `1`。共享 schema 不代表运行时覆盖范围相同。旧生产端可能缺少可选的请求记录、
 采样或攻击证据字段；缺少字段不等于 `no_evidence`。
 
@@ -98,7 +98,7 @@ v1 的 `attack_evidence_counts` 将聚合请求次数划分为三种状态。这
 
 ## 导出策略与投递限制
 
-Java 1.3.4、Node.js 2.0.2 和 Python 1.2.4 默认不向 OpenTelemetry Logs 和证据 JSONL 导出
+Java 1.3.4、Node.js 3.0.0 和 Python 1.2.4 默认不向 OpenTelemetry Logs 和证据 JSONL 导出
 `no_evidence` 发现。设置 `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED=true` 可恢复导出。
 `unknown`、`suspected` 仍可导出，SBOM 不受影响。过滤发生在入队前，不占用队列或发送限额，也不算导出丢失。
 内部检测、去重和同请求证据升级仍然执行。Java 1.3.3 尚无此开关，1.3.4 起提供。

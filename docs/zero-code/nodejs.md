@@ -6,25 +6,28 @@ description: Preload Beacon Node.js without changing application source.
 
 # Node.js zero-code instrumentation
 
-Beacon Node.js 2.0.3 supports Node.js 18.19+, 20.6+, 22, and 24. Security has a narrower runtime
+Beacon Node.js 3.0.0 supports Node.js 18.19+, 20.6+, 22, and 24. Security has a narrower runtime
 requirement documented below.
 
 ## Install
 
 ```bash
-npm install @beacon-observability/nodejs@2.0.3
+npm install @beacon-observability/nodejs@3.0.0
 ```
 
 ## Upgrade
 
-Install the exact 2.0.3 package above and restart the application with its existing preload configuration.
-[Release 2.0.3](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v2.0.3)
-adopts updated Contrib source while retaining the customer package's auto-instrumentation
-0.80.x and OpenTelemetry Core 2.x dependency ranges. This release does not migrate the
-customer runtime to Core 3.x.
+Install the exact 3.0.0 package above and restart with the existing preload.
+[Release 3.0.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v3.0.0)
+changes Security log Bodies to SIEM envelopes. Detailed v2 evidence is retained
+in the `message` string. Update consumers before upgrading: parse `message` and
+use detection-time `span_id` for invocation correlation. See the
+[Security migration guide](../security/nodejs.md#siem-output-and-migration).
 
-
-2.0.3 adds `OTEL_PROFILING_EXPORTER=http` and `OTEL_PROFILING_ENDPOINT` for the existing multipart/pprof exporter. The legacy `OTEL_PROFILING_PPROF_UPLOAD_URL` remains valid and takes precedence over the shared endpoint. `otlp` is not supported; see [Node.js profiling](../profiling/nodejs.md).
+Normal trace and profiling preload configuration is unchanged. Customer runtime
+dependencies remain auto-instrumentation 0.80.x and OpenTelemetry Core 2.x.
+Profiling still uploads multipart/pprof over HTTP; `OTEL_PROFILING_EXPORTER=otlp`
+is not supported.
 
 ## Run
 

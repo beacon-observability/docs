@@ -27,7 +27,7 @@ export OTEL_PROFILING_MEMORY_ENABLED=true
 The default upload interval is 60 seconds. `OTEL_PROFILING_EXPORT_INTERVAL` changes it in seconds, and `OTEL_PROFILING_PPROF_HEADERS` supplies comma-separated `name:value` HTTP headers.
 
 
-This guide targets [Beacon Node.js 2.0.3](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v2.0.3). Export remains multipart/pprof; the native sampler and encoding are unchanged. The legacy `OTEL_PROFILING_PPROF_UPLOAD_URL` remains valid and takes precedence over `OTEL_PROFILING_ENDPOINT` when both are set. `OTEL_PROFILING_EXPORTER=none` disables profiling; `otlp` is not supported and is not an HTTP multipart alias.
+This guide targets [Beacon Node.js 3.0.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v3.0.0). Export remains multipart/pprof; the native sampler and encoding are unchanged. The legacy `OTEL_PROFILING_PPROF_UPLOAD_URL` remains valid and takes precedence over `OTEL_PROFILING_ENDPOINT` when both are set. `OTEL_PROFILING_EXPORTER=none` disables profiling; `otlp` is not supported and is not an HTTP multipart alias.
 
 ## Configuration reference
 

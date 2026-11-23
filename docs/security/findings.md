@@ -17,10 +17,10 @@ Python versions; it does not imply equivalent analysis in PHP or .NET. See
 | Language | Per-request occurrences and attack evidence introduced | Schema v2 introduced | Version used by this guide |
 | --- | --- | --- | --- |
 | Java | [1.3.0](https://github.com/beacon-observability/beacon-java/releases/tag/v1.3.0) | [1.3.3](https://github.com/beacon-observability/beacon-java/releases/tag/v1.3.3) | [1.3.4](https://github.com/beacon-observability/beacon-java/releases/tag/v1.3.4) |
-| Node.js | [1.3.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v1.3.0) | [2.0.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v2.0.0) | [2.0.2](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v2.0.2) |
+| Node.js | [1.3.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v1.3.0) | [2.0.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v2.0.0) | [3.0.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v3.0.0) |
 | Python | [1.2.0](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.0) | [1.2.3](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.3) | [1.2.4](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.4) |
 
-For Python 1.3.0, parse the SIEM envelope's `message` as JSON and read the embedded `schema_version`; use top-level `event_id`, `trace_id`, `span_id`, and `instance_id` for correlation. Other historical formats below refer to the original event body. Read `schema_version` before interpreting a record. The event name remains
+For Node.js 3.0.0 and Python 1.3.0, parse the SIEM envelope's `message` as JSON and read the embedded `schema_version`; use top-level `event_id`, `trace_id`, `span_id`, and `instance_id` for correlation. Other historical formats below refer to the original event body. Read `schema_version` before interpreting a record. The event name remains
 `beacon.security.finding` and fingerprint version remains `1`. A shared schema
 does not establish runtime coverage. Older producers may omit optional occurrence,
 sampling, or attack-evidence fields; missing fields are not `no_evidence`.
@@ -111,7 +111,7 @@ and [Java v2 reference](https://github.com/beacon-observability/beacon-java/blob
 
 ## Export policy and delivery limits
 
-Java 1.3.4, Node.js 2.0.2, and Python 1.2.4 exclude `no_evidence` findings from OpenTelemetry
+Java 1.3.4, Node.js 3.0.0, and Python 1.2.4 exclude `no_evidence` findings from OpenTelemetry
 Logs and evidence JSONL by default. Set
 `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED=true` to restore their export.
 `unknown` and `suspected` remain eligible, and SBOM is unaffected. Filtering

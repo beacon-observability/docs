@@ -7,7 +7,7 @@ description: 通过 Node.js ESM 预加载启用 Beacon Security。
 
 # Node.js Security
 
-Beacon Node.js 2.0.3 已在 `@beacon-observability/nodejs` 中包含 Security。应用通常只需
+Beacon Node.js 3.0.0 已在 `@beacon-observability/nodejs` 中包含 Security。应用通常只需
 安装这个完整软件包。Security 使用同步模块 Hook 进行限定范围的源码转换，因此要求
 Node.js 22.22.3+ 或 24.11.1+。
 
@@ -17,7 +17,7 @@ Node.js 22.22.3+ 或 24.11.1+。
 Profile，但不能启用 Security 源码转换。
 
 ```bash
-npm install @beacon-observability/nodejs@2.0.3
+npm install @beacon-observability/nodejs@3.0.0
 
 export NODE_OPTIONS="--import @beacon-observability/nodejs/register"
 export BEACON_SECURITY_ENABLED=true
@@ -33,10 +33,30 @@ node /srv/app/server.mjs
 `BEACON_SECURITY_NODE_INCLUDE` 用于选择应用源码根目录。依赖包、Node.js 内置模块和
 显式排除的根目录不会被转换。
 
+## SIEM 输出与迁移
+
+3.0.0 仅输出 SIEM v1 信封；OTel Logs 正文与可选诊断 JSONL 采用同一格式。
+完整序列化 v2 证据保存在 `message`，消费端需再解析这层字符串，读取
+`schema_version`、`event_name`、`occurrence_id`、请求/调用证据及依赖列表。
+没有旧格式切换开关，也不会并行导出第二份记录。
+
+顶层 `event_id` 是请求 occurrence ID 或确定性的清单 ID，`target` 是 finding ID
+或进程实例 ID。清单仍需按 `message` 内的 `instance_id`、`observed_at` 与分片字段
+组装完整轮次。指纹版本仍为 1，证据 schema 仍为 2。
+
+`span_id` 是检测时活动的 span，即使它与入口 server span 相同也保留，并与 OTel
+LogRecord 一致。没有活动 span 时省略，不用入口 span 替代。
+`server_span_id` 与 `current_span_id` 不再输出。
+
+`service` 来自已配置的 OTel 服务名；`tenant_id` 使用显式配置的 `tenant.id`，缺省
+为 `default`。未采集可信身份或代理信息，因此 `actor` 与 `ip` 为空。租户隔离应由
+接收系统强制执行。finding 的 `outcome` 保持 `unknown`，`severity` 为
+`informational`，不代表已评定的风险等级。最终转义后的信封字节计入大小和速率预算。
+
 ## 安全发现与分析
 
 逐请求记录与请求级攻击证据自 1.3.0 起提供，schema v2 自 2.0.0 起提供。
-本页使用 2.0.3，以 `occurrence_id` 标识请求记录。详细证据采样独立于请求记录导出和
+本页使用 3.0.0，以 `occurrence_id` 标识请求记录。详细证据采样独立于请求记录导出和
 Trace 采样；空证据数组可以省略，采样本身不表示截断。在线载荷没有累计发生次数，
 消费端应对已收到的 occurrence 去重后聚合。参见[安全发现与证据](findings.md)，了解
 `unknown`、`no_evidence`、`suspected`、证据升级及投递限制；任何状态都不保证利用成功。
@@ -51,11 +71,11 @@ Shell 分析支持简单 POSIX `sh`、`bash`、`dash`、`ksh`、`zsh` 命令、�
 分隔符；展开、重定向、复合语法和其他 Shell 保持 `unknown`。普通 argv 与固定目标的
 路径/查询输入是独立的观测。未实现网络允许列表或文件系统根目录策略，相关边界判断
 仍为 `unknown`；规范化不代表安全。字节串不按已知文本方言分析。
-详见[固定版本的分析参考](https://github.com/beacon-observability/beacon-nodejs/blob/v2.0.3/packages/security-nodejs/README.md)。
+详见[固定版本的分析参考](https://github.com/beacon-observability/beacon-nodejs/blob/v3.0.0/packages/security-nodejs/README.md)。
 
 ### 无攻击证据发现的导出
 
-2.0.3 默认不向 OpenTelemetry Logs 和证据 JSONL 导出 `no_evidence` 发现。
+3.0.0 默认不向 OpenTelemetry Logs 和证据 JSONL 导出 `no_evidence` 发现。
 设置 `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED=true` 可恢复导出。`unknown`、
 `suspected` 仍可导出，SBOM 不受影响。过滤发生在入队前，不算导出丢失；内部检测、
 同请求去重和证据升级仍会执行。本地发现快照和 Span 摘要可保留未导出的观测。
@@ -80,7 +100,7 @@ Shell 分析支持简单 POSIX `sh`、`bash`、`dash`、`ksh`、`zsh` 命令、�
 ## Kubernetes
 
 在应用镜像中安装完整软件包，并参考
-[固定版本的 Deployment 示例](https://github.com/beacon-observability/beacon-nodejs/blob/v2.0.3/packages/security-nodejs/examples/kubernetes/deployment.yaml)。
+[固定版本的 Deployment 示例](https://github.com/beacon-observability/beacon-nodejs/blob/v3.0.0/packages/security-nodejs/examples/kubernetes/deployment.yaml)。
 普通应用容器只需设置 ESM 预加载和环境变量，不需要 Security sidecar 或 init
 container。
 
