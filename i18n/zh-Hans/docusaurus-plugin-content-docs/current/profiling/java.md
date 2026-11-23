@@ -70,7 +70,7 @@ export OTEL_PROFILING_MEMORY_ENABLED=true
 
 ## 升级到 1.4.2 {#upgrade-from-13x}
 
-本指南对应 [Beacon Java v1.4.2](https://github.com/beacon-observability/beacon-java/releases/tag/v1.4.2)。从 1.4.0/1.4.1 升级时，将 `OTEL_PROFILING_EXPORTER=otlp` 改为 `http`，并将 `OTEL_PROFILING_ENDPOINT` 指向接收 JFR multipart 的地址。`otlp` 留待未来支持，1.4.2 不接受该值；`OTEL_EXPORTER_OTLP_PROFILES_*` 不配置这个上传器。Trace、Metric 和 Log 的 OTLP 导出不受影响。
+本指南对应 [Beacon Java v1.5.0](https://github.com/beacon-observability/beacon-java/releases/tag/v1.5.0)。从 1.4.0/1.4.1 升级时，将 `OTEL_PROFILING_EXPORTER=otlp` 改为 `http`，并将 `OTEL_PROFILING_ENDPOINT` 指向接收 JFR multipart 的地址。`otlp` 留待未来支持，1.4.2 不接受该值；`OTEL_EXPORTER_OTLP_PROFILES_*` 不配置这个上传器。Trace、Metric 和 Log 的 OTLP 导出不受影响。
 
 1.3.x 的 `datakit`、上传地址及超时设置继续兼容，推荐使用 `http`。本地文件推荐使用 `OTEL_PROFILING_FILE_PATH`，旧的 `OTEL_PROFILING_EXPERIMENTAL_FILE_EXPORT_PATH` 仍作为回退。设置 `OTEL_PROFILING_ENABLED=false` 关闭采集，或选择 `none` 关闭导出。
 

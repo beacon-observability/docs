@@ -6,9 +6,9 @@ description: 使用 -javaagent 为 Java 应用挂载 Beacon。
 
 # Java 零代码接入
 
-Beacon Java 1.4.2 以单个 Agent JAR 交付，包含可选的 Security 能力。
+Beacon Java 1.5.0 以单个 Agent JAR 交付，包含可选的 Security 能力。
 
-本指南使用 [v1.4.2](https://github.com/beacon-observability/beacon-java/releases/tag/v1.4.2)，采用官方 OTel Java Instrumentation v2.34.0。升级旧版时，请同步迁移 [Profiling 配置](../profiling/java.md#upgrade-from-13x)。从 1.3.5 起，`telemetry.distro.name` 为 `beacon-java-instrumentation`；升级时检查依赖旧名称的查询或过滤条件。
+本指南使用 [v1.5.0](https://github.com/beacon-observability/beacon-java/releases/tag/v1.5.0)，采用官方 OTel Java Instrumentation v2.34.0。升级旧版时，请同步迁移 [Profiling 配置](../profiling/java.md#upgrade-from-13x)。从 1.3.5 起，`telemetry.distro.name` 为 `beacon-java-instrumentation`；升级时检查依赖旧名称的查询或过滤条件。
 
 ## 支持版本
 
@@ -23,11 +23,11 @@ Beacon Java 1.4.2 以单个 Agent JAR 交付，包含可选的 Security 能力�
 
 ## 安装
 
-[下载 Agent JAR](https://github.com/beacon-observability/beacon-java/releases/download/v1.4.2/beacon-javaagent-1.4.2.jar)，保存为 `beacon-javaagent.jar`；也可执行：
+[下载 Agent JAR](https://github.com/beacon-observability/beacon-java/releases/download/v1.5.0/beacon-javaagent-1.5.0.jar)，保存为 `beacon-javaagent.jar`；也可执行：
 
 ```bash
 curl -fL -o beacon-javaagent.jar \
-  https://github.com/beacon-observability/beacon-java/releases/download/v1.4.2/beacon-javaagent-1.4.2.jar
+  https://github.com/beacon-observability/beacon-java/releases/download/v1.5.0/beacon-javaagent-1.5.0.jar
 ```
 
 ## 启动
@@ -57,14 +57,14 @@ OTEL_JAVAAGENT_DEBUG=true \
 
 ## 文本日志关联
 
-Java 1.4.2 可在 JVM 启动时自动为现有文本日志格式补齐 `service.name`、`trace_id` 和 `span_id`，无需修改应用日志配置。此功能默认关闭：
+Java 1.5.0 可在 JVM 启动时自动为现有文本日志格式补齐 `service.name`、`trace_id` 和 `span_id`，无需修改应用日志配置。此功能默认关闭：
 
 ```bash
 export OTEL_INSTRUMENTATION_LOGGING_PATTERN_INJECTION_ENABLED=true
 java -javaagent:./beacon-javaagent.jar -jar app.jar
 ```
 
-也可使用 JVM 参数 `-Dotel.instrumentation.logging.pattern-injection.enabled=true`。支持 Logback classic 1.0+、Log4j 1.2 PatternLayout 和 Log4j2 2.7+ PatternLayout，需要保留对应的 MDC/context-data instrumentation。JSON 布局和 Log4j2 PatternSelector 分支不在此范围内。有效 Span 之外仍可输出服务名，但不会生成 Trace/Span ID。参阅[该版本的日志关联说明](https://github.com/beacon-observability/beacon-java/blob/v1.4.2/beacon/LOGGING.md)。
+也可使用 JVM 参数 `-Dotel.instrumentation.logging.pattern-injection.enabled=true`。支持 Logback classic 1.0+、Log4j 1.2 PatternLayout 和 Log4j2 2.7+ PatternLayout，需要保留对应的 MDC/context-data instrumentation。JSON 布局和 Log4j2 PatternSelector 分支不在此范围内。有效 Span 之外仍可输出服务名，但不会生成 Trace/Span ID。参阅[该版本的日志关联说明](https://github.com/beacon-observability/beacon-java/blob/v1.5.0/beacon/LOGGING.md)。
 
 ## Profile
 
@@ -74,3 +74,5 @@ Java 11 及以上可采集实验性 JFR Profile，导出为本地 JFR 文件或�
 
 同一个 Agent 可以通过 OpenTelemetry Logs 导出需主动启用的安全发现和运行时 SBOM。
 参阅 [Java Security 指南](../security/java.md)。
+
+启用 Security 的应用升级到 1.5.0 前，应先按 [SIEM 信封迁移说明](../security/java.md#siem-output-and-upgrade)更新消费端。
