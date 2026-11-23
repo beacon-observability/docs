@@ -18,7 +18,7 @@ PHP 或 .NET 具有相同的分析能力；.NET 已发布范围见 [.NET Securit
 | Node.js | [1.3.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v1.3.0) | [2.0.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v2.0.0) | [2.0.2](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v2.0.2) |
 | Python | [1.2.0](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.0) | [1.2.3](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.3) | [1.2.4](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.4) |
 
-解读记录前先读取 `schema_version`。事件名称仍为 `beacon.security.finding`，指纹版本
+Python 1.3.0 需先将 SIEM 封装中的 `message` 解析为 JSON，再读取内部的 `schema_version`；顶层 `event_id`、`trace_id`、`span_id`、`instance_id` 用于关联。下文旧格式指原始事件正文。解读记录前先读取 `schema_version`。事件名称仍为 `beacon.security.finding`，指纹版本
 仍为 `1`。共享 schema 不代表运行时覆盖范围相同。旧生产端可能缺少可选的请求记录、
 采样或攻击证据字段；缺少字段不等于 `no_evidence`。
 
