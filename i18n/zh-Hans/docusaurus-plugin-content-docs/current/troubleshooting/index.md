@@ -61,4 +61,4 @@ Java 1.5.0 使用 SIEM 信封。将 `message` 解析为 JSON 后读取攻击证�
 - [Python 1.2.4](https://github.com/beacon-observability/beacon-python/blob/v1.2.4/beacon-otel/src/beacon_otel/cli.py)
 - [Node.js 2.0.3](https://github.com/beacon-observability/beacon-nodejs/blob/v2.0.3/packages/nodejs/README.md)
 - [.NET 1.1.2](https://github.com/beacon-observability/beacon-dotnet/blob/v1.1.2/docs/config.md#internal-logs)
-- [PHP 1.3.1](https://github.com/beacon-observability/beacon-php/blob/v1.3.1/docs/standalone.md)
+- [PHP 2.0.0](https://github.com/beacon-observability/beacon-php/blob/v2.0.0/docs/standalone.md)

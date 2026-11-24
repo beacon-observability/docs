@@ -7,8 +7,8 @@ description: Enable the GitHub-distributed Beacon Ruby Security gem and verify f
 
 # Ruby Security
 
-[Beacon Ruby v1.2.0](https://github.com/beacon-observability/beacon-ruby/releases/tag/v1.2.0)
-distributes `beacon-security-0.1.0.gem` alongside its source archive. Security is
+[Beacon Ruby v1.3.0](https://github.com/beacon-observability/beacon-ruby/releases/tag/v1.3.0)
+distributes `beacon-security-0.2.0.gem` alongside its source archive. Security is
 disabled by default and requires explicit Rack middleware and SDK setup.
 Use the [Ruby download guide](../ruby.md) to verify the five Release assets first.
 The gem is not published on RubyGems; its OTel runtime dependencies come from RubyGems.
@@ -18,7 +18,7 @@ The gem is not published on RubyGems; its OTel runtime dependencies come from Ru
 After installing the downloaded gem, use these Gemfile entries:
 
 ```ruby
-gem 'beacon-security', '= 0.1.0'
+gem 'beacon-security', '= 0.2.0'
 gem 'opentelemetry-sdk'
 gem 'opentelemetry-logs-sdk'
 gem 'opentelemetry-exporter-otlp-logs'
@@ -60,6 +60,7 @@ Clients loaded later need an explicit `Beacon::Security::Hooks.install` call.
 | Variable | Default | Meaning |
 | --- | --- | --- |
 | `BEACON_SECURITY_ENABLED` | `false` | Enable the runtime. |
+| `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED` | `false` | Include `no_evidence` findings; unknown/suspected remain eligible. |
 | `BEACON_SECURITY_SBOM_ENABLED` | `true` | Collect activated gems while Security is enabled. |
 | `BEACON_SECURITY_SBOM_REFRESH_SECONDS` | `300` | Positive delay after collection; invalid/zero values use 300. |
 | `BEACON_SECURITY_LOCAL_OUTPUT_ENABLED` | `false` | Enable process-local diagnostics. |
@@ -97,11 +98,26 @@ MySQL needs client development headers/libraries. This checks real finding and
 inventory Logs, scope/resource identity, event names and trace correlation.
 
 Security CI passes Linux CRuby 3.3/3.4/4.0; the local Collector example uses CRuby
-3.3.12. JRuby, other operating systems, DataKit and backend ingestion are outside this guide’s support scope. See the [versioned reference](https://github.com/beacon-observability/beacon-ruby/blob/v1.2.0/security/README.md)
-and [technical reference](https://github.com/beacon-observability/beacon-ruby/blob/v1.2.0/beacon/validation/security-1.1.0.md).
+3.3.12. JRuby, other operating systems, DataKit and backend ingestion are outside this guide’s support scope. See the [versioned reference](https://github.com/beacon-observability/beacon-ruby/blob/v1.3.0/security/README.md)
+and [technical reference](https://github.com/beacon-observability/beacon-ruby/blob/v1.3.0/beacon/validation/security-1.1.0.md).
 
 If no records arrive, check opt-in settings, middleware placement, client load
 order and the application's actual Logs exporter/receiver pipeline. Findings
 require a modeled input match; absence is not a safety verdict. Set
 `BEACON_SECURITY_ENABLED=false` and restart to disable Security. To roll back,
 restore the previous source/gem and application lockfile; v1.0.0 has no Security.
+
+## SIEM output and upgrade
+
+Ruby 1.3.0 / Security 0.2.0 is a breaking output migration: both OTel Logs and
+optional diagnostic JSONL use SIEM v1 envelopes. `message` retains the exact
+serialized v2 evidence. `span_id` is the span active at detection, including a
+server span; old span aliases and request-entry fallbacks are absent. Fingerprint
+v1 is unchanged. Consumers must parse `message` and assemble complete inventory
+parts before replacing a dependency list. Budgets include final escaped envelope bytes.
+
+Resource `service.name` supplies service and configured `tenant.id` supplies tenant,
+otherwise `default`. Verified actor and client IP remain empty. Finding outcome is
+unknown and severity informational, reflecting log level rather than assessed risk.
+There is no legacy-output switch. Upgrade consumers first. To roll back, restore
+the verified v1.2.1 source, Security 0.1.0 and its historical v2-body consumer together.
