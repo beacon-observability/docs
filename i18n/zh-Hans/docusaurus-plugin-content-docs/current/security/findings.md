@@ -110,3 +110,14 @@ Java 1.3.4、Node.js 2.0.2 和 Python 1.2.4 默认不向 OpenTelemetry Logs 和�
 来补偿丢失的记录。缺少记录可能来自策略过滤、采集限制、队列丢失、传输失败或保留策略。
 基于已收到记录的计数只代表已收到的观测，不是完整普查。请求记录或 OpenTelemetry API
 调用都不保证持久化投递或后端确认。
+
+## Ruby 与 PHP SIEM 迁移
+
+[Ruby 1.3.0](https://github.com/beacon-observability/beacon-ruby/releases/tag/v1.3.0)
+和 [PHP 2.0.0](https://github.com/beacon-observability/beacon-php/releases/tag/v2.0.0)
+使用 SIEM v1 信封。`message` 是完整原始 v2 证据字符串，解析后读取 `occurrence_id`、
+`finding_id`、攻击证据及清单分片。顶层 `event_id` 标识 occurrence 或确定性的清单分片，
+必填 `instance_id` 和可用的 `trace_id`、`span_id`、整数 `trace_flags` 保留进程和当前调用关联。
+不再输出旧 span 别名。Finding 的 outcome 始终为 `unknown`，severity 为 `informational`，
+不代表利用成功或风险等级。Ruby/PHP 的近似关联仍报告 unknown 攻击证据，不能据此推断它们
+具有 Java、Node.js 或 Python 的精确分析能力。

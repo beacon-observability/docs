@@ -127,3 +127,16 @@ lost occurrences. Missing records may reflect policy, collection limits, queue
 loss, transport failure, or retention. Counts from received records describe
 received observations, not a complete census. Neither an occurrence nor an
 OpenTelemetry API call guarantees durable delivery or backend acknowledgement.
+
+## Ruby and PHP SIEM migration
+
+[Ruby 1.3.0](https://github.com/beacon-observability/beacon-ruby/releases/tag/v1.3.0)
+and [PHP 2.0.0](https://github.com/beacon-observability/beacon-php/releases/tag/v2.0.0)
+emit SIEM v1 envelopes. Their complete original v2 evidence is the string in
+`message`; parse it for `occurrence_id`, `finding_id`, attack evidence and inventory
+parts. Top-level `event_id` identifies the occurrence or deterministic inventory
+part. Required `instance_id` and available `trace_id`, `span_id`, and numeric
+`trace_flags` retain process/invocation correlation. Old span aliases are absent.
+Finding outcome remains `unknown` and severity `informational`; these are not
+exploit success or assessed risk. Approximate Ruby/PHP observations remain unknown
+attack evidence and do not imply Java/Node.js/Python analysis parity.

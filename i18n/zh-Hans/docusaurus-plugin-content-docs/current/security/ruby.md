@@ -7,8 +7,8 @@ description: 启用通过 GitHub 分发的 Beacon Ruby Security gem，验证安�
 
 # Ruby Security
 
-[Beacon Ruby v1.2.0](https://github.com/beacon-observability/beacon-ruby/releases/tag/v1.2.0)
-在源码包之外分发 `beacon-security-0.1.0.gem`。Security 默认关闭，需要显式配置
+[Beacon Ruby v1.3.0](https://github.com/beacon-observability/beacon-ruby/releases/tag/v1.3.0)
+在源码包之外分发 `beacon-security-0.2.0.gem`。Security 默认关闭，需要显式配置
 Rack 中间件和 SDK。先按 [Ruby 下载指南](../ruby.md)校验五个 Release 资产。
 gem 未推送 RubyGems，运行时依赖的 OTel gem 仍来自 RubyGems。
 
@@ -17,7 +17,7 @@ gem 未推送 RubyGems，运行时依赖的 OTel gem 仍来自 RubyGems。
 安装已下载的 gem 后，在应用 Gemfile 中加入：
 
 ```ruby
-gem 'beacon-security', '= 0.1.0'
+gem 'beacon-security', '= 0.2.0'
 gem 'opentelemetry-sdk'
 gem 'opentelemetry-logs-sdk'
 gem 'opentelemetry-exporter-otlp-logs'
@@ -58,6 +58,7 @@ BEACON_SECURITY_ENABLED=true OTEL_LOGS_EXPORTER=otlp OTEL_EXPORTER_OTLP_ENDPOINT
 | 变量 | 默认值 | 含义 |
 | --- | --- | --- |
 | `BEACON_SECURITY_ENABLED` | `false` | 启用运行时。 |
+| `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED` | `false` | 导出 `no_evidence` findings；unknown/suspected 不受此开关影响。 |
 | `BEACON_SECURITY_SBOM_ENABLED` | `true` | Security 启用时收集已激活的 gem。 |
 | `BEACON_SECURITY_SBOM_REFRESH_SECONDS` | `300` | 每轮完成后的正整数间隔；非法或零值回退到 300。 |
 | `BEACON_SECURITY_LOCAL_OUTPUT_ENABLED` | `false` | 启用进程本地诊断。 |
@@ -90,10 +91,23 @@ Collector 0.135.0 镜像运行 `python3 test/collector_smoke.py`。开发依赖�
 scope、资源身份、事件名及 Trace 关联。
 
 Security CI 通过 Linux CRuby 3.3/3.4/4.0，本地 Collector 接入示例使用 CRuby 3.3.12。
-JRuby、其他操作系统、DataKit 和后端入库未验证。详见[固定版本参考](https://github.com/beacon-observability/beacon-ruby/blob/v1.2.0/security/README.md)
-和[技术参考](https://github.com/beacon-observability/beacon-ruby/blob/v1.2.0/beacon/validation/security-1.1.0.md)。
+JRuby、其他操作系统、DataKit 和后端入库未验证。详见[固定版本参考](https://github.com/beacon-observability/beacon-ruby/blob/v1.3.0/security/README.md)
+和[技术参考](https://github.com/beacon-observability/beacon-ruby/blob/v1.3.0/beacon/validation/security-1.1.0.md)。
 
 未收到记录时，检查启用配置、中间件位置、客户端加载顺序，以及应用实际的 Logs
 exporter 和接收管道。finding 需要匹配模型中的输入，没有事件不代表安全。设置
 `BEACON_SECURITY_ENABLED=false` 并重启即可关闭；回滚时恢复此前源码/gem 和应用锁文件，
 v1.0.0 不包含 Security。
+
+## SIEM 输出与升级
+
+Ruby 1.3.0 / Security 0.2.0 的输出协议具有破坏性变更：OTel Logs 和可选诊断 JSONL
+统一使用 SIEM v1 信封，`message` 完整保留原始序列化 v2 证据。`span_id` 是检测时的
+当前 span，包括 server span；不再输出旧 span 别名，也不回退到其他入口 span。
+Fingerprint v1 不变。消费者需解析 `message`，收齐清单的全部分片后再替换依赖列表；
+字节预算包含最终信封与 JSON 转义开销。
+
+Resource 的 `service.name` 提供服务名，配置的 `tenant.id` 提供租户，否则为 `default`。
+已验证 actor 与客户端 IP 暂不可用，保留空字符串；finding outcome 为 unknown，
+severity 为 informational，仅表示日志级别，不是风险等级。没有旧输出格式开关。
+先升级消费者；回滚时同时恢复校验过的 v1.2.1 源码、Security 0.1.0 与旧 v2 Body 消费者。
