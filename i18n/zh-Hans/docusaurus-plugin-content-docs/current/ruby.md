@@ -6,7 +6,7 @@ description: 安装已发布的 Ruby 插桩源码，通过 OTLP HTTP/protobuf �
 
 # Ruby 源码接入
 
-Beacon Ruby **[v1.2.0](https://github.com/beacon-observability/beacon-ruby/releases/tag/v1.2.0)** 是基于 OpenTelemetry Ruby Contrib 的源码发行版。应用需要显式集成插桩 gem 并初始化 OpenTelemetry SDK。该版本保留上游插桩 gem 标识，并通过 GitHub Release 资产分发可选的 **beacon-security 0.1.0** 和实验性 **beacon-profiling 0.1.0** gem；未推送 RubyGems，也未提供可执行 Agent 或零代码链路追踪启动器。
+Beacon Ruby **[v1.3.0](https://github.com/beacon-observability/beacon-ruby/releases/tag/v1.3.0)** 是基于 OpenTelemetry Ruby Contrib 的源码发行版。应用需要显式集成插桩 gem 并初始化 OpenTelemetry SDK。该版本保留上游插桩 gem 标识，并通过 GitHub Release 资产分发可选的 **beacon-security 0.2.0** 和实验性 **beacon-profiling 0.1.1** gem；未推送 RubyGems，也未提供可执行 Agent 或零代码链路追踪启动器。
 
 ## 环境要求
 
@@ -16,17 +16,17 @@ Beacon Ruby **[v1.2.0](https://github.com/beacon-observability/beacon-ruby/relea
 
 ## 下载与校验
 
-在新目录中执行以下命令。命令固定 v1.2.0，同时下载对应源码、Security 和 Profiling gem、来源记录和校验文件：
+在新目录中执行以下命令。命令固定 v1.3.0，同时下载对应源码、Security 和 Profiling gem、来源记录和校验文件：
 
 ```bash
-ruby_release_tag=v1.2.0
+ruby_release_tag=v1.3.0
 ruby_release_version=${ruby_release_tag#v}
 ruby_archive="beacon-ruby-${ruby_release_version}-source.tar.gz"
 ruby_release_url="https://github.com/beacon-observability/beacon-ruby/releases/download/${ruby_release_tag}"
 
 curl -fLO "${ruby_release_url}/${ruby_archive}"
-curl -fLO "${ruby_release_url}/beacon-security-0.1.0.gem"
-curl -fLO "${ruby_release_url}/beacon-profiling-0.1.0.gem"
+curl -fLO "${ruby_release_url}/beacon-security-0.2.0.gem"
+curl -fLO "${ruby_release_url}/beacon-profiling-0.1.1.gem"
 curl -fLO "${ruby_release_url}/SOURCE.txt"
 curl -fLO "${ruby_release_url}/SHA256SUMS"
 sha256sum -c SHA256SUMS
@@ -34,7 +34,7 @@ tar -xzf "${ruby_archive}"
 cd "beacon-ruby-${ruby_release_version}"
 ```
 
-校验通过后再继续。`SOURCE.txt` 记录源码提交和上游基线。压缩包包含源码与许可证，两个 gem 是独立的受校验资产，依赖需要单独安装。本页的示例环境和能力范围对应 v1.2.0；使用其他版本时，请查阅所选版本的发布说明。
+校验通过后再继续。`SOURCE.txt` 记录源码提交和上游基线。压缩包包含源码与许可证，两个 gem 是独立的受校验资产，依赖需要单独安装。本页的示例环境和能力范围对应 v1.3.0；使用其他版本时，请查阅所选版本的发布说明。
 
 ## 验证 Net::HTTP 链路
 
@@ -57,16 +57,16 @@ Collector received the service identity and correlated root/client spans.
 
 ## 应用集成与能力范围
 
-Net::HTTP 接入方式可参考发布版本中的 [Gemfile](https://github.com/beacon-observability/beacon-ruby/blob/v1.2.0/beacon/validation/Gemfile) 和 [Ruby 示例](https://github.com/beacon-observability/beacon-ruby/blob/v1.2.0/beacon/validation/http_smoke.rb)。Gemfile 从已发布源码加载基础插桩库和 Net::HTTP 插桩库，并固定 Core SDK 与 OTLP exporter 的版本。先加载所需库，再初始化 SDK 并启用 `OpenTelemetry::Instrumentation::Net::HTTP`。
+Net::HTTP 接入方式可参考发布版本中的 [Gemfile](https://github.com/beacon-observability/beacon-ruby/blob/v1.3.0/beacon/validation/Gemfile) 和 [Ruby 示例](https://github.com/beacon-observability/beacon-ruby/blob/v1.3.0/beacon/validation/http_smoke.rb)。Gemfile 从已发布源码加载基础插桩库和 Net::HTTP 插桩库，并固定 Core SDK 与 OTLP exporter 的版本。先加载所需库，再初始化 SDK 并启用 `OpenTelemetry::Instrumentation::Net::HTTP`。
 
-本版本提供基础插桩库、Net::HTTP 语义模式以及本地 Collector 链路导出。Security 安全发现与运行时清单还具备Logs 导出能力，参见 [Ruby Security](security/ruby.md)。实验性 Profiling 可向本地 DataKit 的 profiling input 上传 pprof，配置见下文。Rails 专属适配、其他链路集成、指标和通用应用日志不在本文支持范围内。将示例用于应用前，请阅读[源码安装指南](https://github.com/beacon-observability/beacon-ruby/blob/v1.2.0/beacon/INSTALLATION.md)和[发布说明](https://github.com/beacon-observability/beacon-ruby/releases/tag/v1.2.0)。
+本版本提供基础插桩库、Net::HTTP 语义模式以及本地 Collector 链路导出。Security 安全发现与运行时清单还具备Logs 导出能力，参见 [Ruby Security](security/ruby.md)。实验性 Profiling 可向本地 DataKit 的 profiling input 上传 pprof，配置见下文。Rails 专属适配、其他链路集成、指标和通用应用日志不在本文支持范围内。将示例用于应用前，请阅读[源码安装指南](https://github.com/beacon-observability/beacon-ruby/blob/v1.3.0/beacon/INSTALLATION.md)和[发布说明](https://github.com/beacon-observability/beacon-ruby/releases/tag/v1.3.0)。
 
 ## 启用 Security
 
 校验全部资产后，从下载目录安装 GitHub 分发的 gem：
 
 ```bash
-gem install ./beacon-security-0.1.0.gem --no-document
+gem install ./beacon-security-0.2.0.gem --no-document
 ```
 
 将已安装的版本加入应用 Gemfile，或通过 Bundler 的 `path:` 引用解压后的
@@ -81,16 +81,16 @@ Profiling 默认关闭。在 Linux CRuby 3.3+ 环境中，准备 Ruby 开发头�
 编译器后，安装已校验的 gem：
 
 ```bash
-gem install ./beacon-profiling-0.1.0.gem --no-document
+gem install ./beacon-profiling-0.1.1.gem --no-document
 ```
 
-将 `gem 'beacon-profiling', '= 0.1.0'` 加入应用 Gemfile，执行 `bundle install`；
+将 `gem 'beacon-profiling', '= 0.1.1'` 加入应用 Gemfile，执行 `bundle install`；
 也可引用解压后的 `profiling` 源码目录。启用本地 DataKit 的 profiling input 后启动应用：
 
 ```bash
 export OTEL_PROFILING_ENABLED=true
-export OTEL_PROFILING_EXPORTER=datakit
-export OTEL_PROFILING_PPROF_UPLOAD_URL=http://127.0.0.1:9529/profiling/v1/input
+export OTEL_PROFILING_EXPORTER=http
+export OTEL_PROFILING_ENDPOINT=http://127.0.0.1:9529/profiling/v1/input
 export OTEL_PROFILING_TYPES=wall,cpu
 export OTEL_PROFILING_MEMORY_ENABLED=true
 export OTEL_PROFILING_BACKEND=beacon
@@ -113,7 +113,7 @@ Linux CRuby 3.3、3.4、4.0 的编译、测试和构建 CI 已通过，本地接
 此预加载入口仅启用 Profiling，不会初始化 Trace SDK。
 
 Puma 和 Unicorn 需要显式配置 fork 后启动及 worker 退出钩子。完整生命周期、配置、
-计数器与限制见[发布版 Profiling 指南](https://github.com/beacon-observability/beacon-ruby/blob/v1.2.0/profiling/README.md)。
+计数器与限制见[发布版 Profiling 指南](https://github.com/beacon-observability/beacon-ruby/blob/v1.3.0/profiling/README.md)。
 设置 `OTEL_PROFILING_ENABLED=false` 并重启即可关闭。如无数据，检查 DataKit profiling
 input、上传地址和 `Beacon::Profiling.stats` 的 `exported`、`failed`、`dropped`；
 HTTP 成功不单独证明数据已在 UI 建立索引。
@@ -124,4 +124,4 @@ HTTP 成功不单独证明数据已在 UI 建立索引。
 
 - [源码仓库](https://github.com/beacon-observability/beacon-ruby)
 - [发布与下载](https://github.com/beacon-observability/beacon-ruby/releases)
-- [固定版本技术参考](https://github.com/beacon-observability/beacon-ruby/blob/v1.2.0/beacon/validation/README.md)
+- [固定版本技术参考](https://github.com/beacon-observability/beacon-ruby/blob/v1.3.0/beacon/validation/README.md)

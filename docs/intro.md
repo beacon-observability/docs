@@ -58,7 +58,7 @@ These versions apply to the Beacon releases in the language guides. See those gu
 
 Each project is versioned and released independently. Follow the release links for available versions and download assets, and the language guides for runtime requirements. Profiling and Security in this table refer to server-side agent features; Rumable provides browser RUM.
 
-Ruby currently provides a source release with Net::HTTP tracing. Release v1.2.0 distributes opt-in Security and experimental profiling gems on GitHub. Tracing and Security require explicit SDK setup; profiling has a separate preload; see the [Ruby guide](ruby.md) for the example environment and limitations. Fastrace requires application code instrumentation and reporter initialization.
+Ruby currently provides a source release with Net::HTTP tracing. Release v1.3.0 distributes opt-in Security and experimental profiling gems on GitHub. Tracing and Security require explicit SDK setup; profiling has a separate preload; see the [Ruby guide](ruby.md) for the example environment and limitations. Fastrace requires application code instrumentation and reporter initialization.
 
 Security is disabled by default. See the [Security guides](security/index.md) for the released Java, Python, Node.js, .NET, PHP, and Ruby activation and runtime scope.
 
