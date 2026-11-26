@@ -58,3 +58,7 @@ description: 排查零代码接入后没有遥测数据的问题。
 - [Node.js 2.0.3](https://github.com/beacon-observability/beacon-nodejs/blob/v2.0.3/packages/nodejs/README.md)
 - [.NET 1.1.2](https://github.com/beacon-observability/beacon-dotnet/blob/v1.1.2/docs/config.md#internal-logs)
 - [PHP 2.0.0](https://github.com/beacon-observability/beacon-php/blob/v2.0.0/docs/standalone.md)
+
+Python 1.4.0 Security 的 Body 不再包含 `message`、`observed_at` 或
+`occurrence_id`，这是预期行为：读取原生时间戳与 LogRecord `event_id`，并解析一次
+Body。历史 SIEM 记录仍需原解码器，参见 [Python 升级说明](../security/python.md#原生日志输出与升级)。
