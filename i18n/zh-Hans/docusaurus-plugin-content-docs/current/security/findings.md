@@ -14,17 +14,18 @@ PHP 或 .NET 具有相同的分析能力；.NET 已发布范围见 [.NET Securit
 
 | 语言 | 首次支持逐请求记录与攻击证据 | 首次使用 schema v2 | 本指南采用的版本 |
 | --- | --- | --- | --- |
-| Java | [1.3.0](https://github.com/beacon-observability/beacon-java/releases/tag/v1.3.0) | [1.3.3](https://github.com/beacon-observability/beacon-java/releases/tag/v1.3.3) | [1.5.0](https://github.com/beacon-observability/beacon-java/releases/tag/v1.5.0) |
+| Java | [1.3.0](https://github.com/beacon-observability/beacon-java/releases/tag/v1.3.0) | [1.3.3](https://github.com/beacon-observability/beacon-java/releases/tag/v1.3.3) | [1.5.1](https://github.com/beacon-observability/beacon-java/releases/tag/v1.5.1) |
 | Node.js | [1.3.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v1.3.0) | [2.0.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v2.0.0) | [2.0.2](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v2.0.2) |
 | Python | [1.2.0](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.0) | [1.2.3](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.3) | [1.2.4](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.4) |
 
-Java 1.5.0 和 Python 1.3.0 需先将 SIEM 封装中的 `message` 解析为 JSON，
-再读取内部的 `schema_version`；顶层 `event_id`、`trace_id`、`span_id`、`instance_id` 用于关联。
-参阅 [Java SIEM 迁移](java.md#siem-output-and-upgrade)。下文旧格式指原始事件正文，
-解读前先读取其 `schema_version`。事件名称仍为 `beacon.security.finding`，指纹版本
-Python 1.4.0 从 OTel 原生 `time_unix_nano` 读取事件时间，从 LogRecord
+Java 1.5.1 与 Python 1.4.0 从 OTel 原生 `time_unix_nano` 读取事件时间，从 LogRecord
 `attributes.event_id` 读取请求记录标识。紧凑 v2 Body 仅省略 `observed_at` 与
-`occurrence_id`，解析一次即可读取其余字段。参见 [Python 升级说明](python.md#原生日志输出与升级)。
+`occurrence_id`，解析一次即可读取其余字段。参见 [Java 升级说明](java.md#native-log-output-and-migration)和
+[Python 升级说明](python.md#原生日志输出与升级)。
+
+Java 1.5.0 与 Python 1.3.0 需先将 SIEM 封装中的 `message` 解析为 JSON，再读取内部的 `schema_version`；顶层 `event_id`、`trace_id`、`span_id`、`instance_id` 用于关联。下文旧格式指原始事件正文。解读记录前先读取 `schema_version`。事件名称仍为 `beacon.security.finding`，指纹版本
+仍为 `1`。共享 schema 不代表运行时覆盖范围相同。旧生产端可能缺少可选的请求记录、
+采样或攻击证据字段；缺少字段不等于 `no_evidence`。
 
 ## 代码风险、请求证据与利用结果
 
@@ -82,12 +83,15 @@ ANSI 开关与分析边界见各语言页面。上述版本没有实现网络允
 累计本地计数。
 
 v1 的 `attack_evidence_counts` 将聚合请求次数划分为三种状态。这是证据状态计数，绝非
-已确认攻击次数。v2 在线载荷没有累计发生次数；消费端按 `instance_id + occurrence_id`
+已确认攻击次数。v2 在线载荷没有累计发生次数；历史完整 v2 的消费端按 `instance_id + occurrence_id`
 去重、按 `finding_id` 分组，并合并同一 occurrence 的升级，不能将每次更新计为新请求。
+
+Java 1.5.1 的 occurrence ID 改为从 LogRecord `attributes.event_id` 读取，
+参见 [Java 日志迁移](java.md#native-log-output-and-migration)。
 
 ## 采样与迁移
 
-| 项目 | Java 1.3.0–1.3.2 schema v1 | 上述 schema v2 版本 |
+| 项目 | Java 1.3.0–1.3.2 schema v1 | 历史完整 schema v2 Body |
 | --- | --- | --- |
 | 请求记录标识 | `evidence_id` 及其别名 `occurrence_id` | `occurrence_id`；移除 `evidence_id` |
 | 详细证据未采样 | `evidence_sampled=false`，必需的 `sources`、`propagation`、`ranges`、`stack` 数组为空 | `evidence_sampled=false`；省略空证据数组 |

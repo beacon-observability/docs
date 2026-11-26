@@ -16,21 +16,17 @@ Python versions; it does not imply equivalent analysis in PHP or .NET. See
 
 | Language | Per-request occurrences and attack evidence introduced | Schema v2 introduced | Version used by this guide |
 | --- | --- | --- | --- |
-| Java | [1.3.0](https://github.com/beacon-observability/beacon-java/releases/tag/v1.3.0) | [1.3.3](https://github.com/beacon-observability/beacon-java/releases/tag/v1.3.3) | [1.5.0](https://github.com/beacon-observability/beacon-java/releases/tag/v1.5.0) |
+| Java | [1.3.0](https://github.com/beacon-observability/beacon-java/releases/tag/v1.3.0) | [1.3.3](https://github.com/beacon-observability/beacon-java/releases/tag/v1.3.3) | [1.5.1](https://github.com/beacon-observability/beacon-java/releases/tag/v1.5.1) |
 | Node.js | [1.3.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v1.3.0) | [2.0.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v2.0.0) | [2.0.2](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v2.0.2) |
 | Python | [1.2.0](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.0) | [1.2.3](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.3) | [1.2.4](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.4) |
 
-For Java 1.5.0 and Python 1.3.0, parse the SIEM envelope's `message` as JSON and
-read the embedded `schema_version`; use top-level `event_id`, `trace_id`,
-`span_id`, and `instance_id` for correlation. See [Java SIEM migration](java.md#siem-output-and-upgrade).
-Other historical formats below refer to the original event body; read its
-`schema_version` before interpreting a record. The event name remains
-Python 1.4.0 reads event time from native OTel `time_unix_nano` and occurrence
-identity from LogRecord `attributes.event_id`. Its compact v2 Body omits only
+Java 1.5.1 and Python 1.4.0 read event time from native OTel `time_unix_nano` and occurrence
+identity from LogRecord `attributes.event_id`. Their compact v2 Bodies omit only
 `observed_at` and `occurrence_id`; parse it once for all other fields. See the
+[Java migration guide](java.md#native-log-output-and-migration) and
 [Python migration guide](python.md#native-log-output-and-migration).
 
-For Python 1.3.0, parse the SIEM envelope's `message` as JSON and read the embedded `schema_version`; use top-level `event_id`, `trace_id`, `span_id`, and `instance_id` for correlation. Other historical formats below refer to the original event body. Read `schema_version` before interpreting a record. The event name remains
+For Java 1.5.0 and Python 1.3.0, parse the SIEM envelope's `message` as JSON and read the embedded `schema_version`; use top-level `event_id`, `trace_id`, `span_id`, and `instance_id` for correlation. Other historical formats below refer to the original event body. Read `schema_version` before interpreting a record. The event name remains
 `beacon.security.finding` and fingerprint version remains `1`. A shared schema
 does not establish runtime coverage. Older producers may omit optional occurrence,
 sampling, or attack-evidence fields; missing fields are not `no_evidence`.
@@ -101,12 +97,13 @@ cumulative local counters require explicit local diagnostic output.
 V1 `attack_evidence_counts` partitions aggregate request occurrences into the
 three statuses. Those are evidence-status counts, never confirmed attack counts.
 The v2 online body has no cumulative occurrence total; consumers deduplicate
-received records by `instance_id + occurrence_id` and group by `finding_id`,
+historical complete-v2 records by `instance_id + occurrence_id` and group by `finding_id`.
+For Java 1.5.1, use native LogRecord `attributes.event_id` as occurrence identity,
 merging same-occurrence upgrades rather than counting each update as a request.
 
 ## Sampling and migration
 
-| Detail | Java 1.3.0–1.3.2 schema v1 | Schema v2 versions listed above |
+| Detail | Java 1.3.0–1.3.2 schema v1 | Historical complete schema v2 Body |
 | --- | --- | --- |
 | Occurrence identity | `evidence_id` and its alias `occurrence_id` | `occurrence_id`; `evidence_id` removed |
 | Sampled-out evidence | `evidence_sampled=false`, required `sources`, `propagation`, `ranges`, `stack` arrays empty | `evidence_sampled=false`; empty evidence arrays omitted |

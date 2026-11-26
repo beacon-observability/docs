@@ -7,14 +7,14 @@ description: Enable Beacon Security in the complete Beacon Java Agent.
 
 # Java Security
 
-This guide uses Beacon Java 1.5.0. Security has been embedded in the complete
+This guide uses Beacon Java 1.5.1. Security has been embedded in the complete
 Agent JAR since 1.1.0. Keep the same `-javaagent` setup from the [Java zero-code guide](../zero-code/java.md); there
 is no separate Security JAR to install or version.
 
 ## Enable Security
 
 Before enabling Security, download the complete Agent JAR from the
-[1.5.0 Release](https://github.com/beacon-observability/beacon-java/releases/tag/v1.5.0)
+[1.5.1 Release](https://github.com/beacon-observability/beacon-java/releases/tag/v1.5.1)
 and name it `beacon-javaagent.jar`.
 
 ```bash
@@ -31,71 +31,60 @@ The Agent exports findings and runtime dependency inventories through
 OpenTelemetry Logs. Local CycloneDX files require explicit diagnostic output.
 Security is disabled by default. Findings are modeled runtime observations or candidate risks rather than confirmed vulnerabilities.
 
-## SIEM output and upgrade {#siem-output-and-upgrade}
+## Native log output and migration
 
-Java 1.5.0 changes the OpenTelemetry LogRecord string Body and evidence JSONL to
-`beacon-security-siem-v1`. Update consumers when upgrading from 1.4.x or earlier;
-there is no legacy-output switch. The fifteen base fields are required strings:
+[Java 1.5.1](https://github.com/beacon-observability/beacon-java/releases/tag/v1.5.1)
+exports one compact, single-line JSON object directly as the OTel LogRecord Body.
+There is no SIEM envelope or `message` wrapper. `schema_version=2` remains at the
+Body top level; fingerprint v1, detection, sampling, and the default `no_evidence`
+filter are unchanged.
 
-| Field | Finding | Runtime inventory |
-| --- | --- | --- |
-| `time` | Original `observed_at` | Original `observed_at` |
-| `event_id` | Original `occurrence_id` | Deterministic inventory ID |
-| `event_class` | `security_finding` | `software_inventory_info` |
-| `source` | `beacon_security` | `beacon_security_sbom` |
-| `service` | Resource `service.name`, or empty | Same |
-| `tenant_id` | Resource `tenant.id`, or `default` | Same |
-| `actor` | Empty | Empty |
-| `ip` | Empty | Empty |
-| `action` | Original `rule` | `inventory_snapshot` |
-| `target` | Original `finding_id` | Process `instance_id` |
-| `target_type` | `finding` | `process` |
-| `outcome` | `unknown` | `success` for local collection |
-| `status` | `info` | `info` |
-| `severity` | `informational` | `informational` |
-| `message` | Complete serialized v2 finding | Complete serialized v2 inventory part |
+| Information | 1.5.1 transmitted location |
+| --- | --- |
+| Event time, formerly logical `observed_at` | Native `time_unix_nano`, epoch nanoseconds; omitted from Body |
+| Finding occurrence ID, formerly `occurrence_id` | LogRecord `attributes.event_id`; omitted from Body |
+| Stable finding ID | Body `finding_id` |
+| Inventory event ID | LogRecord `attributes.event_id`, deterministic per collection round and part |
+| Source | Existing Body `source` and LogRecord `attributes.source` |
 
-The envelope also requires `instance_id` and preserves available `trace_id`,
-`span_id`, and numeric `trace_flags` (0–255, including zero). Missing trace fields
-are omitted; inventories do not inherit request context. Within a finding's
-`message`, `current_span_id` becomes `span_id` and `server_span_id` is removed.
-The native LogRecord associates with the observed invocation span; an unavailable
-invocation span is not replaced with a request-entry span.
+Parse Body once for all remaining fields, including request/sink context, attack
+evidence, dependencies, process identity, and available trace/span context.
+`event_id` is the same logical occurrence value, not a new ID and not a Resource
+or service-instance ID. Event time retains available precision up to nanoseconds,
+remains stable across queued export, and is not replaced by flush time. Invalid
+or out-of-range timestamps fail export explicitly.
 
-Actor and client IP are not collected by this change. To set an application
-provided tenant, add `tenant.id=customer-a` to `OTEL_RESOURCE_ATTRIBUTES`;
-otherwise the emitted tenant is `default`. This field is not an authorization
-boundary. `status=info` and `severity=informational` describe the log level,
-not vulnerability severity. Read `attack_evidence.status` inside `message`
-for `unknown`, `no_evidence`, or `suspected`.
+Assemble inventory using Body `instance_id`, native event time, and Body
+`part_index`/`part_count`. Parts of a collection share event time; an incomplete
+round must not clear prior completed inventory. Preserve the supplied inventory
+ID rather than recomputing it from a reformatted time string. `started_at` and
+`uptime_ms` retain their separate process-start/uptime meanings.
 
-For migration:
+Body limits and inventory splitting use final compact UTF-8 Body bytes, without
+SIEM double-escaping overhead. Native metadata also counts toward whole-record
+transport limits. Local evidence JSONL is a file-only logical record containing
+`time_unix_nano` as a decimal string, the exact online Body string in `body`, and
+LogRecord `attributes`. This wrapper is never sent as the OTLP Body. A Body-only
+archive cannot recover the moved time or occurrence ID.
 
-1. Parse the outer envelope, then parse `message` as JSON to access
-   `schema_version`, `event_name`, attack evidence, and dependency multipart metadata.
-2. Retain `message` exactly as received. It preserves the original serialized v2
-   event at the export boundary, after existing evidence sampling and declared
-   truncation. It cannot recover evidence that was never collected or was dropped.
-   JSONL and OTLP use the same envelope; local diagnostic snapshots keep their formats.
-3. Assemble inventories by embedded `instance_id + observed_at` and
-   `part_index/part_count`; replace an inventory only after every part arrives.
-4. Configure the receiving pipeline to bind envelope `source` to the intended
-   measurement and `time` to event time, retaining `message` as the original payload.
-   Upgrading the Agent does not deploy a receiving pipeline.
+### Historical 1.5.0 SIEM output {#siem-output-and-upgrade}
 
-Final envelope bytes, including JSON escaping, count toward export limits.
-Oversized envelopes can be dropped with local loss counters rather than silently
-shortening `message`. The default `no_evidence` filter and fingerprint v1 remain
-unchanged. See the [version-pinned SIEM reference](https://github.com/beacon-observability/beacon-java/blob/v1.5.0/extensions/security/SIEM.md)
-and [envelope schema](https://github.com/beacon-observability/beacon-java/blob/v1.5.0/extensions/security/schema-siem-v1.json).
+Coordinate Agent and receiver/file-decoder upgrades. Java 1.5.0 emitted SIEM
+records with evidence inside `message`; older complete v2 records included
+`observed_at` and `occurrence_id` in Body. Historical records keep their original
+decoder. For rollback, reinstall the chosen version and restore its matching
+decoder. The historical [1.5.0 SIEM reference](https://github.com/beacon-observability/beacon-java/blob/v1.5.0/extensions/security/SIEM.md) describes that format. See the [released log binding](https://github.com/beacon-observability/beacon-java/blob/v1.5.1/extensions/security/LOG-OUTPUT.md)
+and [bound-Body schema](https://github.com/beacon-observability/beacon-java/blob/v1.5.1/extensions/security/schema-log-body-v1.json).
 
 ## Findings and analysis
 
 [Java 1.3.0](https://github.com/beacon-observability/beacon-java/releases/tag/v1.3.0)
 introduced per-request occurrences and request-specific attack evidence.
 [Java 1.3.3](https://github.com/beacon-observability/beacon-java/releases/tag/v1.3.3)
-uses schema v2: `occurrence_id` replaces `evidence_id`, online cumulative counts
-are removed, and empty evidence arrays can be omitted. See
+introduced schema v2: logical `occurrence_id` replaces `evidence_id`, online
+cumulative counts are removed, and empty evidence arrays can be omitted. In
+1.5.1, that occurrence value is transmitted only as LogRecord
+`attributes.event_id`, as described above. See
 [Findings and evidence](findings.md) for the Java 1.3.0 A/B/C example, v1 fields,
 v2 migration, status meanings, and delivery limits. Occurrence export, detailed
 evidence sampling, and OpenTelemetry trace sampling are independent.
@@ -119,10 +108,10 @@ argument risks remain possible.
 Analysis is limited to 8,192 UTF-16 code units and 64 exact taint ranges.
 Unsupported inputs, imprecise ranges, and exhausted budgets retain uncertainty.
 There is no exploit replay, network probing, JDBC metadata lookup, or filesystem
-resolution. Java 1.5.0 has no network allowlist or filesystem-root policy;
+resolution. Java 1.5.1 has no network allowlist or filesystem-root policy;
 boundary-dependent SSRF, executable-selection, and path judgments remain
 `unknown`. Normalization does not establish safety. See the
-[released analysis reference](https://github.com/beacon-observability/beacon-java/blob/v1.5.0/extensions/security/README.md#analysis-support-and-limits).
+[released analysis reference](https://github.com/beacon-observability/beacon-java/blob/v1.5.1/extensions/security/README.md#analysis-support-and-limits).
 
 ## Configuration reference
 
@@ -149,7 +138,7 @@ Java also accepts `-Dbeacon.security.export.no-evidence.enabled=true`; put the J
 
 ## Kubernetes
 
-Place the released 1.5.0 Agent JAR in the application image or a mounted volume and load it with `JAVA_TOOL_OPTIONS=-javaagent:/path/to/beacon-javaagent.jar`. Container images are published separately; deploy an image whose JAR version and digest match your chosen release. Keep local output disabled for normal workloads.
+Place the released 1.5.1 Agent JAR in the application image or a mounted volume and load it with `JAVA_TOOL_OPTIONS=-javaagent:/path/to/beacon-javaagent.jar`. Container images are published separately; deploy an image whose JAR version and digest match your chosen release. Keep local output disabled for normal workloads.
 
 Remove `BEACON_SECURITY_ENABLED` or set it to `false` to disable Security while
 leaving normal zero-code telemetry active.

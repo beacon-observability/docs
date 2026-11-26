@@ -32,3 +32,6 @@ Do not put credentials directly in process arguments or committed files. Inject 
 ## Security Logs
 
 [.NET Security](../security/dotnet.md) reuses the existing OpenTelemetry Logs provider, resource identity and OTLP configuration. Configure a Logs pipeline at the receiver and use `OTEL_LOGS_EXPORTER=otlp`. Logs-specific endpoint, protocol and header settings override their shared equivalents. Security settings are environment variables; the .NET Security integration does not add YAML or App.config bindings.
+
+Java 1.5.1 Security uses the same Logs export pipeline. Event time and occurrence
+identity are native metadata; see the [Java log migration](../security/java.md#native-log-output-and-migration).
