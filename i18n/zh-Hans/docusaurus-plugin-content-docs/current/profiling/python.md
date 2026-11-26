@@ -7,7 +7,7 @@ description: 通过 multipart HTTP 上报或本地 pprof 文件使用 Beacon Pyt
 
 # Python Profiling
 
-在应用虚拟环境中安装 `pip install 'beacon-otel[fastapi,profiling]==1.3.0'`，
+在应用虚拟环境中安装 `pip install 'beacon-otel[fastapi,profiling]==1.4.0'`，
 并将 fastapi 替换为应用需要的框架插件。Profiling 仍为实验性功能。
 
 ## HTTP 上报
@@ -45,7 +45,7 @@ beacon uvicorn myapp:app
 Python 3.12 及以上还可设置 `OTEL_PROFILING_EXCEPTION_ENABLED=true`。
 使用 `OTEL_PROFILING_SAMPLE_INTERVAL`、`OTEL_PROFILING_EXPORT_INTERVAL` 调整秒数。
 `OTEL_PROFILING_MAX_FRAMES` 默认为 64，`OTEL_PROFILING_INCLUDE_TRACE_CONTEXT` 默认为 true。
-完整配置参考[固定版本源码说明](https://github.com/beacon-observability/beacon-python/blob/v1.3.0/sdk-extension/beacon-profiling/README.rst)。
+完整配置参考[固定版本源码说明](https://github.com/beacon-observability/beacon-python/blob/v1.4.0/sdk-extension/beacon-profiling/README.rst)。
 
 ## 参数参考
 
