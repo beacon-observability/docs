@@ -6,9 +6,9 @@ description: Attach Beacon Java to an application with -javaagent.
 
 # Java zero-code instrumentation
 
-Beacon Java 1.4.2 ships as one Agent JAR, including the optional Security capability.
+Beacon Java 1.5.0 ships as one Agent JAR, including the optional Security capability.
 
-This guide uses [v1.4.2](https://github.com/beacon-observability/beacon-java/releases/tag/v1.4.2), based on official OTel Java Instrumentation v2.34.0. When upgrading an older release, migrate the [profiling configuration](../profiling/java.md#upgrade-from-13x). Since 1.3.5, `telemetry.distro.name` is `beacon-java-instrumentation`; update queries or filters that depend on the previous name.
+This guide uses [v1.5.0](https://github.com/beacon-observability/beacon-java/releases/tag/v1.5.0), based on official OTel Java Instrumentation v2.34.0. When upgrading an older release, migrate the [profiling configuration](../profiling/java.md#upgrade-from-13x). Since 1.3.5, `telemetry.distro.name` is `beacon-java-instrumentation`; update queries or filters that depend on the previous name.
 
 ## Supported versions
 
@@ -23,11 +23,11 @@ This guide uses [v1.4.2](https://github.com/beacon-observability/beacon-java/rel
 
 ## Install
 
-[Download the Agent JAR](https://github.com/beacon-observability/beacon-java/releases/download/v1.4.2/beacon-javaagent-1.4.2.jar) and save it as `beacon-javaagent.jar`, or run:
+[Download the Agent JAR](https://github.com/beacon-observability/beacon-java/releases/download/v1.5.0/beacon-javaagent-1.5.0.jar) and save it as `beacon-javaagent.jar`, or run:
 
 ```bash
 curl -fL -o beacon-javaagent.jar \
-  https://github.com/beacon-observability/beacon-java/releases/download/v1.4.2/beacon-javaagent-1.4.2.jar
+  https://github.com/beacon-observability/beacon-java/releases/download/v1.5.0/beacon-javaagent-1.5.0.jar
 ```
 
 ## Run
@@ -57,14 +57,14 @@ Return to the normal launch command after troubleshooting. If the variable or JV
 
 ## Text log correlation
 
-Java 1.4.2 can add missing `service.name`, `trace_id`, and `span_id` fields to existing text patterns without editing application logging configuration. Enable this at JVM startup; the default is `false`:
+Java 1.5.0 can add missing `service.name`, `trace_id`, and `span_id` fields to existing text patterns without editing application logging configuration. Enable this at JVM startup; the default is `false`:
 
 ```bash
 export OTEL_INSTRUMENTATION_LOGGING_PATTERN_INJECTION_ENABLED=true
 java -javaagent:./beacon-javaagent.jar -jar app.jar
 ```
 
-The JVM option `-Dotel.instrumentation.logging.pattern-injection.enabled=true` is equivalent. Supported layouts are Logback classic 1.0+, Log4j 1.2 PatternLayout, and Log4j2 2.7+ PatternLayout; keep the corresponding MDC/context-data instrumentation enabled. JSON layouts and Log4j2 PatternSelector branches are excluded. The service name remains available outside a valid span, but the Agent does not generate Trace/Span IDs for those logs. See the [release logging reference](https://github.com/beacon-observability/beacon-java/blob/v1.4.2/beacon/LOGGING.md).
+The JVM option `-Dotel.instrumentation.logging.pattern-injection.enabled=true` is equivalent. Supported layouts are Logback classic 1.0+, Log4j 1.2 PatternLayout, and Log4j2 2.7+ PatternLayout; keep the corresponding MDC/context-data instrumentation enabled. JSON layouts and Log4j2 PatternSelector branches are excluded. The service name remains available outside a valid span, but the Agent does not generate Trace/Span IDs for those logs. See the [release logging reference](https://github.com/beacon-observability/beacon-java/blob/v1.5.0/beacon/LOGGING.md).
 
 ## Profiling
 
@@ -74,3 +74,5 @@ Java 11 and later can collect experimental JFR profiles and export local JFR fil
 
 The same Agent can export opt-in security findings and a runtime SBOM through
 OpenTelemetry Logs. See the [Java Security guide](../security/java.md).
+
+When upgrading to 1.5.0 with Security enabled, update consumers for the [SIEM envelope](../security/java.md#siem-output-and-upgrade) before rollout.

@@ -7,14 +7,14 @@ description: Enable Beacon Security in the complete Beacon Java Agent.
 
 # Java Security
 
-This guide uses Beacon Java 1.4.2. Security has been embedded in the complete
+This guide uses Beacon Java 1.5.0. Security has been embedded in the complete
 Agent JAR since 1.1.0. Keep the same `-javaagent` setup from the [Java zero-code guide](../zero-code/java.md); there
 is no separate Security JAR to install or version.
 
 ## Enable Security
 
 Before enabling Security, download the complete Agent JAR from the
-[1.4.2 Release](https://github.com/beacon-observability/beacon-java/releases/tag/v1.4.2)
+[1.5.0 Release](https://github.com/beacon-observability/beacon-java/releases/tag/v1.5.0)
 and name it `beacon-javaagent.jar`.
 
 ```bash
@@ -30,6 +30,64 @@ java -javaagent:./beacon-javaagent.jar -jar orders.jar
 The Agent exports findings and runtime dependency inventories through
 OpenTelemetry Logs. Local CycloneDX files require explicit diagnostic output.
 Security is disabled by default. Findings are modeled runtime observations or candidate risks rather than confirmed vulnerabilities.
+
+## SIEM output and upgrade {#siem-output-and-upgrade}
+
+Java 1.5.0 changes the OpenTelemetry LogRecord string Body and evidence JSONL to
+`beacon-security-siem-v1`. Update consumers when upgrading from 1.4.x or earlier;
+there is no legacy-output switch. The fifteen base fields are required strings:
+
+| Field | Finding | Runtime inventory |
+| --- | --- | --- |
+| `time` | Original `observed_at` | Original `observed_at` |
+| `event_id` | Original `occurrence_id` | Deterministic inventory ID |
+| `event_class` | `security_finding` | `software_inventory_info` |
+| `source` | `beacon_security` | `beacon_security_sbom` |
+| `service` | Resource `service.name`, or empty | Same |
+| `tenant_id` | Resource `tenant.id`, or `default` | Same |
+| `actor` | Empty | Empty |
+| `ip` | Empty | Empty |
+| `action` | Original `rule` | `inventory_snapshot` |
+| `target` | Original `finding_id` | Process `instance_id` |
+| `target_type` | `finding` | `process` |
+| `outcome` | `unknown` | `success` for local collection |
+| `status` | `info` | `info` |
+| `severity` | `informational` | `informational` |
+| `message` | Complete serialized v2 finding | Complete serialized v2 inventory part |
+
+The envelope also requires `instance_id` and preserves available `trace_id`,
+`span_id`, and numeric `trace_flags` (0–255, including zero). Missing trace fields
+are omitted; inventories do not inherit request context. Within a finding's
+`message`, `current_span_id` becomes `span_id` and `server_span_id` is removed.
+The native LogRecord associates with the observed invocation span; an unavailable
+invocation span is not replaced with a request-entry span.
+
+Actor and client IP are not collected by this change. To set an application
+provided tenant, add `tenant.id=customer-a` to `OTEL_RESOURCE_ATTRIBUTES`;
+otherwise the emitted tenant is `default`. This field is not an authorization
+boundary. `status=info` and `severity=informational` describe the log level,
+not vulnerability severity. Read `attack_evidence.status` inside `message`
+for `unknown`, `no_evidence`, or `suspected`.
+
+For migration:
+
+1. Parse the outer envelope, then parse `message` as JSON to access
+   `schema_version`, `event_name`, attack evidence, and dependency multipart metadata.
+2. Retain `message` exactly as received. It preserves the original serialized v2
+   event at the export boundary, after existing evidence sampling and declared
+   truncation. It cannot recover evidence that was never collected or was dropped.
+   JSONL and OTLP use the same envelope; local diagnostic snapshots keep their formats.
+3. Assemble inventories by embedded `instance_id + observed_at` and
+   `part_index/part_count`; replace an inventory only after every part arrives.
+4. Configure the receiving pipeline to bind envelope `source` to the intended
+   measurement and `time` to event time, retaining `message` as the original payload.
+   Upgrading the Agent does not deploy a receiving pipeline.
+
+Final envelope bytes, including JSON escaping, count toward export limits.
+Oversized envelopes can be dropped with local loss counters rather than silently
+shortening `message`. The default `no_evidence` filter and fingerprint v1 remain
+unchanged. See the [version-pinned SIEM reference](https://github.com/beacon-observability/beacon-java/blob/v1.5.0/extensions/security/SIEM.md)
+and [envelope schema](https://github.com/beacon-observability/beacon-java/blob/v1.5.0/extensions/security/schema-siem-v1.json).
 
 ## Findings and analysis
 
@@ -61,10 +119,10 @@ argument risks remain possible.
 Analysis is limited to 8,192 UTF-16 code units and 64 exact taint ranges.
 Unsupported inputs, imprecise ranges, and exhausted budgets retain uncertainty.
 There is no exploit replay, network probing, JDBC metadata lookup, or filesystem
-resolution. Java 1.4.2 has no network allowlist or filesystem-root policy;
+resolution. Java 1.5.0 has no network allowlist or filesystem-root policy;
 boundary-dependent SSRF, executable-selection, and path judgments remain
 `unknown`. Normalization does not establish safety. See the
-[released analysis reference](https://github.com/beacon-observability/beacon-java/blob/v1.4.2/extensions/security/README.md#analysis-support-and-limits).
+[released analysis reference](https://github.com/beacon-observability/beacon-java/blob/v1.5.0/extensions/security/README.md#analysis-support-and-limits).
 
 ## Configuration reference
 
@@ -91,7 +149,7 @@ Java also accepts `-Dbeacon.security.export.no-evidence.enabled=true`; put the J
 
 ## Kubernetes
 
-Place the released 1.4.2 Agent JAR in the application image or a mounted volume and load it with `JAVA_TOOL_OPTIONS=-javaagent:/path/to/beacon-javaagent.jar`. Container images are published separately; deploy an image whose JAR version and digest match your chosen release. Keep local output disabled for normal workloads.
+Place the released 1.5.0 Agent JAR in the application image or a mounted volume and load it with `JAVA_TOOL_OPTIONS=-javaagent:/path/to/beacon-javaagent.jar`. Container images are published separately; deploy an image whose JAR version and digest match your chosen release. Keep local output disabled for normal workloads.
 
 Remove `BEACON_SECURITY_ENABLED` or set it to `false` to disable Security while
 leaving normal zero-code telemetry active.
