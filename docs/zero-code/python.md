@@ -6,7 +6,7 @@ description: Run a Python application through the Beacon command.
 
 # Python zero-code instrumentation
 
-Beacon Python 1.3.0 supports the documented zero-code workflow on Python 3.10
+Beacon Python 1.4.0 supports the documented zero-code workflow on Python 3.10
 through 3.14. Install it in the same virtual environment as the application.
 
 ## Install
@@ -15,7 +15,7 @@ Choose the extra that matches the application:
 
 ```bash
 # FastAPI; use flask or requests for those integrations
-pip install 'beacon-otel[fastapi]==1.3.0'
+pip install 'beacon-otel[fastapi]==1.4.0'
 ```
 
 ## Run
@@ -31,7 +31,7 @@ Replace `uvicorn myapp:app` with the application's existing command. `beacon --v
 
 ## Debugging and diagnostics
 
-The Beacon Python 1.3.0 zero-code entry point does not provide a unified SDK debug-log switch. `OTEL_LOG_LEVEL=debug` does not automatically configure Python `logging` levels. For detailed logs, use the application's existing logging configuration to set the `opentelemetry` logger to `DEBUG` and attach an output handler.
+The Beacon Python 1.4.0 zero-code entry point does not provide a unified SDK debug-log switch. `OTEL_LOG_LEVEL=debug` does not automatically configure Python `logging` levels. For detailed logs, use the application's existing logging configuration to set the `opentelemetry` logger to `DEBUG` and attach an output handler.
 
 For an initial check without application source changes, add console Span output while retaining OTLP export:
 
@@ -57,7 +57,7 @@ The same `beacon-otel` wheel contains opt-in Security for standard-GIL CPython
 ## Instrumentation extras
 
 Install only the plugins needed by your application, for example
-`pip install 'beacon-otel[fastapi,redis,pymysql]==1.3.0'`. `[all]` installs the
+`pip install 'beacon-otel[fastapi,redis,pymysql]==1.4.0'`. `[all]` installs the
 51 supported instrumentation plugins; `[all,profiling]` also includes profiling.
 The base package stays minimal. Extras install plugins, not application frameworks
 or database clients. Installing all plugins applies their combined dependency

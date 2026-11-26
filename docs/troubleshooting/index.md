@@ -61,3 +61,8 @@ If the application fails only when the agent is active, disable the agent first 
 - [Node.js 2.0.3](https://github.com/beacon-observability/beacon-nodejs/blob/v2.0.3/packages/nodejs/README.md)
 - [.NET 1.1.2](https://github.com/beacon-observability/beacon-dotnet/blob/v1.1.2/docs/config.md#internal-logs)
 - [PHP 2.0.0](https://github.com/beacon-observability/beacon-php/blob/v2.0.0/docs/standalone.md)
+
+For Python 1.4.0 Security, a missing Body `message`, `observed_at` or
+`occurrence_id` is expected: read the native timestamp and LogRecord `event_id`,
+and parse Body once. Historical SIEM records need their original decoder. See the
+[Python migration guide](../security/python.md#native-log-output-and-migration).
