@@ -7,7 +7,7 @@ description: Export Beacon Java JFR profiles to local files or an HTTP receiver.
 
 # Java profiling
 
-This guide uses [Beacon Java v1.5.0](https://github.com/beacon-observability/beacon-java/releases/tag/v1.5.0). Profiling is experimental, disabled by default, and requires Java 11 or later with JFR available. Keep using the same `-javaagent` command from the [Java zero-code guide](../zero-code/java.md).
+This guide uses [Beacon Java v1.5.1](https://github.com/beacon-observability/beacon-java/releases/tag/v1.5.1). Profiling is experimental, disabled by default, and requires Java 11 or later with JFR available. Keep using the same `-javaagent` command from the [Java zero-code guide](../zero-code/java.md).
 
 ## Upload over HTTP
 

@@ -32,3 +32,6 @@ export OTEL_EXPORTER_OTLP_PROTOCOL=grpc
 ## Security Logs
 
 [.NET Security](../security/dotnet.md) 复用现有 OpenTelemetry Logs Provider、资源标识和 OTLP 配置。接收端需配置 Logs 管道，并设置 `OTEL_LOGS_EXPORTER=otlp`。Logs 专用的端点、协议和请求头设置会覆盖对应通用设置。Security 参数通过环境变量配置；.NET Security 不增加 YAML 或 App.config 绑定。
+
+Java 1.5.1 Security 沿用同一套 Logs 导出管道；事件时间和 occurrence ID 从原生元数据
+读取，参见 [Java 日志迁移](../security/java.md#native-log-output-and-migration)。
