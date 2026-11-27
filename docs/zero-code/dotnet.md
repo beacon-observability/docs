@@ -6,7 +6,7 @@ description: Launch an unchanged .NET application with beacon-dotnet.
 
 # .NET zero-code instrumentation
 
-Beacon .NET 1.1.2 provides native packages and a cross-platform `beacon-dotnet` command. The following example uses Debian or Ubuntu on x64; use the [release page](https://github.com/beacon-observability/beacon-dotnet/releases/tag/v1.1.2) for other systems and architectures.
+Beacon .NET 2.0.0 provides native packages and a cross-platform `beacon-dotnet` command. The following example uses Debian or Ubuntu on x64; use the [release page](https://github.com/beacon-observability/beacon-dotnet/releases/tag/v2.0.0) for other systems and architectures.
 
 This release adopts [OpenTelemetry .NET Automatic Instrumentation v1.19.1](https://github.com/open-telemetry/opentelemetry-dotnet-instrumentation/releases/tag/v1.19.1). Beacon package versions follow their own release sequence.
 
@@ -24,7 +24,7 @@ Download and install Beacon .NET:
 
 ```bash
 curl -fL -o beacon-dotnet.deb \
-  https://github.com/beacon-observability/beacon-dotnet/releases/download/v1.1.2/beacon-dotnet-1.1.2-linux-amd64.deb
+  https://github.com/beacon-observability/beacon-dotnet/releases/download/v2.0.0/beacon-dotnet-2.0.0-linux-amd64.deb
 sudo apt install ./beacon-dotnet.deb
 beacon-dotnet status
 ```
@@ -38,7 +38,7 @@ With a recent GitHub CLI that supports artifact attestations, run before install
 gh attestation verify beacon-dotnet.deb \
   --repo beacon-observability/beacon-dotnet \
   --signer-workflow beacon-observability/beacon-dotnet/.github/workflows/beacon-release.yml \
-  --source-ref refs/tags/v1.1.2
+  --source-ref refs/tags/v2.0.0
 ```
 
 </details>
@@ -56,13 +56,13 @@ beacon-dotnet run dotnet MyApp.dll
 
 ## Upgrade and verify
 
-Download the 1.1.2 package for the same system and architecture from the release page and install it using the same package manager. Restart the instrumented application after upgrading, then check `beacon-dotnet version` and `beacon-dotnet status`.
+Download the 2.0.0 package for the same system and architecture from the release page and install it using the same package manager. Restart the instrumented application after upgrading, then check `beacon-dotnet version` and `beacon-dotnet status`.
 
 The release includes Linux glibc/musl x64 and ARM64 archives, a Windows archive and x64 MSI, a macOS ARM64 archive (macOS 14 or later), Linux DEB/RPM packages, and NuGet packages. Native packages are not yet OS-signed; use the optional command above to check artifact provenance.
 
 ## Optional Security
 
-Version 1.1.2 includes experimental, default-off [Security and runtime assembly inventory](../security/dotnet.md). Enable it separately and verify OTLP Logs receipt. Its runtime support scope is narrower than the downloadable platform set.
+Version 2.0.0 includes experimental, default-off [Security and runtime assembly inventory](../security/dotnet.md). Enable it separately and verify OTLP Logs receipt. Its runtime support scope is narrower than the downloadable platform set.
 
 ## Debugging and diagnostics
 

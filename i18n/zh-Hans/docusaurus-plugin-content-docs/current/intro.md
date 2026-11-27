@@ -58,8 +58,8 @@ C++ 应用使用 [Beacon C++ SDK](cpp.md) 源码发行版。构建固定版本�
 
 各项目独立维护版本与发布节奏。请通过发布链接查看可用版本与下载资源，通过对应语言指南查看运行时要求。表中的 Profile 和 Security 指服务端探针能力；Rumable 提供浏览器 RUM。
 
-Ruby 当前提供源码发行包，支持 Net::HTTP 链路追踪；v1.3.0 通过 GitHub 分发可选 Security 和实验性 Profiling gem，链路追踪和 Security 仍需显式 SDK 配置，Profiling 提供独立预加载入口，示例环境与限制请参阅 [Ruby 指南](ruby.md)。Fastrace 需要在应用代码中显式埋点并初始化 reporter。
+Ruby 当前提供源码发行包，支持 Net::HTTP 链路追踪；v2.0.0 通过 GitHub 分发可选 Security 和实验性 Profiling gem，链路追踪和 Security 仍需显式 SDK 配置，Profiling 提供独立预加载入口，示例环境与限制请参阅 [Ruby 指南](ruby.md)。Fastrace 需要在应用代码中显式埋点并初始化 reporter。
 
 Security 默认关闭。已发布的 Java、Python、Node.js、.NET、PHP 和 Ruby 启用方式及运行时范围请参阅 [Security 指南](security/index.md)。
 
-Java 1.5.1、Python 1.2.4 和 Node.js 2.0.3 默认过滤无利用证据的安全发现，并提供恢复导出的开关。参阅 [Security 导出策略](security/index.md#finding-export-policy)。
+Java 1.5.1、Python 1.2.4 和 Node.js 4.0.0 默认过滤无利用证据的安全发现，并提供恢复导出的开关。参阅 [Security 导出策略](security/index.md#finding-export-policy)。

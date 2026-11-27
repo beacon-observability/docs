@@ -7,7 +7,7 @@ description: Enable experimental Security and runtime assembly inventory in Beac
 
 # .NET Security
 
-[Beacon .NET 1.1.2](https://github.com/beacon-observability/beacon-dotnet/releases/tag/v1.1.2) includes experimental Security in the existing zero-code package. It is disabled by default and uses the normal [`beacon-dotnet run` launcher](../zero-code/dotnet.md).
+[Beacon .NET 2.0.0](https://github.com/beacon-observability/beacon-dotnet/releases/tag/v2.0.0) includes experimental Security in the existing zero-code package. It is disabled by default and uses the normal [`beacon-dotnet run` launcher](../zero-code/dotnet.md).
 
 ## Enable and verify
 
@@ -55,4 +55,23 @@ Enable `BEACON_SECURITY_LOCAL_OUTPUT_ENABLED=true` separately when local snapsho
 
 Local writing is asynchronous and bounded. Overload or filesystem failure can lose diagnostics while OTLP export continues independently. Files are neither a durable history nor a multi-process aggregation mechanism, and old process directories are not automatically removed. Return local output to `false` after diagnosis and manage retained files separately.
 
-See the [versioned Security reference](https://github.com/beacon-observability/beacon-dotnet/tree/v1.1.2/beacon/security) for modeled calls, request budgets and contract provenance, and the [release notes](https://github.com/beacon-observability/beacon-dotnet/releases/tag/v1.1.2) for release support and limitations.
+See the [versioned Security reference](https://github.com/beacon-observability/beacon-dotnet/tree/v2.0.0/beacon/security) for modeled calls, request budgets and contract provenance, and the [release notes](https://github.com/beacon-observability/beacon-dotnet/releases/tag/v2.0.0) for release support and limitations.
+
+## Native log output and migration
+
+This release uses output profile `beacon-security-log-body-v1`, pinned to
+Security specification `d9d76e5a41d974d294bb596e06918bb954319bf6`.
+Read event time from native OTel `time_unix_nano` and occurrence identity from
+LogRecord `attributes.event_id`. The Body is compact single-line schema-v2 JSON;
+parse it once. It omits only `observed_at` and `occurrence_id`, preserving every
+other field path, value and nesting. `source` remains in Body and attributes.
+There is no SIEM envelope or `message` wrapper. Fingerprint v1 and inventory IDs
+are unchanged. Record budgets and inventory splitting use final compact UTF-8
+Body bytes; queued retries retain native event time and identity. Local Body-only
+diagnostics omit native time and ID and are not complete transport archives.
+
+Upgrade consumers before the producer. Assemble every inventory part before
+replacing the previous complete list. Rollback requires the previous verified
+producer and its matching SIEM consumer together.
+
+Rollback reinstalls .NET 1.1.3 and its matching consumer.

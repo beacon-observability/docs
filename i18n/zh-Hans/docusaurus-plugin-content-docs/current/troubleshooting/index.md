@@ -45,7 +45,7 @@ description: 排查零代码接入后没有遥测数据的问题。
   字符串拼接到达已建模的 sink 才会产生安全发现，并需核对运行时支持范围。
 - 运行时 SBOM 可能先于安全发现产生。请生成一条经过已建模 source 和 sink 的实际请求；
   仅启动应用不会产生安全发现。
-- Java 1.5.1、Python 1.2.4、Node.js 2.0.3 默认不导出 `attack_evidence.status=no_evidence` 的安全发现，这不表示采集失败。按需设置 `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED=true`；参阅[导出策略](../security/index.md#finding-export-policy)。
+- Java 1.5.1、Python 1.2.4、Node.js 4.0.0 默认不导出 `attack_evidence.status=no_evidence` 的安全发现，这不表示采集失败。按需设置 `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED=true`；参阅[导出策略](../security/index.md#finding-export-policy)。
 - 除非设置 `BEACON_SECURITY_LOCAL_OUTPUT_ENABLED=true`，否则本地诊断文件始终关闭。
   没有本地文件并不代表 OTLP Logs 导出失败。
 
@@ -55,10 +55,10 @@ description: 排查零代码接入后没有遥测数据的问题。
 
 - [Java 1.5.1](https://github.com/beacon-observability/beacon-java/blob/v1.5.1/javaagent-tooling/src/main/java/io/opentelemetry/javaagent/tooling/config/EarlyInitAgentConfig.java)
 - [Python 1.2.4](https://github.com/beacon-observability/beacon-python/blob/v1.2.4/beacon-otel/src/beacon_otel/cli.py)
-- [Node.js 2.0.3](https://github.com/beacon-observability/beacon-nodejs/blob/v2.0.3/packages/nodejs/README.md)
-- [.NET 1.1.2](https://github.com/beacon-observability/beacon-dotnet/blob/v1.1.2/docs/config.md#internal-logs)
-- [PHP 2.0.0](https://github.com/beacon-observability/beacon-php/blob/v2.0.0/docs/standalone.md)
+- [Node.js 4.0.0](https://github.com/beacon-observability/beacon-nodejs/blob/v4.0.0/packages/nodejs/README.md)
+- [.NET 2.0.0](https://github.com/beacon-observability/beacon-dotnet/blob/v2.0.0/docs/config.md#internal-logs)
+- [PHP 3.0.0](https://github.com/beacon-observability/beacon-php/blob/v3.0.0/docs/standalone.md)
 
-Java 1.5.1 与 Python 1.4.0 Security 的 Body 不再包含 `message`、`observed_at` 或
+Java 1.5.1、Python 1.4.0、Node.js 4.0.0、PHP 3.0.0、Ruby 2.0.0 和 .NET 2.0.0 Security 的 Body 不再包含 `message`、`observed_at` 或
 `occurrence_id`，这是预期行为：读取原生时间戳与 LogRecord `event_id`，并解析一次
 Body。历史 SIEM 记录仍需原解码器，参见 [Java 升级说明](../security/java.md#native-log-output-and-migration)与 [Python 升级说明](../security/python.md#原生日志输出与升级)。

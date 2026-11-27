@@ -15,10 +15,11 @@ PHP 或 .NET 具有相同的分析能力；.NET 已发布范围见 [.NET Securit
 | 语言 | 首次支持逐请求记录与攻击证据 | 首次使用 schema v2 | 本指南采用的版本 |
 | --- | --- | --- | --- |
 | Java | [1.3.0](https://github.com/beacon-observability/beacon-java/releases/tag/v1.3.0) | [1.3.3](https://github.com/beacon-observability/beacon-java/releases/tag/v1.3.3) | [1.5.1](https://github.com/beacon-observability/beacon-java/releases/tag/v1.5.1) |
-| Node.js | [1.3.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v1.3.0) | [2.0.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v2.0.0) | [2.0.2](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v2.0.2) |
+| Node.js | [1.3.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v1.3.0) | [2.0.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v2.0.0) | [4.0.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v4.0.0) |
 | Python | [1.2.0](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.0) | [1.2.3](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.3) | [1.2.4](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.4) |
 
-Java 1.5.1 与 Python 1.4.0 从 OTel 原生 `time_unix_nano` 读取事件时间，从 LogRecord
+Java 1.5.1、Python 1.4.0、Node.js 4.0.0、PHP 3.0.0、Ruby 2.0.0 / Security 0.3.0
+和 .NET 2.0.0 从 OTel 原生 `time_unix_nano` 读取事件时间，从 LogRecord
 `attributes.event_id` 读取请求记录标识。紧凑 v2 Body 仅省略 `observed_at` 与
 `occurrence_id`，解析一次即可读取其余字段。参见 [Java 升级说明](java.md#native-log-output-and-migration)和
 [Python 升级说明](python.md#原生日志输出与升级)。
@@ -119,7 +120,7 @@ Java 1.3.4、Node.js 2.0.2 和 Python 1.2.4 默认不向 OpenTelemetry Logs 和�
 基于已收到记录的计数只代表已收到的观测，不是完整普查。请求记录或 OpenTelemetry API
 调用都不保证持久化投递或后端确认。
 
-## Ruby 与 PHP SIEM 迁移
+## 历史 Ruby 与 PHP SIEM 迁移
 
 [Ruby 1.3.0](https://github.com/beacon-observability/beacon-ruby/releases/tag/v1.3.0)
 和 [PHP 2.0.0](https://github.com/beacon-observability/beacon-php/releases/tag/v2.0.0)

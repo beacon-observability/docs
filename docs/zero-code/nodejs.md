@@ -6,25 +6,25 @@ description: Preload Beacon Node.js without changing application source.
 
 # Node.js zero-code instrumentation
 
-Beacon Node.js 2.0.3 supports Node.js 18.19+, 20.6+, 22, and 24. Security has a narrower runtime
+Beacon Node.js 4.0.0 supports Node.js 18.19+, 20.6+, 22, and 24. Security has a narrower runtime
 requirement documented below.
 
 ## Install
 
 ```bash
-npm install @beacon-observability/nodejs@2.0.3
+npm install @beacon-observability/nodejs@4.0.0
 ```
 
 ## Upgrade
 
-Install the exact 2.0.3 package above and restart the application with its existing preload configuration.
-[Release 2.0.3](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v2.0.3)
+Install the exact 4.0.0 package above and restart the application with its existing preload configuration.
+[Release 4.0.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v4.0.0)
 adopts updated Contrib source while retaining the customer package's auto-instrumentation
 0.80.x and OpenTelemetry Core 2.x dependency ranges. This release does not migrate the
 customer runtime to Core 3.x.
 
 
-2.0.3 adds `OTEL_PROFILING_EXPORTER=http` and `OTEL_PROFILING_ENDPOINT` for the existing multipart/pprof exporter. The legacy `OTEL_PROFILING_PPROF_UPLOAD_URL` remains valid and takes precedence over the shared endpoint. `otlp` is not supported; see [Node.js profiling](../profiling/nodejs.md).
+Profiling supports `OTEL_PROFILING_EXPORTER=http` and `OTEL_PROFILING_ENDPOINT` for the existing multipart/pprof exporter. The legacy `OTEL_PROFILING_PPROF_UPLOAD_URL` remains valid and takes precedence over the shared endpoint. `otlp` is not supported; see [Node.js profiling](../profiling/nodejs.md).
 
 ## Run
 
@@ -59,3 +59,5 @@ The same preload can collect wall and heap profiles and upload them over HTTP. S
 Security is included and opt in on Node.js 22.22.3+ or 24.11.1+. It requires
 the ESM `--import` preload instead of `--require`. See the
 [Node.js Security guide](../security/nodejs.md).
+
+Security 4.0.0 changes the log wire format; update consumers before upgrading. See the [migration guide](../security/nodejs.md#native-log-output-and-migration).
