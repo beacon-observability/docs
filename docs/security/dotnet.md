@@ -31,6 +31,7 @@ Security reuses standard [OpenTelemetry transport and resource configuration](..
 | Environment variable | Default | Purpose |
 | --- | --- | --- |
 | `BEACON_SECURITY_ENABLED` | `false` | Enables the Security lifecycle. |
+| `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED` | `false` | Include `no_evidence` findings in online and local output. |
 | `BEACON_SECURITY_SBOM_ENABLED` | `true` | Collects loaded assembly inventory while Security is enabled. |
 | `BEACON_SECURITY_SBOM_REFRESH_SECONDS` | `300` | Positive integer delay after a completed collection; invalid or zero values use 300. |
 | `BEACON_SECURITY_LOCAL_OUTPUT_ENABLED` | `false` | Separately enables local diagnostic output. |

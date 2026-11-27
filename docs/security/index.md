@@ -40,4 +40,4 @@ approximate correlation; see [Ruby Security](ruby.md) for its coverage.
 
 ## Finding export policy {#finding-export-policy}
 
-Java 1.5.1, Node.js 4.0.0, Python 1.4.0, Ruby 2.0.0, and PHP 3.0.0 filter `no_evidence` events by default, so an absent event does not mean no risk was detected. Set `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED=true` to include them; the default is `false`. See [Findings and evidence](findings.md) for status meanings, same-request upgrades, and delivery limits.
+Java 1.5.1, Node.js 4.0.0, Python 1.4.0, Ruby 2.0.0, PHP 3.0.0, and .NET 2.0.1 filter `no_evidence` events by default, so an absent event does not mean no risk was detected. Set `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED=true` to include them; the default is `false`. See [Findings and evidence](findings.md) for status meanings, same-request upgrades, and delivery limits.

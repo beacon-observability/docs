@@ -35,4 +35,4 @@ schema v1/v2 差异；不能据此推断 PHP、.NET 或 Ruby 具有相同覆盖�
 
 ## 安全发现的导出策略 {#finding-export-policy}
 
-Java 1.5.1、Node.js 4.0.0、Python 1.4.0、Ruby 2.0.0 和 PHP 3.0.0 默认过滤 `no_evidence` 事件，没有收到事件不代表没有检测到风险。设置 `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED=true` 可恢复导出，默认值为 `false`。参见[安全发现与证据](findings.md)，了解状态含义、同请求升级与投递限制。
+Java 1.5.1、Node.js 4.0.0、Python 1.4.0、Ruby 2.0.0、PHP 3.0.0 和 .NET 2.0.1 默认过滤 `no_evidence` 事件，没有收到事件不代表没有检测到风险。设置 `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED=true` 可恢复导出，默认值为 `false`。参见[安全发现与证据](findings.md)，了解状态含义、同请求升级与投递限制。

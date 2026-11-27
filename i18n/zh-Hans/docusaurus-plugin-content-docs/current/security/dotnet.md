@@ -31,6 +31,7 @@ Security 复用标准 [OpenTelemetry 传输和资源配置](../configuration/ind
 | 环境变量 | 默认值 | 用途 |
 | --- | --- | --- |
 | `BEACON_SECURITY_ENABLED` | `false` | 开启 Security 生命周期。 |
+| `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED` | `false` | 在在线和本地输出中包含 `no_evidence` findings。 |
 | `BEACON_SECURITY_SBOM_ENABLED` | `true` | 在 Security 开启时采集已加载程序集清单。 |
 | `BEACON_SECURITY_SBOM_REFRESH_SECONDS` | `300` | 每轮采集完成后的正整数延迟秒数；无效值或零使用 300。 |
 | `BEACON_SECURITY_LOCAL_OUTPUT_ENABLED` | `false` | 单独开启本地诊断输出。 |
