@@ -8,13 +8,13 @@ description: 使用 beacon-dotnet 启动未修改的 .NET 应用。
 
 Beacon .NET 2.0.1 提供原生安装包和跨平台 `beacon-dotnet` 命令。以下示例适用于 x64 Debian 或 Ubuntu；其他系统与架构请在[发布页面](https://github.com/beacon-observability/beacon-dotnet/releases/tag/v2.0.1)选择对应安装包。
 
-该版本采用 [OpenTelemetry .NET Automatic Instrumentation v1.19.1](https://github.com/open-telemetry/opentelemetry-dotnet-instrumentation/releases/tag/v1.19.1)。Beacon 安装包使用独立的发布版本号。
+该版本采用 [OpenTelemetry .NET Automatic Instrumentation v1.20.0](https://github.com/open-telemetry/opentelemetry-dotnet-instrumentation/releases/tag/v1.20.0)。Beacon 安装包使用独立的发布版本号。
 
 ## 支持版本
 
 | 运行时 | 版本 |
 | --- | --- |
-| CoreCLR | .NET 8、9、10 |
+| CoreCLR | .NET 10、11 |
 
 Security 的系统与架构要求见 [Security 指南](../security/dotnet.md)。
 

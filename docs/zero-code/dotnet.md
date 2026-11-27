@@ -8,13 +8,13 @@ description: Launch an unchanged .NET application with beacon-dotnet.
 
 Beacon .NET 2.0.1 provides native packages and a cross-platform `beacon-dotnet` command. The following example uses Debian or Ubuntu on x64; use the [release page](https://github.com/beacon-observability/beacon-dotnet/releases/tag/v2.0.1) for other systems and architectures.
 
-This release adopts [OpenTelemetry .NET Automatic Instrumentation v1.19.1](https://github.com/open-telemetry/opentelemetry-dotnet-instrumentation/releases/tag/v1.19.1). Beacon package versions follow their own release sequence.
+This release adopts [OpenTelemetry .NET Automatic Instrumentation v1.20.0](https://github.com/open-telemetry/opentelemetry-dotnet-instrumentation/releases/tag/v1.20.0). Beacon package versions follow their own release sequence.
 
 ## Supported versions
 
 | Runtime | Versions |
 | --- | --- |
-| CoreCLR | .NET 8, 9, 10 |
+| CoreCLR | .NET 10, 11 |
 
 See the [Security guide](../security/dotnet.md) for Security OS and architecture requirements.
 
