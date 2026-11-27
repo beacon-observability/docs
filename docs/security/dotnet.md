@@ -7,7 +7,7 @@ description: Enable experimental Security and runtime assembly inventory in Beac
 
 # .NET Security
 
-[Beacon .NET 1.1.2](https://github.com/beacon-observability/beacon-dotnet/releases/tag/v1.1.2) includes experimental Security in the existing zero-code package. It is disabled by default and uses the normal [`beacon-dotnet run` launcher](../zero-code/dotnet.md).
+[Beacon .NET 2.0.1](https://github.com/beacon-observability/beacon-dotnet/releases/tag/v2.0.1) includes experimental Security in the existing zero-code package. It is disabled by default and uses the normal [`beacon-dotnet run` launcher](../zero-code/dotnet.md).
 
 ## Enable and verify
 
@@ -31,6 +31,7 @@ Security reuses standard [OpenTelemetry transport and resource configuration](..
 | Environment variable | Default | Purpose |
 | --- | --- | --- |
 | `BEACON_SECURITY_ENABLED` | `false` | Enables the Security lifecycle. |
+| `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED` | `false` | Include `no_evidence` findings in online and local output. |
 | `BEACON_SECURITY_SBOM_ENABLED` | `true` | Collects loaded assembly inventory while Security is enabled. |
 | `BEACON_SECURITY_SBOM_REFRESH_SECONDS` | `300` | Positive integer delay after a completed collection; invalid or zero values use 300. |
 | `BEACON_SECURITY_LOCAL_OUTPUT_ENABLED` | `false` | Separately enables local diagnostic output. |
@@ -41,7 +42,7 @@ These are environment-variable bindings. Setting an output path alone does not e
 
 ## Coverage and compatibility
 
-Security flow and export tests cover CoreCLR .NET 8, 9 and 10 on Linux glibc x64, Windows x64 and macOS ARM64. .NET Framework runtime behavior, cross-AppDomain identity, other Security architectures and production performance remain outside the documented support scope. Downloadable archives for other platforms do not imply Security support on those platforms.
+Security flow and export tests cover CoreCLR .NET 10 and 11 on Linux glibc x64, Windows x64 and macOS ARM64. .NET Framework runtime behavior, cross-AppDomain identity, other Security architectures and production performance remain outside the documented support scope. Downloadable archives for other platforms do not imply Security support on those platforms.
 
 The model tracks ASP.NET Core query values by string identity through the two-, three- and four-string `String.Concat` overloads. Supported sensitive calls observe file reads through `File.ReadAllText(string)`, ADO.NET text-command templates, asynchronous HTTP destinations and `Process.Start` invocations. Bound SQL parameter values do not taint a constant command template.
 
@@ -55,4 +56,23 @@ Enable `BEACON_SECURITY_LOCAL_OUTPUT_ENABLED=true` separately when local snapsho
 
 Local writing is asynchronous and bounded. Overload or filesystem failure can lose diagnostics while OTLP export continues independently. Files are neither a durable history nor a multi-process aggregation mechanism, and old process directories are not automatically removed. Return local output to `false` after diagnosis and manage retained files separately.
 
-See the [versioned Security reference](https://github.com/beacon-observability/beacon-dotnet/tree/v1.1.2/beacon/security) for modeled calls, request budgets and contract provenance, and the [release notes](https://github.com/beacon-observability/beacon-dotnet/releases/tag/v1.1.2) for release support and limitations.
+See the [versioned Security reference](https://github.com/beacon-observability/beacon-dotnet/tree/v2.0.1/beacon/security) for modeled calls, request budgets and contract provenance, and the [release notes](https://github.com/beacon-observability/beacon-dotnet/releases/tag/v2.0.1) for release support and limitations.
+
+## Native log output and migration
+
+This release uses output profile `beacon-security-log-body-v1`, pinned to
+Security specification `d9d76e5a41d974d294bb596e06918bb954319bf6`.
+Read event time from native OTel `time_unix_nano` and occurrence identity from
+LogRecord `attributes.event_id`. The Body is compact single-line schema-v2 JSON;
+parse it once. It omits only `observed_at` and `occurrence_id`, preserving every
+other field path, value and nesting. `source` remains in Body and attributes.
+There is no SIEM envelope or `message` wrapper. Fingerprint v1 and inventory IDs
+are unchanged. Record budgets and inventory splitting use final compact UTF-8
+Body bytes; queued retries retain native event time and identity. Local diagnostics retain the full logical v2 event, including `observed_at`
+and `occurrence_id`; native binding is applied separately for OTLP export.
+
+Upgrade consumers before the producer. Assemble every inventory part before
+replacing the previous complete list. Rollback requires the previous verified
+producer and its matching full-v2 consumer together.
+
+Rollback reinstalls .NET 1.1.3 and its matching consumer.

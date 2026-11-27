@@ -35,7 +35,7 @@ These versions apply to the Beacon releases in the language guides. See those gu
 | [Java](zero-code/java.md) | JDK 1.8 (Java 8), 11, 17, 21, 25, 26 |
 | [Python](zero-code/python.md) | Python 3.10, 3.11, 3.12, 3.13, 3.14 |
 | [Node.js](zero-code/nodejs.md) | Node.js 18.19+, 20.6+, 22, 24 |
-| [.NET](zero-code/dotnet.md) | CoreCLR .NET 8, 9, 10; see the language guide for OS and architecture limits |
+| [.NET](zero-code/dotnet.md) | CoreCLR .NET 10, 11; see the language guide for OS and architecture limits |
 | [PHP](zero-code/php.md) | PHP 8.2, 8.3, 8.4 |
 | [Ruby](ruby.md) | CRuby 3.3.12; source gems require Ruby 3.3+, see the language guide for other runtimes |
 | [Rust / Fastrace](fastrace.md) | Rust 1.91.0+ and Cargo |
@@ -58,8 +58,8 @@ These versions apply to the Beacon releases in the language guides. See those gu
 
 Each project is versioned and released independently. Follow the release links for available versions and download assets, and the language guides for runtime requirements. Profiling and Security in this table refer to server-side agent features; Rumable provides browser RUM.
 
-Ruby currently provides a source release with Net::HTTP tracing. Release v1.3.0 distributes opt-in Security and experimental profiling gems on GitHub. Tracing and Security require explicit SDK setup; profiling has a separate preload; see the [Ruby guide](ruby.md) for the example environment and limitations. Fastrace requires application code instrumentation and reporter initialization.
+Ruby currently provides a source release with Net::HTTP tracing. Release v2.0.0 distributes opt-in Security and experimental profiling gems on GitHub. Tracing and Security require explicit SDK setup; profiling has a separate preload; see the [Ruby guide](ruby.md) for the example environment and limitations. Fastrace requires application code instrumentation and reporter initialization.
 
 Security is disabled by default. See the [Security guides](security/index.md) for the released Java, Python, Node.js, .NET, PHP, and Ruby activation and runtime scope.
 
-Java 1.5.1, Python 1.2.4, and Node.js 2.0.3 suppress findings without exploitation evidence by default and provide a switch to include them. See the [Security export policy](security/index.md#finding-export-policy).
+Java 1.5.1, Python 1.2.4, and Node.js 4.0.0 suppress findings without exploitation evidence by default and provide a switch to include them. See the [Security export policy](security/index.md#finding-export-policy).

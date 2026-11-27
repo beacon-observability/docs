@@ -17,10 +17,11 @@ Python versions; it does not imply equivalent analysis in PHP or .NET. See
 | Language | Per-request occurrences and attack evidence introduced | Schema v2 introduced | Version used by this guide |
 | --- | --- | --- | --- |
 | Java | [1.3.0](https://github.com/beacon-observability/beacon-java/releases/tag/v1.3.0) | [1.3.3](https://github.com/beacon-observability/beacon-java/releases/tag/v1.3.3) | [1.5.1](https://github.com/beacon-observability/beacon-java/releases/tag/v1.5.1) |
-| Node.js | [1.3.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v1.3.0) | [2.0.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v2.0.0) | [2.0.2](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v2.0.2) |
-| Python | [1.2.0](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.0) | [1.2.3](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.3) | [1.2.4](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.4) |
+| Node.js | [1.3.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v1.3.0) | [2.0.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v2.0.0) | [4.0.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v4.0.0) |
+| Python | [1.2.0](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.0) | [1.2.3](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.3) | [1.4.0](https://github.com/beacon-observability/beacon-python/releases/tag/v1.4.0) |
 
-Java 1.5.1 and Python 1.4.0 read event time from native OTel `time_unix_nano` and occurrence
+Java 1.5.1, Python 1.4.0, Node.js 4.0.0, PHP 3.0.0, Ruby 2.0.0 / Security 0.3.0,
+and .NET 2.0.1 read event time from native OTel `time_unix_nano` and occurrence
 identity from LogRecord `attributes.event_id`. Their compact v2 Bodies omit only
 `observed_at` and `occurrence_id`; parse it once for all other fields. See the
 [Java migration guide](java.md#native-log-output-and-migration) and
@@ -135,7 +136,7 @@ loss, transport failure, or retention. Counts from received records describe
 received observations, not a complete census. Neither an occurrence nor an
 OpenTelemetry API call guarantees durable delivery or backend acknowledgement.
 
-## Ruby and PHP SIEM migration
+## Historical Ruby and PHP SIEM migration
 
 [Ruby 1.3.0](https://github.com/beacon-observability/beacon-ruby/releases/tag/v1.3.0)
 and [PHP 2.0.0](https://github.com/beacon-observability/beacon-php/releases/tag/v2.0.0)

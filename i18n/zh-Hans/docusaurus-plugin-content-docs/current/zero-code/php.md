@@ -6,13 +6,13 @@ description: 通过统一安装脚本部署 Beacon PHP，并在应用代码运�
 
 # PHP 零代码接入
 
-[Beacon PHP 2.0.0](https://github.com/beacon-observability/beacon-php/releases/tag/v2.0.0) 支持 PHP 8.2、8.3 和 8.4。默认独立安装器会选择 Beacon 原生扩展 1.1.0，并安装隔离的 Agent 运行时，无需 Composer，保留应用原有依赖。Linux glibc x86_64 支持独立安装；其他平台限制见[对应版本的部署说明](https://github.com/beacon-observability/beacon-php/blob/v2.0.0/docs/standalone.md)。
+[Beacon PHP 3.0.0](https://github.com/beacon-observability/beacon-php/releases/tag/v3.0.0) 支持 PHP 8.2、8.3 和 8.4。默认独立安装器会选择 Beacon 原生扩展 1.1.0，并安装隔离的 Agent 运行时，无需 Composer，保留应用原有依赖。Linux glibc x86_64 支持独立安装；其他平台限制见[对应版本的部署说明](https://github.com/beacon-observability/beacon-php/blob/v3.0.0/docs/standalone.md)。
 
 ## 安装
 
 ```bash
 curl --fail --location --output beacon-setup.php \
-  https://github.com/beacon-observability/beacon-php/releases/download/v2.0.0/beacon-setup.php
+  https://github.com/beacon-observability/beacon-php/releases/download/v3.0.0/beacon-setup.php
 php beacon-setup.php --php-bin=all \
   --service-name=my-php-service \
   --otlp-endpoint=http://127.0.0.1:4318
@@ -20,7 +20,7 @@ php beacon-setup.php --php-bin=all \
 
 运行用户需要拥有 PHP 扩展目录、INI 目录和安装目录的写权限，Unix 默认安装到 `/opt/beacon/php`。使用 `--dry-run` 预览变更。Release 提供 `SHA256SUMS`，可独立校验安装器；安装器会校验下载的运行时和原生扩展制品。
 
-运行时在应用代码前加载，包含选定的官方 PDO、cURL、Guzzle、Laravel 和 Symfony 探针，并保留已有 `auto_prepend_file` 的行为。应用手工埋点需要与 Agent 共用 SDK 和上下文时，可使用[高级 Composer 项目模式](https://github.com/beacon-observability/beacon-php/blob/v2.0.0/docs/standalone.md#advanced-composer-project-integration)。
+运行时在应用代码前加载，包含选定的官方 PDO、cURL、Guzzle、Laravel 和 Symfony 探针，并保留已有 `auto_prepend_file` 的行为。应用手工埋点需要与 Agent 共用 SDK 和上下文时，可使用[高级 Composer 项目模式](https://github.com/beacon-observability/beacon-php/blob/v3.0.0/docs/standalone.md#advanced-composer-project-integration)。
 
 ## 启动与管理
 
@@ -47,7 +47,7 @@ php beacon-setup.php uninstall --php-bin=all
 [Beacon PHP Instrumentation 1.1.0](https://github.com/beacon-observability/beacon-php-instrumentation/releases/tag/v1.1.0)
 是基于 OpenTelemetry 扩展 1.5.0 的独立原生扩展发布。产物与产品版本为 1.1.0，
 `phpversion("opentelemetry")` 返回 1.5.0。
-PHP Agent 2.0.0 安装器已选择原生扩展 1.1.0；升级已有安装前，先下载该版本安装器。
+PHP Agent 3.0.0 安装器已选择原生扩展 1.1.0；升级已有安装前，先下载该版本安装器。
 
 显式管理原生扩展时，从该 Release 下载匹配的归档并用 `SHA256SUMS` 校验。
 PHP 8.2/8.3/8.4、操作系统、架构、NTS/TS 和 Windows 编译器 ABI 必须完全匹配；

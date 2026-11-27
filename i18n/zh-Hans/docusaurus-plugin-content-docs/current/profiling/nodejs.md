@@ -27,7 +27,7 @@ export OTEL_PROFILING_MEMORY_ENABLED=true
 默认上传周期为 60 秒。`OTEL_PROFILING_EXPORT_INTERVAL` 可以按秒调整周期，`OTEL_PROFILING_PPROF_HEADERS` 用于设置以逗号分隔的 `名称:值` HTTP Header。
 
 
-本指南对应 [Beacon Node.js 2.0.3](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v2.0.3)。导出格式仍是 multipart/pprof，原生采样器与编码不变。旧的 `OTEL_PROFILING_PPROF_UPLOAD_URL` 继续有效；同时设置时，它优先于 `OTEL_PROFILING_ENDPOINT`。`OTEL_PROFILING_EXPORTER=none` 可关闭 Profiling；`otlp` 尚不支持，也不是 HTTP multipart 的别名。
+本指南对应 [Beacon Node.js 4.0.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v4.0.0)。导出格式仍是 multipart/pprof，原生采样器与编码不变。旧的 `OTEL_PROFILING_PPROF_UPLOAD_URL` 继续有效；同时设置时，它优先于 `OTEL_PROFILING_ENDPOINT`。`OTEL_PROFILING_EXPORTER=none` 可关闭 Profiling；`otlp` 尚不支持，也不是 HTTP multipart 的别名。
 
 ## 参数参考
 

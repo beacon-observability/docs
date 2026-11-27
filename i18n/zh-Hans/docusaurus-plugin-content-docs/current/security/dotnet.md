@@ -7,7 +7,7 @@ description: 在 Beacon .NET 中启用实验性 Security 与运行时程序集�
 
 # .NET Security
 
-[Beacon .NET 1.1.2](https://github.com/beacon-observability/beacon-dotnet/releases/tag/v1.1.2) 在现有零代码软件包中包含实验性 Security。它默认关闭，沿用常规的 [`beacon-dotnet run` 启动器](../zero-code/dotnet.md)。
+[Beacon .NET 2.0.1](https://github.com/beacon-observability/beacon-dotnet/releases/tag/v2.0.1) 在现有零代码软件包中包含实验性 Security。它默认关闭，沿用常规的 [`beacon-dotnet run` 启动器](../zero-code/dotnet.md)。
 
 ## 启用与验证
 
@@ -31,6 +31,7 @@ Security 复用标准 [OpenTelemetry 传输和资源配置](../configuration/ind
 | 环境变量 | 默认值 | 用途 |
 | --- | --- | --- |
 | `BEACON_SECURITY_ENABLED` | `false` | 开启 Security 生命周期。 |
+| `BEACON_SECURITY_EXPORT_NO_EVIDENCE_ENABLED` | `false` | 在在线和本地输出中包含 `no_evidence` findings。 |
 | `BEACON_SECURITY_SBOM_ENABLED` | `true` | 在 Security 开启时采集已加载程序集清单。 |
 | `BEACON_SECURITY_SBOM_REFRESH_SECONDS` | `300` | 每轮采集完成后的正整数延迟秒数；无效值或零使用 300。 |
 | `BEACON_SECURITY_LOCAL_OUTPUT_ENABLED` | `false` | 单独开启本地诊断输出。 |
@@ -41,7 +42,7 @@ Security 复用标准 [OpenTelemetry 传输和资源配置](../configuration/ind
 
 ## 覆盖范围与兼容性
 
-Security 数据流和导出测试覆盖 Linux glibc x64、Windows x64、macOS ARM64 上的 CoreCLR .NET 8、9 和 10。.NET Framework 运行时行为、跨 AppDomain 标识、其他 Security 架构和生产性能仍不在本文支持范围内。提供其他平台的可下载归档不代表支持这些平台的 Security。
+Security 数据流和导出测试覆盖 Linux glibc x64、Windows x64、macOS ARM64 上的 CoreCLR .NET 10 和 11。.NET Framework 运行时行为、跨 AppDomain 标识、其他 Security 架构和生产性能仍不在本文支持范围内。提供其他平台的可下载归档不代表支持这些平台的 Security。
 
 模型按字符串对象标识跟踪 ASP.NET Core 查询参数值，并支持经过双字符串、三字符串和四字符串 `String.Concat` 重载的传播。受支持的敏感调用包括 `File.ReadAllText(string)` 文件读取、ADO.NET 文本命令模板、异步 HTTP 目标和 `Process.Start` 调用。绑定的 SQL 参数值不会污染常量命令模板。
 
@@ -55,4 +56,21 @@ Security 数据流和导出测试覆盖 Linux glibc x64、Windows x64、macOS AR
 
 本地写入异步执行且有容量限制。过载或文件系统错误可能丢失诊断数据，OTLP 导出仍独立继续。这些文件不提供持久历史或多进程聚合，旧进程目录也不会自动删除。诊断结束后将本地输出恢复为 `false`，并单独管理保留的文件。
 
-已建模调用、请求预算和合约来源请参阅[版本化 Security 参考](https://github.com/beacon-observability/beacon-dotnet/tree/v1.1.2/beacon/security)，版本说明与限制请参阅[发布说明](https://github.com/beacon-observability/beacon-dotnet/releases/tag/v1.1.2)。
+已建模调用、请求预算和合约来源请参阅[版本化 Security 参考](https://github.com/beacon-observability/beacon-dotnet/tree/v2.0.1/beacon/security)，版本说明与限制请参阅[发布说明](https://github.com/beacon-observability/beacon-dotnet/releases/tag/v2.0.1)。
+
+## 原生日志输出与迁移
+
+本版本使用 `beacon-security-log-body-v1` 输出协议，固定 Security 规范提交
+`d9d76e5a41d974d294bb596e06918bb954319bf6`。
+事件时间读取 OTel 原生 `time_unix_nano`，请求记录标识读取 LogRecord
+`attributes.event_id`。Body 是紧凑单行 schema v2 JSON，只需解析一次；仅移除
+`observed_at` 和 `occurrence_id`，其他字段路径、值和嵌套保持不变。
+`source` 同时保留在 Body 和 attributes 中，不再有 SIEM 信封或 `message` 包装。
+Fingerprint v1 和清单 ID 算法不变。记录预算及清单拆分按最终紧凑 UTF-8 Body
+字节数计算，队列重试保留原生时间与标识。本地诊断保留完整逻辑 v2 事件，包含
+`observed_at` 与 `occurrence_id`；OTLP 导出时单独执行原生绑定。
+
+先升级消费者，再升级生产端；收齐清单一轮的全部分片后才能替换此前完整列表。
+回滚时必须同时恢复此前校验过的生产端及匹配的完整 v2 消费者。
+
+回滚恢复 .NET 1.1.3 及匹配消费者。

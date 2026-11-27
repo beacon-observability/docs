@@ -7,11 +7,11 @@ description: Enable experimental Security and runtime SBOM in the released Beaco
 
 # PHP Security
 
-Beacon PHP 2.0.0 includes experimental Security in the normal Agent runtime. It is disabled by default and uses the same native extension and installation lifecycle as [PHP zero-code instrumentation](../zero-code/php.md).
+Beacon PHP 3.0.0 includes experimental Security in the normal Agent runtime. It is disabled by default and uses the same native extension and installation lifecycle as [PHP zero-code instrumentation](../zero-code/php.md).
 
 ## Enable Security
 
-After downloading the 2.0.0 installer, enable Security during installation or an idempotent reinstall:
+After downloading the 3.0.0 installer, enable Security during installation or an idempotent reinstall:
 
 ```bash
 php beacon-setup.php --php-bin=all --enable-security
@@ -42,19 +42,26 @@ Selected PDO, file, command and cURL sinks observe bounded value correlations wi
 
 Conventional CLI and PHP request lifecycles are covered. Long-running multi-request workers do not have request-reset integration. Runtime SBOM is explicitly partial and includes loaded extensions and Composer packages observed through included files.
 
-Use `--disable-security` with the installer to clear its enablement default, and remove or disable any application `BEACON_SECURITY_ENABLED` override. See the [versioned Security reference](https://github.com/beacon-observability/beacon-php/blob/v2.0.0/docs/security.md) for detailed coverage, diagnostic output and limits. Verify actual Logs receipt; successful startup or `doctor` does not confirm receiver delivery.
+Use `--disable-security` with the installer to clear its enablement default, and remove or disable any application `BEACON_SECURITY_ENABLED` override. See the [versioned Security reference](https://github.com/beacon-observability/beacon-php/releases/tag/v3.0.0) for detailed coverage, diagnostic output and limits. Verify actual Logs receipt; successful startup or `doctor` does not confirm receiver delivery.
 
-## SIEM migration and lifecycle limits
+## Native log output and migration
 
-PHP 2.0.0 replaces historical v1 bodies with SIEM v1 envelopes containing complete
-serialized v2 evidence in `message`. Update consumers before upgrading; no legacy
-mode is available. Use top-level process identity and invocation `span_id` for
-correlation, and parse `message` for evidence or complete inventory assembly.
-Final escaped envelope bytes govern the 65536-byte record budget. Unknown/suspected
-remain eligible for export; default no-evidence filtering consumes no delivery budget.
-Actor/client-IP enrichment remains empty; configured Resource `tenant.id` is used
-when present, otherwise `default`. Findings keep unknown outcome and informational
-log severity, not assessed risk.
+This release uses output profile `beacon-security-log-body-v1`, pinned to
+Security specification `d9d76e5a41d974d294bb596e06918bb954319bf6`.
+Read event time from native OTel `time_unix_nano` and occurrence identity from
+LogRecord `attributes.event_id`. The Body is compact single-line schema-v2 JSON;
+parse it once. It omits only `observed_at` and `occurrence_id`, preserving every
+other field path, value and nesting. `source` remains in Body and attributes.
+There is no SIEM envelope or `message` wrapper. Fingerprint v1 and inventory IDs
+are unchanged. Record budgets and inventory splitting use final compact UTF-8
+Body bytes; queued retries retain native event time and identity. PHP diagnostic JSONL uses a local wrapper with `time_unix_nano`, `attributes`
+and the compact `body` string; that wrapper is not transmitted as OTLP Body.
+
+Upgrade consumers before the producer. Assemble every inventory part before
+replacing the previous complete list. Rollback requires the previous verified
+producer and its matching SIEM consumer together.
+
+## Lifecycle limits
 
 PHP has no independent in-process background scheduler here. First collection is
 synchronous, refresh runs when selected native Hooks observe the deadline, and
@@ -65,5 +72,5 @@ unsupported platforms. Long-running multi-request framework workers still lack a
 request-reset adapter. Failed scans emit no replacement; successful empty lists
 can clear inventory. Do not replace an inventory until every part of a round arrives.
 
-Rollback reinstalls the verified 1.3.1 installer/runtime and the historical v1-body
+Rollback reinstalls the verified 2.0.0 installer/runtime and the matching SIEM
 consumer together. The native extension remains Beacon 1.1.0 / module 1.5.0.

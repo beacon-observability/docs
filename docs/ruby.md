@@ -6,7 +6,7 @@ description: Install released Ruby instrumentation source and verify Net::HTTP t
 
 # Ruby source integration
 
-Beacon Ruby **[v1.3.0](https://github.com/beacon-observability/beacon-ruby/releases/tag/v1.3.0)** is a source release based on OpenTelemetry Ruby Contrib. Applications integrate the instrumentation gems and initialize the OpenTelemetry SDK explicitly. This release retains upstream instrumentation gem identities and distributes opt-in **beacon-security 0.2.0** and experimental **beacon-profiling 0.1.1** gems as GitHub Release assets. It does not publish to RubyGems or provide an executable agent or zero-code trace launcher.
+Beacon Ruby **[v2.0.0](https://github.com/beacon-observability/beacon-ruby/releases/tag/v2.0.0)** is a source release based on OpenTelemetry Ruby Contrib. Applications integrate the instrumentation gems and initialize the OpenTelemetry SDK explicitly. This release retains upstream instrumentation gem identities and distributes opt-in **beacon-security 0.3.0** and experimental **beacon-profiling 0.1.1** gems as GitHub Release assets. It does not publish to RubyGems or provide an executable agent or zero-code trace launcher.
 
 ## Requirements
 
@@ -16,16 +16,16 @@ Beacon Ruby **[v1.3.0](https://github.com/beacon-observability/beacon-ruby/relea
 
 ## Download and verify
 
-Run these commands in a new directory. They pin v1.3.0 and download its source, Security and profiling gems, provenance and checksums together:
+Run these commands in a new directory. They pin v2.0.0 and download its source, Security and profiling gems, provenance and checksums together:
 
 ```bash
-ruby_release_tag=v1.3.0
+ruby_release_tag=v2.0.0
 ruby_release_version=${ruby_release_tag#v}
 ruby_archive="beacon-ruby-${ruby_release_version}-source.tar.gz"
 ruby_release_url="https://github.com/beacon-observability/beacon-ruby/releases/download/${ruby_release_tag}"
 
 curl -fLO "${ruby_release_url}/${ruby_archive}"
-curl -fLO "${ruby_release_url}/beacon-security-0.2.0.gem"
+curl -fLO "${ruby_release_url}/beacon-security-0.3.0.gem"
 curl -fLO "${ruby_release_url}/beacon-profiling-0.1.1.gem"
 curl -fLO "${ruby_release_url}/SOURCE.txt"
 curl -fLO "${ruby_release_url}/SHA256SUMS"
@@ -34,7 +34,7 @@ tar -xzf "${ruby_archive}"
 cd "beacon-ruby-${ruby_release_version}"
 ```
 
-Continue only if checksum verification succeeds. `SOURCE.txt` records the source commit and upstream baseline. The archive includes source and licenses; the two gems are separate assets covered by the checksums. Dependencies are installed separately. The example environment and scope on this page describe v1.3.0; review the selected release's notes for changes.
+Continue only if checksum verification succeeds. `SOURCE.txt` records the source commit and upstream baseline. The archive includes source and licenses; the two gems are separate assets covered by the checksums. Dependencies are installed separately. The example environment and scope on this page describe v2.0.0; review the selected release's notes for changes.
 
 ## Verify Net::HTTP traces
 
@@ -57,16 +57,16 @@ The harness removes its temporary servers, container, and trace output afterward
 
 ## Application integration and scope
 
-Use the release's [Gemfile](https://github.com/beacon-observability/beacon-ruby/blob/v1.3.0/beacon/validation/Gemfile) and [Ruby example](https://github.com/beacon-observability/beacon-ruby/blob/v1.3.0/beacon/validation/http_smoke.rb) as references for the Net::HTTP integration. The Gemfile loads the base and Net::HTTP instrumentation from the released source and pins the Core SDK and OTLP exporter. Load the required libraries before initializing the SDK and enabling `OpenTelemetry::Instrumentation::Net::HTTP`.
+Use the release's [Gemfile](https://github.com/beacon-observability/beacon-ruby/blob/v2.0.0/beacon/validation/Gemfile) and [Ruby example](https://github.com/beacon-observability/beacon-ruby/blob/v2.0.0/beacon/validation/http_smoke.rb) as references for the Net::HTTP integration. The Gemfile loads the base and Net::HTTP instrumentation from the released source and pins the Core SDK and OTLP exporter. Load the required libraries before initializing the SDK and enabling `OpenTelemetry::Instrumentation::Net::HTTP`.
 
-This release provides the shared instrumentation base, Net::HTTP modes, and local Collector trace export. Security findings and runtime inventories also have a Logs export path; see [Ruby Security](security/ruby.md). Experimental profiling can upload pprof data to a local DataKit profiling input as described below. Rails-specific adapters, other trace integrations, metrics and general application logs are outside the documented support scope. See the [source installation guide](https://github.com/beacon-observability/beacon-ruby/blob/v1.3.0/beacon/INSTALLATION.md) and [release notes](https://github.com/beacon-observability/beacon-ruby/releases/tag/v1.3.0) before adapting the example.
+This release provides the shared instrumentation base, Net::HTTP modes, and local Collector trace export. Security findings and runtime inventories also have a Logs export path; see [Ruby Security](security/ruby.md). Experimental profiling can upload pprof data to a local DataKit profiling input as described below. Rails-specific adapters, other trace integrations, metrics and general application logs are outside the documented support scope. See the [source installation guide](https://github.com/beacon-observability/beacon-ruby/blob/v2.0.0/beacon/INSTALLATION.md) and [release notes](https://github.com/beacon-observability/beacon-ruby/releases/tag/v2.0.0) before adapting the example.
 
 ## Enable Security
 
 After verifying all assets, install the GitHub-distributed gem from the download directory:
 
 ```bash
-gem install ./beacon-security-0.2.0.gem --no-document
+gem install ./beacon-security-0.3.0.gem --no-document
 ```
 
 Add that installed version to the application's Gemfile, or reference the extracted
@@ -117,7 +117,7 @@ CRuby 3.3/3.4/4.0 compile/test/build CI passes; local receiver acceptance uses 3
 This preload enables profiling only and does not initialize trace SDKs.
 
 Puma and Unicorn require explicit post-fork startup and shutdown hooks. See the
-[released profiling guide](https://github.com/beacon-observability/beacon-ruby/blob/v1.3.0/profiling/README.md)
+[released profiling guide](https://github.com/beacon-observability/beacon-ruby/blob/v2.0.0/profiling/README.md)
 for lifecycle hooks, configuration, counters and limits. Set
 `OTEL_PROFILING_ENABLED=false` and restart to disable profiling. If no data arrives,
 check the DataKit profiling input, upload endpoint and `Beacon::Profiling.stats`
@@ -129,4 +129,4 @@ Keep each source release in a separate directory. Retain the verified archive, c
 
 - [Source repository](https://github.com/beacon-observability/beacon-ruby)
 - [Releases and downloads](https://github.com/beacon-observability/beacon-ruby/releases)
-- [Versioned technical reference](https://github.com/beacon-observability/beacon-ruby/blob/v1.3.0/beacon/validation/README.md)
+- [Versioned technical reference](https://github.com/beacon-observability/beacon-ruby/blob/v2.0.0/beacon/validation/README.md)
