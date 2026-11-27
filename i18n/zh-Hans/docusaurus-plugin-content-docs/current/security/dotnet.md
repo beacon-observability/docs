@@ -41,7 +41,7 @@ Security 复用标准 [OpenTelemetry 传输和资源配置](../configuration/ind
 
 ## 覆盖范围与兼容性
 
-Security 数据流和导出测试覆盖 Linux glibc x64、Windows x64、macOS ARM64 上的 CoreCLR .NET 8、9 和 10。.NET Framework 运行时行为、跨 AppDomain 标识、其他 Security 架构和生产性能仍不在本文支持范围内。提供其他平台的可下载归档不代表支持这些平台的 Security。
+Security 数据流和导出测试覆盖 Linux glibc x64、Windows x64、macOS ARM64 上的 CoreCLR .NET 10 和 11。.NET Framework 运行时行为、跨 AppDomain 标识、其他 Security 架构和生产性能仍不在本文支持范围内。提供其他平台的可下载归档不代表支持这些平台的 Security。
 
 模型按字符串对象标识跟踪 ASP.NET Core 查询参数值，并支持经过双字符串、三字符串和四字符串 `String.Concat` 重载的传播。受支持的敏感调用包括 `File.ReadAllText(string)` 文件读取、ADO.NET 文本命令模板、异步 HTTP 目标和 `Process.Start` 调用。绑定的 SQL 参数值不会污染常量命令模板。
 

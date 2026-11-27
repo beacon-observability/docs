@@ -18,7 +18,7 @@ Python versions; it does not imply equivalent analysis in PHP or .NET. See
 | --- | --- | --- | --- |
 | Java | [1.3.0](https://github.com/beacon-observability/beacon-java/releases/tag/v1.3.0) | [1.3.3](https://github.com/beacon-observability/beacon-java/releases/tag/v1.3.3) | [1.5.1](https://github.com/beacon-observability/beacon-java/releases/tag/v1.5.1) |
 | Node.js | [1.3.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v1.3.0) | [2.0.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v2.0.0) | [4.0.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v4.0.0) |
-| Python | [1.2.0](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.0) | [1.2.3](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.3) | [1.2.4](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.4) |
+| Python | [1.2.0](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.0) | [1.2.3](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.3) | [1.4.0](https://github.com/beacon-observability/beacon-python/releases/tag/v1.4.0) |
 
 Java 1.5.1, Python 1.4.0, Node.js 4.0.0, PHP 3.0.0, Ruby 2.0.0 / Security 0.3.0,
 and .NET 2.0.1 read event time from native OTel `time_unix_nano` and occurrence
