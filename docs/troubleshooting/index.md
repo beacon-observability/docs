@@ -59,10 +59,10 @@ If the application fails only when the agent is active, disable the agent first 
 - [Java 1.5.1](https://github.com/beacon-observability/beacon-java/blob/v1.5.1/javaagent-tooling/src/main/java/io/opentelemetry/javaagent/tooling/config/EarlyInitAgentConfig.java)
 - [Python 1.2.4](https://github.com/beacon-observability/beacon-python/blob/v1.2.4/beacon-otel/src/beacon_otel/cli.py)
 - [Node.js 4.0.0](https://github.com/beacon-observability/beacon-nodejs/blob/v4.0.0/packages/nodejs/README.md)
-- [.NET 2.0.0](https://github.com/beacon-observability/beacon-dotnet/blob/v2.0.0/docs/config.md#internal-logs)
+- [.NET 2.0.1](https://github.com/beacon-observability/beacon-dotnet/blob/v2.0.1/docs/config.md#internal-logs)
 - [PHP 3.0.0](https://github.com/beacon-observability/beacon-php/blob/v3.0.0/docs/standalone.md)
 
-For Java 1.5.1, Python 1.4.0, Node.js 4.0.0, PHP 3.0.0, Ruby 2.0.0 and .NET 2.0.0 Security, a missing Body `message`, `observed_at` or
+For Java 1.5.1, Python 1.4.0, Node.js 4.0.0, PHP 3.0.0, Ruby 2.0.0 and .NET 2.0.1 Security, a missing Body `message`, `observed_at` or
 `occurrence_id` is expected: read the native timestamp and LogRecord `event_id`,
 and parse Body once. Historical SIEM records need their original decoder. See the
 [Java migration guide](../security/java.md#native-log-output-and-migration) and

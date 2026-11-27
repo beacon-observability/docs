@@ -19,7 +19,7 @@ PHP 或 .NET 具有相同的分析能力；.NET 已发布范围见 [.NET Securit
 | Python | [1.2.0](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.0) | [1.2.3](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.3) | [1.2.4](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.4) |
 
 Java 1.5.1、Python 1.4.0、Node.js 4.0.0、PHP 3.0.0、Ruby 2.0.0 / Security 0.3.0
-和 .NET 2.0.0 从 OTel 原生 `time_unix_nano` 读取事件时间，从 LogRecord
+和 .NET 2.0.1 从 OTel 原生 `time_unix_nano` 读取事件时间，从 LogRecord
 `attributes.event_id` 读取请求记录标识。紧凑 v2 Body 仅省略 `observed_at` 与
 `occurrence_id`，解析一次即可读取其余字段。参见 [Java 升级说明](java.md#native-log-output-and-migration)和
 [Python 升级说明](python.md#原生日志输出与升级)。

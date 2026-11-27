@@ -7,7 +7,7 @@ description: 在 Beacon .NET 中启用实验性 Security 与运行时程序集�
 
 # .NET Security
 
-[Beacon .NET 2.0.0](https://github.com/beacon-observability/beacon-dotnet/releases/tag/v2.0.0) 在现有零代码软件包中包含实验性 Security。它默认关闭，沿用常规的 [`beacon-dotnet run` 启动器](../zero-code/dotnet.md)。
+[Beacon .NET 2.0.1](https://github.com/beacon-observability/beacon-dotnet/releases/tag/v2.0.1) 在现有零代码软件包中包含实验性 Security。它默认关闭，沿用常规的 [`beacon-dotnet run` 启动器](../zero-code/dotnet.md)。
 
 ## 启用与验证
 
@@ -55,7 +55,7 @@ Security 数据流和导出测试覆盖 Linux glibc x64、Windows x64、macOS AR
 
 本地写入异步执行且有容量限制。过载或文件系统错误可能丢失诊断数据，OTLP 导出仍独立继续。这些文件不提供持久历史或多进程聚合，旧进程目录也不会自动删除。诊断结束后将本地输出恢复为 `false`，并单独管理保留的文件。
 
-已建模调用、请求预算和合约来源请参阅[版本化 Security 参考](https://github.com/beacon-observability/beacon-dotnet/tree/v2.0.0/beacon/security)，版本说明与限制请参阅[发布说明](https://github.com/beacon-observability/beacon-dotnet/releases/tag/v2.0.0)。
+已建模调用、请求预算和合约来源请参阅[版本化 Security 参考](https://github.com/beacon-observability/beacon-dotnet/tree/v2.0.1/beacon/security)，版本说明与限制请参阅[发布说明](https://github.com/beacon-observability/beacon-dotnet/releases/tag/v2.0.1)。
 
 ## 原生日志输出与迁移
 
@@ -66,10 +66,10 @@ Security 数据流和导出测试覆盖 Linux glibc x64、Windows x64、macOS AR
 `observed_at` 和 `occurrence_id`，其他字段路径、值和嵌套保持不变。
 `source` 同时保留在 Body 和 attributes 中，不再有 SIEM 信封或 `message` 包装。
 Fingerprint v1 和清单 ID 算法不变。记录预算及清单拆分按最终紧凑 UTF-8 Body
-字节数计算，队列重试保留原生时间与标识。本地纯 Body 诊断文件不含原生时间和 ID，
-不能作为完整传输归档。
+字节数计算，队列重试保留原生时间与标识。本地诊断保留完整逻辑 v2 事件，包含
+`observed_at` 与 `occurrence_id`；OTLP 导出时单独执行原生绑定。
 
 先升级消费者，再升级生产端；收齐清单一轮的全部分片后才能替换此前完整列表。
-回滚时必须同时恢复此前校验过的生产端及匹配的 SIEM 消费者。
+回滚时必须同时恢复此前校验过的生产端及匹配的完整 v2 消费者。
 
 回滚恢复 .NET 1.1.3 及匹配消费者。

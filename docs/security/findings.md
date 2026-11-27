@@ -21,7 +21,7 @@ Python versions; it does not imply equivalent analysis in PHP or .NET. See
 | Python | [1.2.0](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.0) | [1.2.3](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.3) | [1.2.4](https://github.com/beacon-observability/beacon-python/releases/tag/v1.2.4) |
 
 Java 1.5.1, Python 1.4.0, Node.js 4.0.0, PHP 3.0.0, Ruby 2.0.0 / Security 0.3.0,
-and .NET 2.0.0 read event time from native OTel `time_unix_nano` and occurrence
+and .NET 2.0.1 read event time from native OTel `time_unix_nano` and occurrence
 identity from LogRecord `attributes.event_id`. Their compact v2 Bodies omit only
 `observed_at` and `occurrence_id`; parse it once for all other fields. See the
 [Java migration guide](java.md#native-log-output-and-migration) and

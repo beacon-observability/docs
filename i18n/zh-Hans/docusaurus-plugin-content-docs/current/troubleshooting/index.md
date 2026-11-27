@@ -56,9 +56,9 @@ description: 排查零代码接入后没有遥测数据的问题。
 - [Java 1.5.1](https://github.com/beacon-observability/beacon-java/blob/v1.5.1/javaagent-tooling/src/main/java/io/opentelemetry/javaagent/tooling/config/EarlyInitAgentConfig.java)
 - [Python 1.2.4](https://github.com/beacon-observability/beacon-python/blob/v1.2.4/beacon-otel/src/beacon_otel/cli.py)
 - [Node.js 4.0.0](https://github.com/beacon-observability/beacon-nodejs/blob/v4.0.0/packages/nodejs/README.md)
-- [.NET 2.0.0](https://github.com/beacon-observability/beacon-dotnet/blob/v2.0.0/docs/config.md#internal-logs)
+- [.NET 2.0.1](https://github.com/beacon-observability/beacon-dotnet/blob/v2.0.1/docs/config.md#internal-logs)
 - [PHP 3.0.0](https://github.com/beacon-observability/beacon-php/blob/v3.0.0/docs/standalone.md)
 
-Java 1.5.1、Python 1.4.0、Node.js 4.0.0、PHP 3.0.0、Ruby 2.0.0 和 .NET 2.0.0 Security 的 Body 不再包含 `message`、`observed_at` 或
+Java 1.5.1、Python 1.4.0、Node.js 4.0.0、PHP 3.0.0、Ruby 2.0.0 和 .NET 2.0.1 Security 的 Body 不再包含 `message`、`observed_at` 或
 `occurrence_id`，这是预期行为：读取原生时间戳与 LogRecord `event_id`，并解析一次
 Body。历史 SIEM 记录仍需原解码器，参见 [Java 升级说明](../security/java.md#native-log-output-and-migration)与 [Python 升级说明](../security/python.md#原生日志输出与升级)。

@@ -14,7 +14,7 @@ Ruby 通过可选 gem 分发，需要显式配置 Rack/SDK。Security 默认关�
 | [Java](java.md) | [1.5.1](https://github.com/beacon-observability/beacon-java/releases/tag/v1.5.1) | 完整 Java Agent | 单个 Agent JAR |
 | [Python](python.md) | [1.4.0](https://github.com/beacon-observability/beacon-python/releases/tag/v1.4.0) | 标准 GIL 的 CPython 3.11–3.14 | 现有 `beacon` 命令 |
 | [Node.js](nodejs.md) | [4.0.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v4.0.0) | Node.js 22.22.3+ 或 24.11.1+ | 现有软件包加 ESM 预加载 |
-| [.NET](dotnet.md) | 2.0.0，实验性 | CoreCLR .NET 8–10：Linux glibc x64、Windows x64、macOS ARM64 | 现有 `beacon-dotnet run` 命令 |
+| [.NET](dotnet.md) | 2.0.1，实验性 | CoreCLR .NET 10–11：Linux glibc x64、Windows x64、macOS ARM64 | 现有 `beacon-dotnet run` 命令 |
 | [PHP](php.md) | 3.0.0，实验性 | PHP 8.2–8.4，Linux glibc x86_64 | 现有安装器与 Agent 运行时 |
 | [Ruby](ruby.md) | 2.0.0 / gem 0.3.0 | Linux CRuby 3.3/3.4/4.0 CI，3.3.12 Collector 接入示例 | GitHub gem 与 Rack 中间件 |
 

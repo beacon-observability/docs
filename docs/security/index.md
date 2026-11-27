@@ -15,7 +15,7 @@ explicit Rack/SDK setup. Security is disabled by default.
 | [Java](java.md) | [1.5.1](https://github.com/beacon-observability/beacon-java/releases/tag/v1.5.1) | The complete Java Agent | One Agent JAR |
 | [Python](python.md) | [1.4.0](https://github.com/beacon-observability/beacon-python/releases/tag/v1.4.0) | Standard-GIL CPython 3.11–3.14 | The existing `beacon` command |
 | [Node.js](nodejs.md) | [4.0.0](https://github.com/beacon-observability/beacon-nodejs/releases/tag/v4.0.0) | Node.js 22.22.3+ or 24.11.1+ | The existing package with ESM preload |
-| [.NET](dotnet.md) | 2.0.0, experimental | CoreCLR .NET 8–10: Linux glibc x64, Windows x64, macOS ARM64 | The existing `beacon-dotnet run` command |
+| [.NET](dotnet.md) | 2.0.1, experimental | CoreCLR .NET 10–11: Linux glibc x64, Windows x64, macOS ARM64 | The existing `beacon-dotnet run` command |
 | [PHP](php.md) | 3.0.0, experimental | PHP 8.2–8.4, Linux glibc x86_64 | The existing installer and Agent runtime |
 | [Ruby](ruby.md) | 2.0.0 / gem 0.3.0 | Linux CRuby 3.3/3.4/4.0 CI; 3.3.12 Collector example | GitHub gem and Rack middleware |
 
